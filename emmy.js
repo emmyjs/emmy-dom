@@ -80,17 +80,6 @@ class Component extends HTMLElement {
         }
     }
 
-    newButton(text, callback) {
-        let button = document.createElement('button');
-        button.innerHTML = text;
-        button.addEventListener('click', callback);
-        this.shadowRoot.appendChild(button);
-        button.applyStyle = () => {
-            button.style = this.Style.button;
-        }
-        return button;
-    }
-
     $(selector) {
         return this.content.querySelector(selector);
     }
