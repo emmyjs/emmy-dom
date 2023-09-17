@@ -8,11 +8,13 @@ class App extends Component {
             <Counter/>
         `);
 
-        this.content.style = `
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        `;
+        this.addStyle({
+            content: `
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            `
+        });
     }
 }
 
