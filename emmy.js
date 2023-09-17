@@ -8,21 +8,6 @@ const processGenerator = (generator) => {
     return processedGenerator;
 }
 
-Object.prototype.onChange = (node, callback) => {
-    // From https://medium.com/@e1016/javascript-reactivo-2-7ec886b4292a
-    let originalValue = this[node]
-    Object.defineProperty(this, node, {
-        get: () => {
-            return originalValue;
-        },
-        set: (newValue) => {
-            console.log(newValue, '·', originalValue);
-            callback(newValue, originalValue || undefined);
-            originalValue = newValue;
-        }
-    })
-}
-
 function parseCSS(cssString) {
     if (typeof cssString !== 'string') {
         return cssString;
