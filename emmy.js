@@ -46,19 +46,25 @@ class Component extends HTMLElement {
                 align-items: center;
             `
         }
+        this.callback = (_) => {};
     }
 
     connectedCallback() {
         this.content.innerHTML = this.contentGenerator(this);
         this.content.setAttribute('class', this.constructor.name.toLowerCase() + '-content');
+        this.callback(this);
+        console.log(this.callback);
     }
 
-    render(generator) {
+    render(generator, callback) {
         if (typeof generator !== 'function') {
             this.contentGenerator = () => processGenerator(generator);
         }
         else {
             this.contentGenerator = generator;
+        }
+        if (callback && typeof callback === 'function') {
+            this.callback = callback;
         }
     }
 

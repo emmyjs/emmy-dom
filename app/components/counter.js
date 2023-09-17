@@ -38,11 +38,13 @@ class Counter extends Component {
         this.render(`
             <h2 style="${this.Style.h2}">Counter</h2>
             <p id="counter">${this.getAttribute('counter')}</p>
-        `);
-
-        this.newButton('+', () => {
-            this.setAttribute('counter', parseInt(this.getAttribute('counter')) + 1);
-        }).applyStyle();
+            <button style="${this.Style.button}">+</button>
+        `, (_) => {
+            let button = _.content.querySelector('button')
+            button.addEventListener('click', () => {
+                _.setAttribute('counter', parseInt(_.getAttribute('counter')) + 1);
+            });
+        });
     }
 
     static get observedAttributes() {
