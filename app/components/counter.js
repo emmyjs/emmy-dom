@@ -1,13 +1,6 @@
 class Counter extends Component {
     constructor() {
         super();
-        this.setAttribute('counter', 0);
-        this.button = document.createElement('button');
-        this.button.innerHTML = '+';
-        this.button.addEventListener('click', () => {
-            this.setAttribute('counter', parseInt(this.getAttribute('counter')) + 1);
-        });
-
         this.addStyle({
             this: `
                 display: flex;
@@ -40,13 +33,16 @@ class Counter extends Component {
             `
         });
 
-        this.button.style = this.Style.button;
+        this.setAttribute('counter', 0);
 
         this.render(`
             <h2 style="${this.Style.h2}">Counter</h2>
             <p id="counter">${this.getAttribute('counter')}</p>
         `);
-        this.shadowRoot.appendChild(this.button);
+
+        this.newButton('+', () => {
+            this.setAttribute('counter', parseInt(this.getAttribute('counter')) + 1);
+        }).applyStyle();
     }
 
     static get observedAttributes() {
