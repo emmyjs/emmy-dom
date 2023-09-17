@@ -4,7 +4,7 @@ class App extends Component {
         this.render(`
             <Hello name="world!"></Hello>
             <p>Introducing Emmy.js</p>
-            <p>A simple JS framework</p>
+            <p>A tiny simple frontend framework</p>
             <Counter/>
         `);
 
