@@ -24,6 +24,9 @@ Object.prototype.onChange = (node, callback) => {
 }
 
 function parseCSS(cssString) {
+    if (typeof cssString !== 'string') {
+        return cssString;
+    }
     const styleObj = {};
     cssString.split(';').forEach((declaration) => {
         const [property, value] = declaration.split(':');
