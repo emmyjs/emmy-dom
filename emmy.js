@@ -90,6 +90,10 @@ class Component extends HTMLElement {
         }
         return button;
     }
+
+    $(selector) {
+        return this.content.querySelector(selector);
+    }
 }
 
 const launch = (component) => {

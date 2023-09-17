@@ -40,10 +40,9 @@ class Counter extends Component {
             <p id="counter">${this.getAttribute('counter')}</p>
             <button style="${this.Style.button}">+</button>
         `, (_) => {
-            let button = _.content.querySelector('button')
-            button.addEventListener('click', () => {
+            _.$('button').onclick = () => {
                 _.setAttribute('counter', parseInt(_.getAttribute('counter')) + 1);
-            });
+            };
         });
     }
 
@@ -53,7 +52,7 @@ class Counter extends Component {
 
     attributeChangedCallback(name, oldValue, newValue) {
         if (name === 'counter') {
-            this.content.querySelector('#counter').innerHTML = newValue;
+            this.$('#counter').innerHTML = newValue;
         }
     }
 }
