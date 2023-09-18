@@ -16,7 +16,7 @@ That's it! You can now start building your application.
 
 You will see the following on your browser:
 
-![image](https://github.com/eanorambuena/Emmy.js/assets/38821970/c7d42fbe-c969-4a4e-a45d-859a1e8c7580)
+![image](https://github.com/eanorambuena/Emmy.js/assets/38821970/62121175-f4a7-40a7-bbec-062cd7cc90f6)
 
 ## Release Notes
 ### 0.0.1a2
