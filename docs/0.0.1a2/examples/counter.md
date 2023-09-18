@@ -19,19 +19,6 @@ class Counter extends Component {
                 font-family: Arial, Helvetica, sans-serif;
                 font-size: 200%;
                 -webkit-text-stroke: 1px black;
-            `,
-            button: `
-                padding: auto;
-                border: 1px solid black;
-                background-color: #55c2da;
-                color: white;
-                font-size: 2rem;
-                border-radius: 50%;
-                width: 3rem;
-                height: 3rem;
-                cursor: pointer;
-                -webkit-text-stroke: 1px black;
-                text-align: center;
             `
         });
 

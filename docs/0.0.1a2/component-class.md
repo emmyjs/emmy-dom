@@ -61,30 +61,6 @@ this.addStyle({
     `
 });
 ```
-It also supports style objects.
-```javascript
-this.addStyle({
-    this: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center'
-    },
-    content: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center'
-    },
-    h2: {
-        color: '#55c2da',
-        borderRadius: '50%',
-        width: '3rem',
-        height: '3rem',
-        cursor: 'pointer',
-        WebkitTextStroke: '1px black',
-        textAlign: 'center'
-    }
-});
-```
 
 ### `button.applyStyle()`
 The `applyStyle` method is used to apply the styles that were added to the component using the `addStyle` method. It is used like this:
