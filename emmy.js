@@ -45,23 +45,21 @@ function createInlineStyle(cssString) {
 class Component extends HTMLElement {
     constructor() {
         super();
-        let shadow = this.attachShadow({ mode: 'open' });
+        this.attachShadow({ mode: 'open' });
         this.content = document.createElement('div');
-        shadow.appendChild(this.content);
         this.Style = {
-            this: `
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            `
+            this: {
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'
+            }
         }
         this.callback = (_) => {};
     }
 
     connectedCallback() {
+        this.shadowRoot.appendChild(this.content);
         this.content.innerHTML = processGenerator(this.contentGenerator(this));
-        console.log(processGenerator(this.contentGenerator(this)));
-        console.log(this.content.innerHTML);
         this.content.setAttribute('class', this.constructor.name.toLowerCase() + '-content');
         this.callback(this);
     }

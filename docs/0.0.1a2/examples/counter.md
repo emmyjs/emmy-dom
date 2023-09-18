@@ -40,10 +40,16 @@ class Counter extends Component {
         this.render(`
             <h2 style="${this.Style.h2}">Counter</h2>
             <p id="counter">${this.getAttribute('counter')}</p>
-            <button style="${this.Style.button}">+</button>
+            <H_layout>
+                <Button id='plusButton' value='+'></Button>
+                <Button id='minusButton' value='-'></Button>
+            </H_layout>
         `, (_) => {
-            _.$('button').onclick = () => {
+            _.$('#plusButton').onclick = () => {
                 _.setAttribute('counter', parseInt(_.getAttribute('counter')) + 1);
+            };
+            _.$('#minusButton').onclick = () => {
+                _.setAttribute('counter', parseInt(_.getAttribute('counter')) - 1);
             };
         });
     }
