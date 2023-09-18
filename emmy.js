@@ -1,10 +1,19 @@
 const processGenerator = (generator) => {
     let processedGenerator = generator.replace(/<\/?[^>]+>/g, match => {
         if (/^[A-Z]/.test(match.slice(1, -1))) {
-          return `<emmy-${match.slice(1, -1)}>`;
+            let element = match.slice(0, -1);
+            let name = element.split(' ')[0].slice(1);
+            let attributes = element.split(' ').slice(1);
+            return `<emmy-${name.toLowerCase()} ${attributes.join(' ')}>`;
+        }
+        else if (/^[A-Z]/.test(match.slice(2, -2))) {
+            let element = match.slice(0, -1);
+            let name = element.split(' ')[0].slice(2);
+            let attributes = element.split(' ').slice(1);
+            return `</emmy-${name.toLowerCase()} ${attributes.join(' ')}>`;
         }
         return match;
-      });
+    });
     return processedGenerator;
 }
 
@@ -50,15 +59,16 @@ class Component extends HTMLElement {
     }
 
     connectedCallback() {
-        this.content.innerHTML = this.contentGenerator(this);
+        this.content.innerHTML = processGenerator(this.contentGenerator(this));
+        console.log(processGenerator(this.contentGenerator(this)));
+        console.log(this.content.innerHTML);
         this.content.setAttribute('class', this.constructor.name.toLowerCase() + '-content');
         this.callback(this);
-        console.log(this.callback);
     }
 
     render(generator, callback) {
         if (typeof generator !== 'function') {
-            this.contentGenerator = () => processGenerator(generator);
+            this.contentGenerator = () => generator;
         }
         else {
             this.contentGenerator = generator;
@@ -81,6 +91,9 @@ class Component extends HTMLElement {
     }
 
     $(selector) {
+        if (/^[A-Z]/.test(selector)) {
+            selector = 'emmy-' + selector.toLowerCase();
+        }
         return this.content.querySelector(selector);
     }
 }
