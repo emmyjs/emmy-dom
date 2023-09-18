@@ -1,10 +1,19 @@
 const processGenerator = (generator) => {
     let processedGenerator = generator.replace(/<\/?[^>]+>/g, match => {
         if (/^[A-Z]/.test(match.slice(1, -1))) {
-          return `<emmy-${match.slice(1, -1)}>`;
+            let element = match.slice(0, -1);
+            let name = element.split(' ')[0].slice(1);
+            let attributes = element.split(' ').slice(1);
+            return `<emmy-${name.toLowerCase()} ${attributes.join(' ')}>`;
+        }
+        else if (/^[A-Z]/.test(match.slice(2, -2))) {
+            let element = match.slice(0, -1);
+            let name = element.split(' ')[0].slice(2);
+            let attributes = element.split(' ').slice(1);
+            return `</emmy-${name.toLowerCase()} ${attributes.join(' ')}>`;
         }
         return match;
-      });
+    });
     return processedGenerator;
 }
 
@@ -36,29 +45,34 @@ function createInlineStyle(cssString) {
 class Component extends HTMLElement {
     constructor() {
         super();
-        let shadow = this.attachShadow({ mode: 'open' });
+        this.attachShadow({ mode: 'open' });
         this.content = document.createElement('div');
-        shadow.appendChild(this.content);
         this.Style = {
-            this: `
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            `
+            this: {
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'
+            }
         }
+        this.callback = (_) => {};
     }
 
     connectedCallback() {
-        this.content.innerHTML = this.contentGenerator(this);
+        this.shadowRoot.appendChild(this.content);
+        this.content.innerHTML = processGenerator(this.contentGenerator(this));
         this.content.setAttribute('class', this.constructor.name.toLowerCase() + '-content');
+        this.callback(this);
     }
 
-    render(generator) {
+    render(generator, callback) {
         if (typeof generator !== 'function') {
-            this.contentGenerator = () => processGenerator(generator);
+            this.contentGenerator = () => generator;
         }
         else {
             this.contentGenerator = generator;
+        }
+        if (callback && typeof callback === 'function') {
+            this.callback = callback;
         }
     }
 
@@ -74,15 +88,11 @@ class Component extends HTMLElement {
         }
     }
 
-    newButton(text, callback) {
-        let button = document.createElement('button');
-        button.innerHTML = text;
-        button.addEventListener('click', callback);
-        this.shadowRoot.appendChild(button);
-        button.applyStyle = () => {
-            button.style = this.Style.button;
+    $(selector) {
+        if (/^[A-Z]/.test(selector)) {
+            selector = 'emmy-' + selector.toLowerCase();
         }
-        return button;
+        return this.content.querySelector(selector);
     }
 }
 

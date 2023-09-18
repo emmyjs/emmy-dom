@@ -5,7 +5,7 @@ class App extends Component {
             <Hello name="world!"></Hello>
             <p>Introducing Emmy.js</p>
             <p>A tiny simple frontend framework</p>
-            <Counter/>
+            <Counter></Counter>
         `);
 
         this.addStyle({

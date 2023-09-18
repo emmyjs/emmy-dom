@@ -16,9 +16,20 @@ That's it! You can now start building your application.
 
 You will see the following on your browser:
 
-![image](https://github.com/eanorambuena/Emmy.js/assets/38821970/897ac5bb-d96e-4a59-9020-ada9dd9eb4ce)
+![image](https://github.com/eanorambuena/Emmy.js/assets/38821970/62121175-f4a7-40a7-bbec-062cd7cc90f6)
 
 ## Release Notes
+### 0.0.1a2
+It includes the following features:
+1. [Component Class](docs/0.0.1a2/component-class.md) 
+2. [Launch Function](docs/0.0.1a2/launch-function.md)
+3. **BREAKING CHANGE**: The `Component.newButton` method has been removed. Use the `callback` argument of the `Component.render` method instead.
+4. **BREAKING CHANGE**: The style objects are no longer supported in `Component.addStyle` method. Use style strings instead.
+5. **FIX**: The shadow DOM is now correctly updated when the `Component.render` method is called.
+
+#### Examples
+1. [Counter](docs/0.0.1a2/examples/counter.md)
+
 ### 0.0.1a1
 First pre-release version of Emmy.js. It includes the following features:
 1. [Component Class](docs/0.0.1a1/component-class.md) 
