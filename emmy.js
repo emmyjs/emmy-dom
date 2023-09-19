@@ -46,15 +46,9 @@ class Component extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.content = document.createElement('div');
-        this.Style = {
-            this: {
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center'
-            }
-        }
         this.callback = (_) => {};
+        this.content = document.createElement('div');
+        this.Style = {};
     }
 
     connectedCallback() {
