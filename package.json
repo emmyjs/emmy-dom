@@ -1,0 +1,27 @@
+{
+  "name": "emmy-dom",
+  "version": "0.0.1",
+  "description": "A tiny simple frontend framework for building web applications",
+  "main": "emmy.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eanorambuena/Emmy.js.git"
+  },
+  "keywords": [
+    "frontend",
+    "components",
+    "web-components"
+  ],
+  "author": "Emmanuel Norambuena",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eanorambuena/Emmy.js/issues"
+  },
+  "homepage": "https://github.com/eanorambuena/Emmy.js#readme"
+}
