@@ -5,6 +5,7 @@ It includes the following features:
 2. [LightComponent Class](docs/0.0.2a1/light-component-class.md)
 3. [Launch Function](docs/0.0.2a1/launch-function.md)
 4. **BREAKING CHANGE**: The `emmy.js` file has been transformed into a module. Use the `import` statement to import the `Component` and `LightComponent` classes and the `launch` function.
+5. **BREAKING CHANGE**: The `Component.content` property has been removed. Use the `Component.shadowRoot` property instead.
 
 ## 0.0.2a2
 It includes the following features:
