@@ -1,3 +1,5 @@
+import { Component, launch } from '../../emmy.js';
+
 class Hello extends Component {
     constructor() {
         super();

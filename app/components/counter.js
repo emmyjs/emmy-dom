@@ -1,3 +1,5 @@
+import { Component, launch } from '../../emmy.js';
+
 class Counter extends Component {
     constructor() {
         super();

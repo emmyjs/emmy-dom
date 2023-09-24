@@ -1,7 +1,8 @@
+import { Component, launch } from '../emmy.js';
+
 class App extends Component {
     constructor() {
         super();
-
         this.addStyle({
             content: `
                 display: flex;

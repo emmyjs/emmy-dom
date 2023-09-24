@@ -42,6 +42,7 @@ function createInlineStyle(cssString) {
     return inlineStyle.trim();
 }
 
+
 class Component extends HTMLElement {
     constructor() {
         super();
@@ -54,7 +55,6 @@ class Component extends HTMLElement {
     connectedCallback() {
         this.shadowRoot.appendChild(this.content);
         this.content.innerHTML = processGenerator(this.contentGenerator(this));
-        this.content.setAttribute('class', this.constructor.name.toLowerCase() + '-content');
         this.callback(this);
     }
 
@@ -88,8 +88,60 @@ class Component extends HTMLElement {
         }
         return this.content.querySelector(selector);
     }
+   
+    behave(element) {
+        this.setAttribute('is', element);
+    }
+}
+
+
+class LightComponent extends HTMLElement {
+    constructor() {
+        super();
+        this.callback = (_) => {};
+        this.Style = {};
+    }
+
+    connectedCallback() {
+        this.innerHTML = processGenerator(this.contentGenerator(this));
+        this.callback(this);
+    }
+
+    render(generator, callback) {
+        if (typeof generator !== 'function') {
+            this.contentGenerator = () => generator;
+        }
+        else {
+            this.contentGenerator = generator;
+        }
+        if (callback && typeof callback === 'function') {
+            this.callback = callback;
+        }
+    }
+
+    addStyle(style) {
+        for (const [element, elementStyle] of Object.entries(style)) {
+            this.Style[element] = createInlineStyle(elementStyle);
+            if (element == 'this') {
+                this.setAttribute('style', this.Style[element]);
+            }
+        }
+    }
+
+    $(selector) {
+        if (/^[A-Z]/.test(selector)) {
+            selector = 'emmy-' + selector.toLowerCase();
+        }
+        return this.querySelector(selector);
+    }
+
+    behave(element) {
+        this.setAttribute('is', element);
+    }
 }
 
 const launch = (component) => {
     customElements.define('emmy-' + component.name.toLowerCase(), component)
 }
+
+export { Component, LightComponent, launch };
