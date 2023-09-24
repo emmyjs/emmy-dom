@@ -1,6 +1,15 @@
-# Emmy.js
-
-A tiny simple frontend framework for building web applications.
+<section align="center" style="display: flex; flex-direction: column">
+  <h1>Emmy.js</h1>
+  <div>
+    <img alt="npm" src="https://img.shields.io/npm/v/emmy-dom"/>
+    <img alt="npm" src="https://img.shields.io/npm/dt/emmy-dom"/>
+    <img alt="NPM" src="https://img.shields.io/npm/l/emmy-dom"/>
+    <img alt="GitHub last commit (by committer)" src="https://img.shields.io/github/last-commit/eanorambuena/Emmy.js"/>
+    <img alt="npm package minimized gzipped size (select exports)" src="https://img.shields.io/bundlejs/size/emmy-dom"/>
+  </div>
+  <i>A tiny simple frontend framework for building web applications.</i>
+</section>
+<hr />
 
 ## Quick Start
 ### Using npm
@@ -28,7 +37,9 @@ That's it! You can now start building your application.
 
 You will see the following on your browser:
 
-![Alt text](docs/image.png)
+<section align="center" style="display: flex; flex-direction: column">
+  <img src="docs/image.png" />
+</section>
 
 ## Release 0.0.2
 It includes the following features:
