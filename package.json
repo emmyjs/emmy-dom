@@ -1,6 +1,6 @@
 {
   "name": "emmy-dom",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A tiny simple frontend framework for building web applications",
   "main": "emmy.js",
   "directories": {
