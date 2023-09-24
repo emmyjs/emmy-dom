@@ -12,7 +12,7 @@ npm install emmy-dom
 ```
 
 Then, integrate it into your project. For your specific framework, see the following guides:
-1. [Ruby on Rails](docs/0.0.1/guides/ruby-on-rails.md)
+1. [Ruby on Rails](docs/0.0.2/guides/ruby-on-rails.md)
 
 ### Using git
 
@@ -30,9 +30,11 @@ You will see the following on your browser:
 
 ![Alt text](docs/image.png)
 
-## Release 0.0.1
+## Release 0.0.2
 It includes the following features:
-1. [Component Class](docs/0.0.1a2/component-class.md) 
-2. [Launch Function](docs/0.0.1a2/launch-function.md)
+1. [Component Class](docs/0.0.2a1/component-class.md)
+2. [LightComponent Class](docs/0.0.2a1/light-component-class.md)
+3. [Launch Function](docs/0.0.2a1/launch-function.md)
+4. **BREAKING CHANGE**: The `emmy.js` file has been transformed into a module. Use the `import` statement to import the `Component` and `LightComponent` classes and the `launch` function.
 
 [Release Notes](docs/releases.md)

@@ -1,6 +1,7 @@
 # Example: Counter
-## Using newButton method
 ```javascript
+import { Component, launch } from 'emmy-dom';
+
 class Counter extends Component {
     constructor() {
         super();
@@ -20,19 +21,6 @@ class Counter extends Component {
                 font-family: Arial, Helvetica, sans-serif;
                 font-size: 200%;
                 -webkit-text-stroke: 1px black;
-            `,
-            button: `
-                padding: auto;
-                border: 1px solid black;
-                background-color: #55c2da;
-                color: white;
-                font-size: 2rem;
-                border-radius: 50%;
-                width: 3rem;
-                height: 3rem;
-                cursor: pointer;
-                -webkit-text-stroke: 1px black;
-                text-align: center;
             `
         });
 
@@ -41,11 +29,18 @@ class Counter extends Component {
         this.render(`
             <h2 style="${this.Style.h2}">Counter</h2>
             <p id="counter">${this.getAttribute('counter')}</p>
-        `);
-
-        this.newButton('+', () => {
-            this.setAttribute('counter', parseInt(this.getAttribute('counter')) + 1);
-        }).applyStyle();
+            <H_layout>
+                <Button id='plusButton' value='+'></Button>
+                <Button id='minusButton' value='-'></Button>
+            </H_layout>
+        `, (_) => {
+            _.$('#plusButton').onclick = () => {
+                _.setAttribute('counter', parseInt(_.getAttribute('counter')) + 1);
+            };
+            _.$('#minusButton').onclick = () => {
+                _.setAttribute('counter', parseInt(_.getAttribute('counter')) - 1);
+            };
+        });
     }
 
     static get observedAttributes() {
@@ -54,77 +49,10 @@ class Counter extends Component {
 
     attributeChangedCallback(name, oldValue, newValue) {
         if (name === 'counter') {
-            this.content.querySelector('#counter').innerHTML = newValue;
+            this.$('#counter').innerHTML = newValue;
         }
     }
 }
-
-launch(Counter);
-```
-
-## Using independent elements
-```javascript
-class Counter extends Component {
-    constructor() {
-        super();
-        this.setAttribute('counter', 0);
-        this.button = document.createElement('button');
-        this.button.innerHTML = '+';
-        this.button.addEventListener('click', () => {
-            this.setAttribute('counter', parseInt(this.getAttribute('counter')) + 1);
-        });
-
-        this.addStyle({
-            this: `
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            `,
-            content: `
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            `,
-            h2: `
-                color: #55c2da;
-                font-family: Arial, Helvetica, sans-serif;
-                font-size: 200%;
-                -webkit-text-stroke: 1px black;
-            `,
-            button: `
-                padding: auto;
-                border: 1px solid black;
-                background-color: #55c2da;
-                color: white;
-                font-size: 2rem;
-                border-radius: 50%;
-                width: 3rem;
-                height: 3rem;
-                cursor: pointer;
-                -webkit-text-stroke: 1px black;
-                text-align: center;
-            `
-        });
-
-        this.button.style = this.Style.button;
-
-        this.render(`
-            <h2 style="${this.Style.h2}">Counter</h2>
-            <p id="counter">${this.getAttribute('counter')}</p>
-        `);
-        this.shadowRoot.appendChild(this.button);
-    }
-
-    static get observedAttributes() {
-        return ['counter'];
-    }
-
-    attributeChangedCallback(name, oldValue, newValue) {
-        if (name === 'counter') {
-            this.content.querySelector('#counter').innerHTML = newValue;
-        }
-    }
-}.
 
 launch(Counter);
 ```
