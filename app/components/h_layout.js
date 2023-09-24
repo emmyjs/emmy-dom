@@ -9,12 +9,6 @@ class H_layout extends Component {
                 display: flex;
                 flex-direction: row;
                 align-items: center;
-            `,
-            content: `
-                width: 100%;
-                display: flex;
-                flex-direction: row;
-                align-items: center;
                 justify-content: space-evenly;
             `
         });

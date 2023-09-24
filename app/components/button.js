@@ -9,11 +9,6 @@ class Button extends Component {
                 flex-direction: column;
                 align-items: center;
             `,
-            content: `
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            `,
             button: `
                 padding: auto;
                 border: 1px solid black;

@@ -9,11 +9,6 @@ class Github extends Component {
                 flex-direction: column;
                 align-items: center;
             `,
-            content: `
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-            `,
             a: `
                 display: flex;
                 width: 100%;

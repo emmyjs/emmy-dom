@@ -9,11 +9,6 @@ class Counter extends Component {
                 flex-direction: column;
                 align-items: center;
             `,
-            content: `
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            `,
             h2: `
                 color: #55c2da;
                 font-family: Arial, Helvetica, sans-serif;

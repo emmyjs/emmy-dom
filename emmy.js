@@ -48,13 +48,11 @@ class Component extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' });
         this.callback = (_) => {};
-        this.content = document.createElement('div');
         this.Style = {};
     }
 
     connectedCallback() {
-        this.shadowRoot.appendChild(this.content);
-        this.content.innerHTML = processGenerator(this.contentGenerator(this));
+        this.shadowRoot.innerHTML = processGenerator(this.contentGenerator(this));
         this.callback(this);
     }
 
@@ -73,10 +71,7 @@ class Component extends HTMLElement {
     addStyle(style) {
         for (const [element, elementStyle] of Object.entries(style)) {
             this.Style[element] = createInlineStyle(elementStyle);
-            if (element == 'content') {
-                this.content.setAttribute('style', this.Style[element]);
-            }
-            else if (element == 'this') {
+            if (element == 'this') {
                 this.setAttribute('style', this.Style[element]);
             }
         }
@@ -86,7 +81,7 @@ class Component extends HTMLElement {
         if (/^[A-Z]/.test(selector)) {
             selector = 'emmy-' + selector.toLowerCase();
         }
-        return this.content.querySelector(selector);
+        return this.shadowRoot.querySelector(selector);
     }
    
     behave(element) {

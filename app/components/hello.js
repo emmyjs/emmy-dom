@@ -4,7 +4,7 @@ class Hello extends Component {
     constructor() {
         super();
         this.addStyle({
-            content: `
+            this: `
                 display: flex;
                 flex-direction: column;
                 align-items: center;
