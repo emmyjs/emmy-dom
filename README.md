@@ -32,7 +32,6 @@ You will see the following on your browser:
 
 ## Release 0.0.2
 It includes the following features:
-It includes the following features:
 1. [Component Class](docs/0.0.2a1/component-class.md)
 2. [LightComponent Class](docs/0.0.2a1/light-component-class.md)
 3. [Launch Function](docs/0.0.2a1/launch-function.md)
