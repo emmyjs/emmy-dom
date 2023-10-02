@@ -11,20 +11,56 @@
 </section>
 <hr />
 
-## Quick Start
-### Using npm
+## Frameworks Guides
+For your specific framework, see the following guides:
+1. [Ruby on Rails](docs/0.0.2/guides/ruby-on-rails.md)
 
+## Quick Start
+### Using CDN
+Just add the following script tag to your HTML file:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/emmy-dom@latest" type="module"></script>
+```
+
+Then, use the `emmy-dom` package in your JavaScript files:
+
+```javascript
+import { LightComponent, launch } from "emmy-dom";
+
+class MyComponent extends LightComponent {
+    constructor() {
+        super();
+        render(`<div>Hello World!</div>`);
+    }
+}
+
+launch(MyComponent);
+```
+
+### Using npm
 First install the package:
 
 ```bash
 npm install emmy-dom
 ```
 
-Then, integrate it into your project. For your specific framework, see the following guides:
-1. [Ruby on Rails](docs/0.0.2/guides/ruby-on-rails.md)
+Then, use the `emmy-dom` package in your JavaScript files:
+
+```javascript
+import { LightComponent, launch } from "emmy-dom";
+
+class MyComponent extends LightComponent {
+    constructor() {
+        super();
+        render(`<div>Hello World!</div>`);
+    }
+}
+
+launch(MyComponent);
+```
 
 ### Using git
-
 First clone the repository:
 
 ```bash
