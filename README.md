@@ -70,29 +70,12 @@ class MyComponent extends LightComponent {
 launch(MyComponent);
 ```
 
-### Using git
-First clone the repository:
-
-```bash
-git clone git@github.com:eanorambuena/Emmy.js.git
-```
-
-Then, launch a development server with your favorite tool. For example, with [http-server](https://www.npmjs.com/package/http-server):
-
-That's it! You can now start building your application.
-
-You will see the following on your browser:
-
-<section align="center" style="display: flex; flex-direction: column">
-  <img src="docs/image.png" />
-</section>
-
-## Release 0.0.2
+## Release 0.0.3
 It includes the following features:
 1. [Component Class](docs/0.0.2a1/component-class.md)
 2. [LightComponent Class](docs/0.0.2a1/light-component-class.md)
 3. [Launch Function](docs/0.0.2a1/launch-function.md)
-4. **BREAKING CHANGE**: The `emmy.js` file has been transformed into a module. Use the `import` statement to import the `Component` and `LightComponent` classes and the `launch` function.
-5. **BREAKING CHANGE**: The `Component.content` property has been removed. Use the `Component.shadowRoot` property instead.
+4. [Emmy Router](docs/0.0.3a1/emmy-router.md)
+5. **BREAKING CHANGE**: Remove `git clone` support. Now you can use `npx create-emmy` to create a new emmy.js project.
 
 [Release Notes](docs/releases.md)
