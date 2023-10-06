@@ -135,8 +135,56 @@ class LightComponent extends HTMLElement {
     }
 }
 
+
+class Route extends LightComponent {
+    static routes = {};
+    constructor() {
+        super();
+
+        this.render(``, (THIS) => {
+            const componentName = "emmy-" + THIS.getAttribute('to').toLowerCase();
+            const path = (THIS.getAttribute('href') === '/') ? '/root' : THIS.getAttribute('href');
+            Route.routes[path] = `<${componentName}></${componentName}>`;
+        });
+    }
+}
+
+
+class Router extends LightComponent {
+    constructor() {
+        super();
+        this.behave('div');
+        this.setAttribute('class', 'flex flex-col justify-center items-center space-y-3');
+
+        this.routes = Route.routes;
+
+        this.handleLocation = () => {
+            const path = window.location.pathname;
+            const html = (path === '/' ? this.routes['/root'] : this.routes[path])
+                || this.routes['/404'] || '<h1>404</h1>';
+            if (this.innerHTML !== html) this.innerHTML = html;
+        }
+
+        window.route = (event) => {
+        event.preventDefault();
+        if (window.location.pathname === event.target.href) return;
+            window.history.pushState({}, '', event.target.href);
+            this.handleLocation();
+        }
+
+        window.onpopstate = this.handleLocation;
+
+        this.render(/*html*/``, () => {
+            this.handleLocation();
+        });
+    }
+}
+
 const launch = (component) => {
     customElements.define('emmy-' + component.name.toLowerCase(), component)
 }
 
-export { Component, LightComponent, launch };
+launch(Route);
+launch(Router);
+
+export { Component, LightComponent, Route, Router, launch };
