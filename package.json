@@ -1,7 +1,7 @@
 {
   "name": "emmy-dom",
-  "version": "0.0.3",
-  "description": "A tiny simple frontend framework for building web applications",
+  "version": "0.1.0",
+  "description": "A tiny simple front-end framework for building web applications",
   "main": "emmy.js",
   "directories": {
     "doc": "docs"
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eanorambuena/emmy-dom.git"
+    "url": "git+https://github.com/emmyjs/emmy-dom.git"
   },
   "keywords": [
     "front-end",
@@ -21,7 +21,7 @@
   "author": "Emmanuel Norambuena",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/eanorambuena/emmy-dom/issues"
+    "url": "https://github.com/emmyjs/emmy-dom/issues"
   },
   "homepage": "https://emmyjs.github.io/"
 }
