@@ -4,7 +4,7 @@
     <img alt="npm" src="https://img.shields.io/npm/v/emmy-dom"/>
     <img alt="npm" src="https://img.shields.io/npm/dt/emmy-dom"/>
     <img alt="NPM" src="https://img.shields.io/npm/l/emmy-dom"/>
-    <img alt="GitHub last commit (by committer)" src="https://img.shields.io/github/last-commit/emmyjs/Emmy.js"/>
+    <img alt="GitHub last commit (by committer)" src="https://img.shields.io/github/last-commit/emmyjs/emmy-dom"/>
     <img alt="npm package minimized gzipped size (select exports)" src="https://img.shields.io/bundlejs/size/emmy-dom"/>
   </div>
   <i>A tiny simple frontend framework for building web applications.</i>

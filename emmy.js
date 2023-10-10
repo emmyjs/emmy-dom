@@ -1,13 +1,12 @@
 const processGenerator = (generator) => {
     let processedGenerator = generator.replace(/<\/?[^>]+>/g, match => {
+        let element = match.slice(0, -1);
         if (/^[A-Z]/.test(match.slice(1, -1))) {
-            let element = match.slice(0, -1);
             let name = element.split(' ')[0].slice(1);
             let attributes = element.split(' ').slice(1);
             return `<emmy-${name.toLowerCase()} ${attributes.join(' ')}>`;
         }
         else if (/^[A-Z]/.test(match.slice(2, -2))) {
-            let element = match.slice(0, -1);
             let name = element.split(' ')[0].slice(2);
             let attributes = element.split(' ').slice(1);
             return `</emmy-${name.toLowerCase()} ${attributes.join(' ')}>`;
@@ -17,7 +16,7 @@ const processGenerator = (generator) => {
     return processedGenerator;
 }
 
-function parseCSS(cssString) {
+const parseCSS = (cssString) => {
     if (typeof cssString !== 'string') {
         return cssString;
     }
@@ -31,7 +30,7 @@ function parseCSS(cssString) {
     return styleObj;
 }
 
-function createInlineStyle(cssString) {
+const createInlineStyle = (cssString) => {
     const styleObj = parseCSS(cssString);
     let inlineStyle = '';
     for (const property in styleObj) {
@@ -42,8 +41,47 @@ function createInlineStyle(cssString) {
     return inlineStyle.trim();
 }
 
+const vanillaElement = (element) => {
+    if (/^[A-Z]/.test(element)) {
+        element = 'emmy-' + element.toLowerCase();
+    }
+    return element;
+}
 
-class Component extends HTMLElement {
+
+class EmmyComponent extends HTMLElement {
+    addStyle(style) {
+        for (const [element, elementStyle] of Object.entries(style)) {
+            this.Style[element] = createInlineStyle(elementStyle);
+            if (element == 'this') {
+                this.setAttribute('style', this.Style[element]);
+            }
+        }
+    }
+
+    behave(element) {
+        this.setAttribute('is', element);
+    }
+
+    connectedCallback() {
+        throw new Error('EmmyComponent must be extended');
+    }
+
+    render(generator, callback) {
+        if (typeof generator !== 'function') {
+            this.contentGenerator = () => generator;
+        }
+        else {
+            this.contentGenerator = generator;
+        }
+        if (callback && typeof callback === 'function') {
+            this.callback = callback;
+        }
+    }
+}
+
+
+class Component extends EmmyComponent {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
@@ -56,41 +94,13 @@ class Component extends HTMLElement {
         this.callback(this);
     }
 
-    render(generator, callback) {
-        if (typeof generator !== 'function') {
-            this.contentGenerator = () => generator;
-        }
-        else {
-            this.contentGenerator = generator;
-        }
-        if (callback && typeof callback === 'function') {
-            this.callback = callback;
-        }
-    }
-
-    addStyle(style) {
-        for (const [element, elementStyle] of Object.entries(style)) {
-            this.Style[element] = createInlineStyle(elementStyle);
-            if (element == 'this') {
-                this.setAttribute('style', this.Style[element]);
-            }
-        }
-    }
-
     $(selector) {
-        if (/^[A-Z]/.test(selector)) {
-            selector = 'emmy-' + selector.toLowerCase();
-        }
-        return this.shadowRoot.querySelector(selector);
-    }
-   
-    behave(element) {
-        this.setAttribute('is', element);
+        return this.shadowRoot.querySelector(vanillaElement(selector));
     }
 }
 
 
-class LightComponent extends HTMLElement {
+class LightComponent extends EmmyComponent {
     constructor() {
         super();
         this.callback = (_) => {};
@@ -102,36 +112,8 @@ class LightComponent extends HTMLElement {
         this.callback(this);
     }
 
-    render(generator, callback) {
-        if (typeof generator !== 'function') {
-            this.contentGenerator = () => generator;
-        }
-        else {
-            this.contentGenerator = generator;
-        }
-        if (callback && typeof callback === 'function') {
-            this.callback = callback;
-        }
-    }
-
-    addStyle(style) {
-        for (const [element, elementStyle] of Object.entries(style)) {
-            this.Style[element] = createInlineStyle(elementStyle);
-            if (element == 'this') {
-                this.setAttribute('style', this.Style[element]);
-            }
-        }
-    }
-
     $(selector) {
-        if (/^[A-Z]/.test(selector)) {
-            selector = 'emmy-' + selector.toLowerCase();
-        }
-        return this.querySelector(selector);
-    }
-
-    behave(element) {
-        this.setAttribute('is', element);
+        return this.querySelector(vanillaElement(selector));
     }
 }
 
@@ -154,7 +136,7 @@ class Router extends LightComponent {
     constructor() {
         super();
         this.behave('div');
-        this.setAttribute('class', 'flex flex-col justify-center items-center space-y-3');
+        this.setAttribute('class', 'flex flex-col justify-center items-center space-y-3 text-center w-full h-full');
 
         this.routes = Route.routes;
 
@@ -174,17 +156,18 @@ class Router extends LightComponent {
 
         window.onpopstate = this.handleLocation;
 
-        this.render(/*html*/``, () => {
+        this.render(``, () => {
             this.handleLocation();
         });
     }
 }
 
-const launch = (component) => {
-    customElements.define('emmy-' + component.name.toLowerCase(), component)
+const launch = (component, name) => {
+    if (name === undefined) name = component.name;
+    customElements.define('emmy-' + name.toLowerCase(), component);
 }
 
-launch(Route);
-launch(Router);
+launch(Route, 'Route');
+launch(Router, 'Router');
 
 export { Component, LightComponent, Route, Router, launch };
