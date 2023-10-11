@@ -167,7 +167,61 @@ const launch = (component, name) => {
     customElements.define('emmy-' + name.toLowerCase(), component);
 }
 
+const load = (func, name) => {
+    class X extends LightComponent {
+        constructor() {
+            super();
+            this.setAttribute('state', JSON.stringify({rerenderCount: 0}));
+            const renderFunction = func(this);
+            this.render(renderFunction);
+        }
+        static get observedAttributes() {
+            return ['state'];
+        }
+        attributeChangedCallback(name, oldValue, newValue) {
+            if (name === 'state') {
+                this.connectedCallback();
+            }
+        }
+        patchState(newState) {
+            const currentState = this.state();
+            const updatedState = Object.assign(currentState, newState);
+            this.setState(updatedState);
+        }
+        rerender() {
+            this.patchState({ rerenderCount: this.state().rerenderCount + 1 });
+        }
+        state() {
+            return JSON.parse(this.getAttribute('state'));
+        }
+        setState(newState) {
+            this.setAttribute('state', JSON.stringify(newState));
+        }
+        $(selector) {
+            let element = super.$(selector);
+            element.$EventListener = (event, callback) => {
+                const newCallback = (event) => {
+                    callback(event);
+                    this.rerender();
+                }
+                element.addEventListener(event, newCallback);
+            }
+            return element;
+        }
+    }
+    launch(X, name);
+}
+
+const useState = (initialValue) => {
+    let value = initialValue;
+    const state = () => value;
+    const setState = (newValue) => {
+        value = newValue;
+    }
+    return [state, setState];
+}
+
 launch(Route, 'Route');
 launch(Router, 'Router');
 
-export { Component, LightComponent, Route, Router, launch };
+export { Component, LightComponent, Route, Router, launch, load, useState };
