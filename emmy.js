@@ -276,6 +276,10 @@ function load (func, name)  {
         return createPageComponent(func, name);
     }
 
+    if (typeof func !== 'function') {
+        return launch(func, name);
+    }
+
     class X extends FunctionalComponent {
         constructor() {
             super(func);
