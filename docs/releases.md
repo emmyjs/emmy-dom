@@ -1,5 +1,16 @@
 # Release Notes
 
+## 0.0.3
+It includes the following features:
+1. [Class Components](docs/0.0.3/docs.md)
+2. [Light Components](docs/0.0.3/docs.md)
+3. [Functional Components](docs/0.0.3/docs.md)
+4. [Page Components](docs/0.0.3/docs.md)
+5. [Emmy Hooks](docs/0.0.3/docs.md)
+6. [Load Function](docs/0.0.3/docs.md)
+7. [Emmy Router](docs/0.0.3/docs.md)
+8. **BREAKING CHANGE**: Remove `git clone` support. Now you can use `npx create-emmy` to create a new emmy.js project.
+
 ## Release 0.0.3a1
 It includes the following features:
 1. [Component Class](docs/0.0.2a1/component-class.md)

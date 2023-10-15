@@ -52,7 +52,7 @@ class EmmyComponent extends HTMLElement {
     constructor() {
         super();
         this.contentGenerator = () => '';
-        this.callback = (_) => {};
+        this.callback = (component) => {};
         this.Style = {};
     }
 
@@ -131,37 +131,37 @@ function getValues (dependencies) {
 function useEffect (callback, dependencies) {
     const oldCallback = this.effectCallback;
     if (!dependencies || dependencies.length === 0) {
-        this.effectCallback = (_) => {
-            oldCallback(_);
-            callback.call(_, _);
+        this.effectCallback = (component) => {
+            oldCallback(component);
+            callback.call(component, component);
         }
         return;
     }
     let oldDependencies = getValues(dependencies);
-    this.effectCallback = (_) => {
-        oldCallback(_);
+    this.effectCallback = (component) => {
+        oldCallback(component);
         const newDependencies = getValues(dependencies);
         if (JSON.stringify(oldDependencies) !== JSON.stringify(newDependencies)) {
             oldDependencies = newDependencies;
-            callback.call(_, _);
+            callback.call(component, component);
         }
     }
+}
+
+function bindHooks (component) {
+    component.useState = useState.bind(component);
+    component.useEffect = useEffect.bind(component);
 }
 
 
 class FunctionalComponent extends LightComponent {
     constructor(func) {
         super();
-        this.effectCallback = (_) => {};
-        this.bindHooks();
+        this.effectCallback = (component) => {};
+        bindHooks(this);
         this.setState({rerenderCount: 0})
         const renderFunctionOrString = func.call(this, this);
         this.render(renderFunctionOrString);
-    }
-
-    bindHooks() {
-        this.useState = useState.bind(this);
-        this.useEffect = useEffect.bind(this);
     }
 
     connectedCallback() {
@@ -290,5 +290,6 @@ launch(Router, 'Router');
 export {
     Component, LightComponent, FunctionalComponent,
     Route, Router,
+    useState, useEffect,
     launch, load 
 };

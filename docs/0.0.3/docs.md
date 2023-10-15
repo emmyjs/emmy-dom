@@ -1,0 +1,130 @@
+# emmy-dom
+Emmy.js is a JavaScript library for building user interfaces. It is inspired by React.js and Astro
+
+## Functional Components
+You can use functional components to create components without classes. Functional components are just functions that return a string of HTML code or a function that returns a string of HTML code. The following example shows how to create a functional component:
+```javascript
+import { load } from "emmy-dom";
+
+function HelloWorld() {
+    return `<h1>Hello World!</h1>`;
+}
+
+load(HelloWorld, 'HelloWorld');
+```
+
+## Page Components
+You can use page components to create components that are rendered only once, from a html file. The following example shows how to create a page component:
+```html
+<!-- home.html -->
+<h1>Hello World!</h1>
+```
+
+```javascript
+import { load } from "emmy-dom";
+
+load('/home.html', 'Home');
+```
+
+## Class Components
+You can use class components to create components with classes. The following example shows how to create a class component:
+
+### Light Components
+```javascript
+import { LightComponent, launch } from "emmy-dom";
+
+class HelloWorld extends LightComponent {
+    constructor() {
+        super();
+        this.render(`<h1>Hello World!</h1>`);
+    }
+}
+
+launch(HelloWorld, 'HelloWorld');
+```
+
+### Shadow Components
+```javascript
+import { Component, launch } from "emmy-dom";
+
+class HelloWorld extends Component {
+    constructor() {
+        super();
+        this.render(`<h1>Hello World!</h1>`);
+    }
+}
+
+launch(HelloWorld, 'HelloWorld');
+```
+
+## Emmy Hooks
+Emmy Hooks are inspired by React Hooks. You can use them to add state to your functional components without manually managing the `state` property. 
+
+### useState
+```javascript
+import { load } from "emmy-dom";
+
+function Counter() {
+    const [count, setCount] = this.useState(0);
+
+    this.callback = () => {
+        this.querySelector('#increment').addEventListener('click', () => {
+            setCount(count() + 1);
+        });
+    }
+
+    return () => `<div>
+        <h1>Count: ${count()}</h1>
+        <button id="increment">+</button>
+    </div>`;
+}
+
+load(Counter, 'Counter');
+```
+
+### useEffect
+```javascript
+import { load } from "emmy-dom";
+
+function Counter() {
+    const [count, setCount] = useState(0);
+
+    this.callback = () => {
+        this.querySelector('#increment').addEventListener('click', () => {
+            setCount(count() + 1);
+        });
+    }
+
+    this.useEffect(() => {
+        console.log('Count changed to', count());
+    }, [count]);
+
+    return () => `<div>
+        <h1>Count: ${count()}</h1>
+        <button id="increment">+</button>
+    </div>`;
+}
+
+load(Counter, 'Counter');
+```
+
+## Emmy Router
+Emmy Router is inspired by React Router. You can use it to create a single page application. The following example shows how to create a single page application with Emmy Router:
+```javascript
+import { load, Router, Route } from "emmy-dom";
+
+load('/home.html', 'Home');
+load('/about.html', 'About');
+
+function App() {
+    return () => `
+        <div>
+            <Route path="/" component="Home" />
+            <Route path="/about" component="About" />
+            <Router></Router>
+        </div>
+    `;
+}
+
+load(App, 'App');
+```

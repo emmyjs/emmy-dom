@@ -72,10 +72,12 @@ launch(MyComponent);
 
 ## Release 0.0.3
 It includes the following features:
-1. [Component Class](docs/0.0.2a1/component-class.md)
-2. [LightComponent Class](docs/0.0.2a1/light-component-class.md)
-3. [Launch Function](docs/0.0.2a1/launch-function.md)
-4. [Emmy Router](docs/0.0.3a1/emmy-router.md)
-5. **BREAKING CHANGE**: Remove `git clone` support. Now you can use `npx create-emmy` to create a new emmy.js project.
+1. [Class Components](docs/0.0.3/docs.md)
+2. [Functional Components](docs/0.0.3/docs.md)
+3. [Page Components](docs/0.0.3/docs.md)
+4. [Emmy Hooks](docs/0.0.3/docs.md)
+5. [Load Function](docs/0.0.3/docs.md)
+6. [Emmy Router](docs/0.0.3/docs.md)
+7. **BREAKING CHANGE**: Remove `git clone` support. Now you can use `npx create-emmy` to create a new emmy.js project.
 
 [Release Notes](docs/releases.md)
