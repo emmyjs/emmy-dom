@@ -154,12 +154,12 @@ class OldCounter extends LightComponent {
         </button>
       </div>
 
-    `, (THIS) => {
-      THIS.$('#plusButton').onclick = () => {
-        THIS.setAttribute('counter', parseInt(THIS.getAttribute('counter')) + 1);
+    `, (component) => {
+      component.querySelector('#plusButton').onclick = () => {
+        componentsetAttribute('counter', parseInt(component.getAttribute('counter')) + 1);
       };
-      THIS.$('#wordButton').onclick = () => {
-        THIS.setAttribute('word', "a" + THIS.getAttribute('word'));
+      component.querySelector('#wordButton').onclick = () => {
+        component.setAttribute('word', "a" + component.getAttribute('word'));
       };
     });
   }
@@ -190,12 +190,10 @@ function Counter () {
 
   this.callback = () => {
     const handleClick = () => setCount(count() + 1);
-    this.querySelector('#plusButton')
-      .addEventListener('click', handleClick);
+    this.querySelector('#plusButton').addEventListener('click', handleClick);
 
     const handleWord = () => setWord("a" + word());
-    this.querySelector('#wordButton')
-      .addEventListener('click', handleWord);
+    this.querySelector('#wordButton').addEventListener('click', handleWord);
   };
 
   return () => /*html*/`

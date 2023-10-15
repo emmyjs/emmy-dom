@@ -7,12 +7,12 @@
     <img alt="GitHub last commit (by committer)" src="https://img.shields.io/github/last-commit/emmyjs/emmy-dom"/>
     <img alt="npm package minimized gzipped size (select exports)" src="https://img.shields.io/bundlejs/size/emmy-dom"/>
   </div>
-  <i>A tiny simple frontend framework for building web applications.</i>
+  <i>A tiny simple front-end framework for building web applications.</i>
 </section>
 <hr />
 
 ## Why Emmy.js?
-Emmy.js is a tiny simple frontend framework for building web applications. It is based on the [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) standard.
+Emmy.js is a tiny simple front-end framework for building web applications. It is based on the [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) standard.
 It is specially designed for building web applications with server-side frameworks like Ruby on Rails, Django, Laravel, etc.
 
 <hr />
