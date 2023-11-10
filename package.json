@@ -7,7 +7,8 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "repository": {
     "type": "git",
@@ -23,5 +24,9 @@
   "bugs": {
     "url": "https://github.com/emmyjs/emmy-dom/issues"
   },
-  "homepage": "https://emmyjs.github.io/"
+  "homepage": "https://emmyjs.github.io/",
+  "devDependencies": {
+    "happy-dom": "^12.10.3",
+    "vitest": "^0.34.6"
+  }
 }
