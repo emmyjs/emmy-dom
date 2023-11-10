@@ -26,6 +26,7 @@
   },
   "homepage": "https://emmyjs.github.io/",
   "devDependencies": {
+    "@vitest/coverage-v8": "^0.34.6",
     "happy-dom": "^12.10.3",
     "vitest": "^0.34.6"
   }

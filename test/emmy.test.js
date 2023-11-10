@@ -13,13 +13,14 @@ function awaitDidMount(componentName) {
     });
 }
 
+// @vitest-environment happy-dom
+
 describe("emmy", () => {
     it("should work", () => {
         expect(1).toBe(1);
     });
 });
 
-// @vitest-environment happy-dom
 describe("Component", () => {
     it("should be defined", () => {
         expect(Component).toBeDefined();
@@ -104,7 +105,7 @@ describe("Component", () => {
                     });
                 }
             }
-            load(A, 'A');
+            customElements.define('emmy-a', A);
             document.body.innerHTML = '<emmy-a></emmy-a>';
             awaitDidMount('emmy-a');
             return document.querySelector('emmy-a').querySelector('div');
