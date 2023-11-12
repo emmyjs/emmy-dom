@@ -6,6 +6,7 @@
     <img alt="NPM" src="https://img.shields.io/npm/l/emmy-dom"/>
     <img alt="GitHub last commit (by committer)" src="https://img.shields.io/github/last-commit/emmyjs/emmy-dom"/>
     <img alt="npm package minimized gzipped size (select exports)" src="https://img.shields.io/bundlejs/size/emmy-dom"/>
+    <img alt="tests" src="https://github.com/emmyjs/emmy-dom/actions/workflows/vitest.yml/badge.svg"/>
   </div>
   <i>A tiny simple front-end framework for building web applications.</i>
 </section>
