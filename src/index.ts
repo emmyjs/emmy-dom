@@ -170,8 +170,8 @@ export function useEffect (callback: Callback, dependencies: DependencyArray) {
 }
 
 function bindHooks (component: FunctionalComponent) {
-    this.useState = useState.bind(component);
-    this.useEffect = useEffect.bind(component);
+    component.useState = useState.bind(component);
+    component.useEffect = useEffect.bind(component);
 }
 
 
@@ -180,10 +180,10 @@ export class FunctionalComponent extends LightComponent {
     useState: (initialValue: any) => [() => any, (newValue: any) => void];
     useEffect: (callback: Callback, dependencies: DependencyArray) => void;
 
-    constructor(func) {
+    constructor(func: HTMLGenerator) {
         super();
         this.effectCallback = (component: FunctionalComponent) => {};
-        bindHooks(this);
+        bindHooks.call(this, this);
         this.setState({rerenderCount: 0})
         const renderFunctionOrString = func.call(this, this);
         this.render(renderFunctionOrString);
@@ -302,16 +302,16 @@ export function load (func: ComponentType, name: string) {
         return createPageComponent(func, name);
     }
 
-    if (typeof func !== 'function') {
-        return launch(func, name);
+    if (typeof func === 'function') {
+        class X extends FunctionalComponent {
+            constructor() {
+                super(func as HTMLGenerator);
+            }
+        }
+        launch(new X, name);
     }
 
-    class X extends FunctionalComponent {
-        constructor() {
-            super(func);
-        }
-    }
-    launch(new X, name);
+    return launch(func as ClassComponent, name);
 }
 
 load(new Route, 'Route');

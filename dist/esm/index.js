@@ -127,14 +127,14 @@ export function useEffect(callback, dependencies) {
     };
 }
 function bindHooks(component) {
-    this.useState = useState.bind(component);
-    this.useEffect = useEffect.bind(component);
+    component.useState = useState.bind(component);
+    component.useEffect = useEffect.bind(component);
 }
 export class FunctionalComponent extends LightComponent {
     constructor(func) {
         super();
         this.effectCallback = (component) => { };
-        bindHooks(this);
+        bindHooks.call(this, this);
         this.setState({ rerenderCount: 0 });
         const renderFunctionOrString = func.call(this, this);
         this.render(renderFunctionOrString);
@@ -231,15 +231,15 @@ export function load(func, name) {
     if (typeof func === 'string') {
         return createPageComponent(func, name);
     }
-    if (typeof func !== 'function') {
-        return launch(func, name);
-    }
-    class X extends FunctionalComponent {
-        constructor() {
-            super(func);
+    if (typeof func === 'function') {
+        class X extends FunctionalComponent {
+            constructor() {
+                super(func);
+            }
         }
+        launch(new X, name);
     }
-    launch(new X, name);
+    return launch(func, name);
 }
 load(new Route, 'Route');
 load(new Router, 'Router');
