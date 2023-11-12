@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { Component, LightComponent } from "../emmy.js";
+import { Component, LightComponent } from "../dist/esm/index.js";
 import { HTMLElement } from "happy-dom";
 
 function awaitDidMount(componentName) {
@@ -56,8 +56,26 @@ describe("Component", () => {
                     super();
                     this.render('<div></div>');
                     this.addStyle({
-                        'this': {
+                        this: {
                             'background-color': 'red'
+                        }
+                    });
+                }
+            }
+            customElements.define('emmy-a', A);
+            document.body.innerHTML = '<emmy-a></emmy-a>';
+            return document.querySelector('emmy-a').Style['this'];
+        })()).toBe('background-color: red;');
+    });
+    it("addStyle method should add a React style", () => {
+        expect((() => {
+            class A extends Component {
+                constructor() {
+                    super();
+                    this.render('<div></div>');
+                    this.addStyle({
+                        this: {
+                            backgroundColor: 'red'
                         }
                     });
                 }
@@ -148,8 +166,26 @@ describe("LightComponent", () => {
                     super();
                     this.render(() => '<div></div>');
                     this.addStyle({
-                        'this': {
+                        this: {
                             'background-color': 'red'
+                        }
+                    });
+                }
+            }
+            customElements.define('emmy-a', A);
+            document.body.innerHTML = '<emmy-a></emmy-a>';
+            return document.querySelector('emmy-a').Style['this'];
+        })()).toBe('background-color: red;');
+    });
+    it("addStyle method should add a React style", () => {
+        expect((() => {
+            class A extends Component {
+                constructor() {
+                    super();
+                    this.render('<div></div>');
+                    this.addStyle({
+                        this: {
+                            backgroundColor: 'red'
                         }
                     });
                 }
@@ -189,5 +225,22 @@ describe("LightComponent", () => {
             awaitDidMount('emmy-a');
             return document.querySelector('emmy-a').querySelector('div');
         })()).toBeInstanceOf(HTMLElement);
+    });
+    it("should render", () => {
+        expect((() => {
+            class A extends LightComponent {
+                constructor() {
+                    super();
+                    this.didMount = false;
+                    this.render('<div></div>', (component) => {
+                        component.didMount = true;
+                    });
+                }
+            }
+            customElements.define('emmy-a', A);
+            document.body.innerHTML = '<emmy-a></emmy-a>';
+            awaitDidMount('emmy-a');
+            return document.querySelector('emmy-a').querySelector('div');
+        })()).toBeDefined();
     });
 });

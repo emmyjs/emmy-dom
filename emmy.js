@@ -111,7 +111,7 @@ class LightComponent extends EmmyComponent {
     }
 
     querySelector(selector) {
-        HTMLElement.prototype.querySelector.call(this, vanillaElement(selector));
+        return HTMLElement.prototype.querySelector.call(this, vanillaElement(selector));
     }
 }
 
@@ -244,8 +244,8 @@ class Router extends LightComponent {
         window.route = (event) => {
             event.preventDefault();
             if (window.location.pathname === event.target.href) return;
-                window.history.pushState({}, '', event.target.href);
-                this.handleLocation();
+            window.history.pushState({}, '', event.target.href);
+            this.handleLocation();
         }
 
         window.onpopstate = this.handleLocation;
