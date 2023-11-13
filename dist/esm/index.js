@@ -1,4 +1,4 @@
-const reactToCSS = require('react-style-object-to-css');
+import reactToCSS from 'react-style-object-to-css';
 function processGenerator(generator) {
     let processedGenerator = generator.replace(/<\/?[^>]+>/g, match => {
         let element = match.slice(0, -1);
@@ -235,7 +235,7 @@ export function launch(component, name) {
         console.warn(`Custom element ${vanillaElement(name)} already defined`);
         return;
     }
-    customElements.define(vanillaElement(name), component.constructor);
+    customElements.define(vanillaElement(name), component);
 }
 function createPageComponent(url, name) {
     fetch(url)
@@ -254,9 +254,9 @@ export function load(func, name) {
                 super(func);
             }
         }
-        launch(new X, name);
+        launch(X, name);
     }
     return launch(func, name);
 }
-load(new Route, 'Route');
-load(new Router, 'Router');
+load(Route, 'Route');
+load(Router, 'Router');

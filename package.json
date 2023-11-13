@@ -14,7 +14,7 @@
   "scripts": {
     "tsc": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
     "build": "npm run tsc && vitest run",
-    "commit": "npm run build && git add . && sui-mono commit",
+    "commit": "npm run build && git add . && sui-mono commit && git push",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "prepublishOnly": "npm run build"

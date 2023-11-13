@@ -1,4 +1,4 @@
-const reactToCSS = require('react-style-object-to-css');
+import reactToCSS from 'react-style-object-to-css';
 
 type HTMLGenerator = ((component: EmmyComponent) => string) | ((component?: EmmyComponent) => string) | (() => string);
 type Callback = ((component: EmmyComponent) => void) | ((component?: EmmyComponent) => void) | (() => void);
@@ -303,7 +303,7 @@ export function launch (component: ClassComponent | FunctionalComponent, name: s
         console.warn(`Custom element ${vanillaElement(name)} already defined`);
         return;
     }
-    customElements.define(vanillaElement(name), component.constructor as CustomElementConstructor);
+    customElements.define(vanillaElement(name), component as unknown as CustomElementConstructor);
 }
 
 function createPageComponent (url: string, name: string) {
@@ -325,11 +325,11 @@ export function load (func: ComponentType, name: string) {
                 super(func as HTMLGenerator);
             }
         }
-        launch(new X, name);
+        launch(X as unknown as FunctionalComponent, name);
     }
 
     return launch(func as ClassComponent, name);
 }
 
-load(new Route, 'Route');
-load(new Router, 'Router');
+load(Route as unknown as ComponentType, 'Route');
+load(Router as unknown as ComponentType, 'Router');

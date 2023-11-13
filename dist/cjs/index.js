@@ -1,7 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.load = exports.launch = exports.Router = exports.Route = exports.FunctionalComponent = exports.useEffect = exports.useState = exports.LightComponent = exports.Component = void 0;
-const reactToCSS = require('react-style-object-to-css');
+const react_style_object_to_css_1 = __importDefault(require("react-style-object-to-css"));
 function processGenerator(generator) {
     let processedGenerator = generator.replace(/<\/?[^>]+>/g, match => {
         let element = match.slice(0, -1);
@@ -31,7 +34,7 @@ function parseCSS(cssString) {
 }
 function createInlineStyle(cssString) {
     if (typeof cssString !== 'string')
-        return reactToCSS(cssString).trim();
+        return (0, react_style_object_to_css_1.default)(cssString).trim();
     const styleObj = parseCSS(cssString);
     let inlineStyle = '';
     for (const property in styleObj) {
@@ -245,7 +248,7 @@ function launch(component, name) {
         console.warn(`Custom element ${vanillaElement(name)} already defined`);
         return;
     }
-    customElements.define(vanillaElement(name), component.constructor);
+    customElements.define(vanillaElement(name), component);
 }
 exports.launch = launch;
 function createPageComponent(url, name) {
@@ -265,10 +268,10 @@ function load(func, name) {
                 super(func);
             }
         }
-        launch(new X, name);
+        launch(X, name);
     }
     return launch(func, name);
 }
 exports.load = load;
-load(new Route, 'Route');
-load(new Router, 'Router');
+load(Route, 'Route');
+load(Router, 'Router');
