@@ -146,27 +146,44 @@ export function useState (initialValue): [() => any, (newValue: any) => void] {
 }
 
 function getValues (dependencies: DependencyArray): Array<any> {
-    return dependencies.map((dependency) => dependency());
+    return dependencies.map((dependency) => {
+        if (typeof dependency === 'function') {
+            return dependency();
+        }
+        return dependency;
+    });
 }
 
 export function useEffect (callback: Callback, dependencies: DependencyArray) {
-    const oldCallback = this.effectCallback;
+    const oldEffectCallback = this.effectCallback;
     if (!dependencies || dependencies.length === 0) {
         this.effectCallback = (component) => {
-            oldCallback(component);
+            oldEffectCallback(component);
             callback.call(component, component);
         }
         return;
     }
     let oldDependencies = getValues(dependencies);
     this.effectCallback = (component) => {
-        oldCallback(component);
+        oldEffectCallback(component);
         const newDependencies = getValues(dependencies);
         if (JSON.stringify(oldDependencies) !== JSON.stringify(newDependencies)) {
             oldDependencies = newDependencies;
             callback.call(component, component);
         }
     }
+    dependencies.find((dependency) => {
+        if (typeof dependency === 'string') {
+            if (dependency === 'didMount') {
+                const oldCallback = this.callback;
+                this.callback = (component) => {
+                    oldCallback.call(component, component);
+                    callback.call(component, component);
+                };
+            }
+        }
+        return false;
+    });
 }
 
 function bindHooks (component: FunctionalComponent) {
@@ -184,7 +201,7 @@ export class FunctionalComponent extends LightComponent {
         super();
         this.effectCallback = (component: FunctionalComponent) => {};
         bindHooks.call(this, this);
-        this.setState({rerenderCount: 0})
+        this.setState({ rerenderCount: 0 });
         const renderFunctionOrString = func.call(this, this);
         this.render(renderFunctionOrString);
     }
@@ -258,7 +275,7 @@ export class Router extends LightComponent {
     constructor() {
         super();
         this.behave('div');
-        this.className = 'flex flex-col justify-center items-center space-y-3 text-center w-full h-full';
+        this.className = 'flex flex-col justify-center items-center space-y-3 text-center w-full h-full box-border';
 
         this.handleLocation = () => {
             const path = window.location.pathname;

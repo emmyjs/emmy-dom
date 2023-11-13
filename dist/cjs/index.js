@@ -111,26 +111,43 @@ function useState(initialValue) {
 }
 exports.useState = useState;
 function getValues(dependencies) {
-    return dependencies.map((dependency) => dependency());
+    return dependencies.map((dependency) => {
+        if (typeof dependency === 'function') {
+            return dependency();
+        }
+        return dependency;
+    });
 }
 function useEffect(callback, dependencies) {
-    const oldCallback = this.effectCallback;
+    const oldEffectCallback = this.effectCallback;
     if (!dependencies || dependencies.length === 0) {
         this.effectCallback = (component) => {
-            oldCallback(component);
+            oldEffectCallback(component);
             callback.call(component, component);
         };
         return;
     }
     let oldDependencies = getValues(dependencies);
     this.effectCallback = (component) => {
-        oldCallback(component);
+        oldEffectCallback(component);
         const newDependencies = getValues(dependencies);
         if (JSON.stringify(oldDependencies) !== JSON.stringify(newDependencies)) {
             oldDependencies = newDependencies;
             callback.call(component, component);
         }
     };
+    dependencies.find((dependency) => {
+        if (typeof dependency === 'string') {
+            if (dependency === 'didMount') {
+                const oldCallback = this.callback;
+                this.callback = (component) => {
+                    oldCallback.call(component, component);
+                    callback.call(component, component);
+                };
+            }
+        }
+        return false;
+    });
 }
 exports.useEffect = useEffect;
 function bindHooks(component) {
@@ -202,7 +219,7 @@ class Router extends LightComponent {
     constructor() {
         super();
         this.behave('div');
-        this.className = 'flex flex-col justify-center items-center space-y-3 text-center w-full h-full';
+        this.className = 'flex flex-col justify-center items-center space-y-3 text-center w-full h-full box-border';
         this.handleLocation = () => {
             const path = window.location.pathname;
             const html = (path === '/' ? Route.routes['/root'] : Route.routes[path])
