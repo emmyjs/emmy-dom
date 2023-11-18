@@ -1,7 +1,7 @@
 import reactToCSS from 'react-style-object-to-css';
 
-type HTMLGenerator = ((component: EmmyComponent) => string) | ((component?: EmmyComponent) => string) | (() => string);
-type Callback = ((component: EmmyComponent) => void) | ((component?: EmmyComponent) => void) | (() => void);
+export type HTMLGenerator = ((component: EmmyComponent) => string) | ((component?: EmmyComponent) => string) | (() => string);
+export type Callback = ((component: EmmyComponent) => void) | ((component?: EmmyComponent) => void) | (() => void);
 type StyleObject = {
     [key: string]: string
 }
@@ -11,7 +11,7 @@ declare global {
       route: (event: Event) => void;
     }
 }
-type ClassComponent = Component | LightComponent;
+export type ClassComponent = Component | LightComponent;
 type RouteString = `/${string}`;
 type ComponentType = ClassComponent | FunctionalComponent | HTMLGenerator | RouteString;
 
@@ -236,7 +236,7 @@ export class FunctionalComponent extends LightComponent {
     }
 
     setState(newState: object) {
-        this.setAttribute('state', JSON.stringify(newState));
+        this.setAttribute('state', JSON.stringify(newState).replace(/"/g, "'"));
     }
 
     querySelector(selector: string): HTMLElement | null {
@@ -301,20 +301,23 @@ export class Router extends LightComponent {
 export function launch (component: ClassComponent | FunctionalComponent, name: string) {
     if (customElements.get(vanillaElement(name))) {
         console.warn(`Custom element ${vanillaElement(name)} already defined`);
-        return;
+        return component;
     }
     customElements.define(vanillaElement(name), component as unknown as CustomElementConstructor);
+    return component;
 }
 
-function createPageComponent (url: string, name: string) {
-    fetch(url)
-        .then(res => res.text())
-        .then(html => {
-            load(() => html, name);
-        });
+function createPageComponent (url: string, name: string): ClassComponent | FunctionalComponent {
+    let component;
+    async () => {
+        const result = await fetch(url);
+        const html = await result.text();
+        component = load(() => html, name);
+    }
+    return component;
 }
 
-export function load (func: ComponentType, name: string) {
+export function load (func: ComponentType, name: string): ClassComponent | FunctionalComponent {
     if (typeof func === 'string') {
         return createPageComponent(func, name);
     }
@@ -325,7 +328,7 @@ export function load (func: ComponentType, name: string) {
                 super(func as HTMLGenerator);
             }
         }
-        launch(X as unknown as FunctionalComponent, name);
+        return launch(X as unknown as FunctionalComponent, name);
     }
 
     return launch(func as ClassComponent, name);

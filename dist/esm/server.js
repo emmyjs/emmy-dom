@@ -8,6 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import reactToCSS from 'react-style-object-to-css';
+import { writeFileSync } from 'fs';
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const render = require('./ssr');
+require('./ssr/register');
 function processGenerator(generator) {
     let processedGenerator = generator.replace(/<\/?[^>]+>/g, match => {
         let element = match.slice(0, -1);
@@ -82,6 +87,10 @@ class EmmyComponent extends HTMLElement {
             this.callback = callback;
         }
     }
+    querySelector(selector) {
+        this.setAttribute(`emmy-hydratation`, 'true');
+        return this;
+    }
 }
 export class Component extends EmmyComponent {
     constructor() {
@@ -92,7 +101,7 @@ export class Component extends EmmyComponent {
         this.shadowRoot.innerHTML = processGenerator(this.contentGenerator(this));
         this.callback.call(this, this);
     }
-    querySelector(selector) {
+    __querySelector(selector) {
         return this.shadowRoot.querySelector(vanillaElement(selector));
     }
 }
@@ -101,7 +110,7 @@ export class LightComponent extends EmmyComponent {
         this.innerHTML = processGenerator(this.contentGenerator(this));
         this.callback.call(this, this);
     }
-    querySelector(selector) {
+    __querySelector(selector) {
         return HTMLElement.prototype.querySelector.call(this, vanillaElement(selector));
     }
 }
@@ -191,7 +200,7 @@ export class FunctionalComponent extends LightComponent {
     setState(newState) {
         this.setAttribute('state', JSON.stringify(newState).replace(/"/g, "'"));
     }
-    querySelector(selector) {
+    __querySelector(selector) {
         let element = HTMLElement.prototype.querySelector.call(this, vanillaElement(selector));
         element.__proto__.addEventListener = (event, callback) => {
             const newCallback = (event) => {
@@ -240,11 +249,11 @@ export class Router extends LightComponent {
     }
 }
 export function launch(component, name) {
-    if (customElements.get(vanillaElement(name))) {
+    if (window.customElements.get(vanillaElement(name))) {
         console.warn(`Custom element ${vanillaElement(name)} already defined`);
         return component;
     }
-    customElements.define(vanillaElement(name), component);
+    window.customElements.define(vanillaElement(name), component);
     return component;
 }
 function createPageComponent(url, name) {
@@ -272,3 +281,46 @@ export function load(func, name) {
 }
 load(Route, 'Route');
 load(Router, 'Router');
+export function renderToString(component) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const instance = new component();
+        const html = yield render(instance);
+        return html;
+    });
+}
+function capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+function hydrateScript(generator, name) {
+    return /*javascript*/ `
+    const ${name.toLowerCase()} = ${String(generator)}
+    load(${name.toLowerCase()}, '${capitalizeFirstLetter(name)}');
+    document.querySelectorAll('${vanillaElement(name)}').forEach((element) => {
+      element.connectedCallback();
+    });
+  `;
+}
+export function build(component, generators) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const ssr = yield renderToString(component);
+        let javascript = '';
+        for (const name in generators) {
+            javascript += hydrateScript(generators[name], name);
+        }
+        let content = /*html*/ `${ssr}
+  <script type="module">
+    import { load } from 'emmy-dom';
+    ${javascript}
+  </script>
+  `;
+        writeFileSync('index.html', /*html*/ `<!DOCTYPE html>
+  <html>
+    <head>
+      <title>Emmy DOM</title>
+    </head>
+    <body>
+      ${content}
+    </body>
+  </html>`);
+    });
+}

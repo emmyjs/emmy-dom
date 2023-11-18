@@ -21,16 +21,17 @@ declare abstract class EmmyComponent extends HTMLElement {
     behave(element: string): void;
     abstract connectedCallback(): void;
     render(generator: string | HTMLGenerator, callback?: Callback): void;
-    abstract querySelector(selector: string): HTMLElement | null;
+    abstract __querySelector(selector: string): HTMLElement | null;
+    querySelector(selector: string): HTMLElement | null;
 }
 export declare class Component extends EmmyComponent {
     constructor();
     connectedCallback(): void;
-    querySelector(selector: string): HTMLElement | null;
+    __querySelector(selector: string): HTMLElement | null;
 }
 export declare class LightComponent extends EmmyComponent {
     connectedCallback(): void;
-    querySelector(selector: string): HTMLElement | null;
+    __querySelector(selector: string): HTMLElement | null;
 }
 export declare function useState(initialValue: any): [() => any, (newValue: any) => void];
 export declare function useEffect(callback: Callback, dependencies: DependencyArray): void;
@@ -46,7 +47,7 @@ export declare class FunctionalComponent extends LightComponent {
     rerender(): void;
     state(): any;
     setState(newState: object): void;
-    querySelector(selector: string): HTMLElement | null;
+    __querySelector(selector: string): HTMLElement | null;
 }
 export declare class Route extends LightComponent {
     static routes: {
@@ -60,4 +61,8 @@ export declare class Router extends LightComponent {
 }
 export declare function launch(component: ClassComponent | FunctionalComponent, name: string): ClassComponent | FunctionalComponent;
 export declare function load(func: ComponentType, name: string): ClassComponent | FunctionalComponent;
+export declare function renderToString(component: ClassComponent | FunctionalComponent): Promise<string>;
+export declare function build(component: FunctionalComponent | ClassComponent, generators: {
+    [key: string]: HTMLGenerator;
+}): Promise<void>;
 export {};
