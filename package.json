@@ -36,7 +36,7 @@
   "homepage": "https://emmyjs.github.io/",
   "devDependencies": {
     "@s-ui/mono": "2.41.0",
-    "@types/eslint": "^8.44.7",
+    "@types/eslint": "8.44.7",
     "@vitest/coverage-v8": "0.34.6",
     "happy-dom": "12.10.3",
     "typescript": "5.2.2",
@@ -44,6 +44,7 @@
     "vitest": "0.34.6"
   },
   "dependencies": {
+    "parse5": "7.1.2",
     "react-style-object-to-css": "1.1.2",
     "undom": "0.4.0"
   }

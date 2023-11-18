@@ -1,11 +1,12 @@
 import reactToCSS from 'react-style-object-to-css';
 import { writeFileSync } from 'fs';
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
+//import { createRequire } from "module";
+//const require = createRequire(import.meta.url);
 const render = require('./ssr');
 require('./ssr/register');
 
 export type HTMLGenerator = ((component: EmmyComponent) => string) | ((component?: EmmyComponent) => string) | (() => string);
+export type HTMLGeneratorGenerator = ((component: EmmyComponent) => HTMLGenerator) | ((component?: EmmyComponent) => HTMLGenerator) | (() => HTMLGenerator) | HTMLGenerator;
 export type Callback = ((component: EmmyComponent) => void) | ((component?: EmmyComponent) => void) | (() => void);
 type StyleObject = {
     [key: string]: string
@@ -18,7 +19,7 @@ declare global {
 }
 export type ClassComponent = Component | LightComponent;
 type RouteString = `/${string}`;
-type ComponentType = ClassComponent | FunctionalComponent | HTMLGenerator | RouteString;
+type ComponentType = ClassComponent | FunctionalComponent | HTMLGeneratorGenerator | RouteString;
 
 function processGenerator (generator: string): string {
     let processedGenerator = generator.replace(/<\/?[^>]+>/g, match => {
@@ -241,7 +242,7 @@ export class FunctionalComponent extends LightComponent {
     }
 
     state() {
-        return JSON.parse(this.getAttribute('state') || '');
+        return JSON.parse(this.getAttribute('state').replace(/'/g, '"') || '');
     }
 
     setState(newState: object) {
@@ -353,38 +354,38 @@ export async function renderToString(component: ClassComponent | FunctionalCompo
 }
 
 function capitalizeFirstLetter(str: string): string {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+    return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-function hydrateScript(generator: HTMLGenerator, name: string) {
-  return /*javascript*/`
-    const ${name.toLowerCase()} = ${String(generator)}
-    load(${name.toLowerCase()}, '${capitalizeFirstLetter(name)}');
-    document.querySelectorAll('${vanillaElement(name)}').forEach((element) => {
-      element.connectedCallback();
-    });
-  `;
+function hydrateScript(generator: HTMLGeneratorGenerator, name: string) {
+    return /*javascript*/`
+        const ${name.toLowerCase()} = ${String(generator)}
+        load(${name.toLowerCase()}, '${capitalizeFirstLetter(name)}');
+        document.querySelectorAll('${vanillaElement(name)}').forEach((element) => {
+        element.connectedCallback();
+        });
+    `;
 }
 
-export async function build(component: FunctionalComponent | ClassComponent, generators: { [key: string]: HTMLGenerator }) {
-  const ssr = await renderToString(component);
-  let javascript = '';
-  for (const name in generators) {
-    javascript += hydrateScript(generators[name], name);
-  }
-  let content = /*html*/`${ssr}
-  <script type="module">
-    import { load } from 'emmy-dom';
-    ${javascript}
-  </script>
-  `;
-  writeFileSync('index.html', /*html*/`<!DOCTYPE html>
-  <html>
-    <head>
-      <title>Emmy DOM</title>
-    </head>
-    <body>
-      ${content}
-    </body>
-  </html>`);
+export async function build(component: FunctionalComponent | ClassComponent, generators: { [key: string]: HTMLGeneratorGenerator }) {
+    const ssr = await renderToString(component);
+    let javascript = '';
+    for (const name in generators) {
+        javascript += hydrateScript(generators[name], name);
+    }
+    let content = /*html*/`${ssr}
+    <script type="module">
+        import { load } from './dist/esm/index.js';
+        ${javascript}
+    </script>
+    `;
+    writeFileSync('index.html', /*html*/`<!DOCTYPE html>
+    <html>
+        <head>
+            <title>Emmy DOM</title>
+        </head>
+        <body>
+            ${content}
+        </body>
+    </html>`);
 }

@@ -1,5 +1,6 @@
-type HTMLGenerator = ((component: EmmyComponent) => string) | ((component?: EmmyComponent) => string) | (() => string);
-type Callback = ((component: EmmyComponent) => void) | ((component?: EmmyComponent) => void) | (() => void);
+export type HTMLGenerator = ((component: EmmyComponent) => string) | ((component?: EmmyComponent) => string) | (() => string);
+export type HTMLGeneratorGenerator = ((component: EmmyComponent) => HTMLGenerator) | ((component?: EmmyComponent) => HTMLGenerator) | (() => HTMLGenerator);
+export type Callback = ((component: EmmyComponent) => void) | ((component?: EmmyComponent) => void) | (() => void);
 type StyleObject = {
     [key: string]: string;
 };
@@ -9,7 +10,7 @@ declare global {
         route: (event: Event) => void;
     }
 }
-type ClassComponent = Component | LightComponent;
+export type ClassComponent = Component | LightComponent;
 type RouteString = `/${string}`;
 type ComponentType = ClassComponent | FunctionalComponent | HTMLGenerator | RouteString;
 declare abstract class EmmyComponent extends HTMLElement {
@@ -58,6 +59,6 @@ export declare class Router extends LightComponent {
     handleLocation: () => void;
     constructor();
 }
-export declare function launch(component: ClassComponent | FunctionalComponent, name: string): void;
-export declare function load(func: ComponentType, name: string): void;
+export declare function launch(component: ClassComponent | FunctionalComponent, name: string): ClassComponent | FunctionalComponent;
+export declare function load(func: ComponentType, name: string): ClassComponent | FunctionalComponent;
 export {};

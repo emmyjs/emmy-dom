@@ -186,7 +186,7 @@ export class FunctionalComponent extends LightComponent {
         this.patchState({ rerenderCount: this.state().rerenderCount + 1 });
     }
     state() {
-        return JSON.parse(this.getAttribute('state') || '');
+        return JSON.parse(this.getAttribute('state').replace(/'/g, '"') || '');
     }
     setState(newState) {
         this.setAttribute('state', JSON.stringify(newState).replace(/"/g, "'"));

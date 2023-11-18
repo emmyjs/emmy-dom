@@ -1,3 +1,7 @@
+import { describe, it, expect } from "vitest";
+
+// @vitest-environment happy-dom
+
 describe('ClassList', () => {
   it('add', () => {
     const div = document.createElement('div');

@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,8 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import reactToCSS from 'react-style-object-to-css';
-import { writeFileSync } from 'fs';
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.build = exports.renderToString = exports.load = exports.launch = exports.Router = exports.Route = exports.FunctionalComponent = exports.useEffect = exports.useState = exports.LightComponent = exports.Component = void 0;
+const react_style_object_to_css_1 = __importDefault(require("react-style-object-to-css"));
+const fs_1 = require("fs");
 //import { createRequire } from "module";
 //const require = createRequire(import.meta.url);
 const render = require('./ssr');
@@ -42,7 +48,7 @@ function parseCSS(cssString) {
 }
 function createInlineStyle(cssString) {
     if (typeof cssString !== 'string')
-        return reactToCSS(cssString).trim();
+        return (0, react_style_object_to_css_1.default)(cssString).trim();
     const styleObj = parseCSS(cssString);
     let inlineStyle = '';
     for (const property in styleObj) {
@@ -92,7 +98,7 @@ class EmmyComponent extends HTMLElement {
         return this;
     }
 }
-export class Component extends EmmyComponent {
+class Component extends EmmyComponent {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
@@ -105,7 +111,8 @@ export class Component extends EmmyComponent {
         return this.shadowRoot.querySelector(vanillaElement(selector));
     }
 }
-export class LightComponent extends EmmyComponent {
+exports.Component = Component;
+class LightComponent extends EmmyComponent {
     connectedCallback() {
         this.innerHTML = processGenerator(this.contentGenerator(this));
         this.callback.call(this, this);
@@ -114,7 +121,8 @@ export class LightComponent extends EmmyComponent {
         return HTMLElement.prototype.querySelector.call(this, vanillaElement(selector));
     }
 }
-export function useState(initialValue) {
+exports.LightComponent = LightComponent;
+function useState(initialValue) {
     let value = initialValue;
     const state = () => value;
     const setState = (newValue) => {
@@ -122,6 +130,7 @@ export function useState(initialValue) {
     };
     return [state, setState];
 }
+exports.useState = useState;
 function getValues(dependencies) {
     return dependencies.map((dependency) => {
         if (typeof dependency === 'function') {
@@ -130,7 +139,7 @@ function getValues(dependencies) {
         return dependency;
     });
 }
-export function useEffect(callback, dependencies) {
+function useEffect(callback, dependencies) {
     const oldEffectCallback = this.effectCallback;
     if (!dependencies || dependencies.length === 0) {
         this.effectCallback = (component) => {
@@ -161,11 +170,12 @@ export function useEffect(callback, dependencies) {
         return false;
     });
 }
+exports.useEffect = useEffect;
 function bindHooks(component) {
     component.useState = useState.bind(component);
     component.useEffect = useEffect.bind(component);
 }
-export class FunctionalComponent extends LightComponent {
+class FunctionalComponent extends LightComponent {
     constructor(func) {
         super();
         this.effectCallback = (component) => { };
@@ -212,7 +222,8 @@ export class FunctionalComponent extends LightComponent {
         return element;
     }
 }
-export class Route extends LightComponent {
+exports.FunctionalComponent = FunctionalComponent;
+class Route extends LightComponent {
     constructor() {
         super();
         this.render(``, () => {
@@ -223,8 +234,9 @@ export class Route extends LightComponent {
         });
     }
 }
+exports.Route = Route;
 Route.routes = {};
-export class Router extends LightComponent {
+class Router extends LightComponent {
     constructor() {
         super();
         this.behave('div');
@@ -248,7 +260,8 @@ export class Router extends LightComponent {
         this.render(``, () => this.handleLocation());
     }
 }
-export function launch(component, name) {
+exports.Router = Router;
+function launch(component, name) {
     if (window.customElements.get(vanillaElement(name))) {
         console.warn(`Custom element ${vanillaElement(name)} already defined`);
         return component;
@@ -256,6 +269,7 @@ export function launch(component, name) {
     window.customElements.define(vanillaElement(name), component);
     return component;
 }
+exports.launch = launch;
 function createPageComponent(url, name) {
     let component;
     () => __awaiter(this, void 0, void 0, function* () {
@@ -265,7 +279,7 @@ function createPageComponent(url, name) {
     });
     return component;
 }
-export function load(func, name) {
+function load(func, name) {
     if (typeof func === 'string') {
         return createPageComponent(func, name);
     }
@@ -279,15 +293,17 @@ export function load(func, name) {
     }
     return launch(func, name);
 }
+exports.load = load;
 load(Route, 'Route');
 load(Router, 'Router');
-export function renderToString(component) {
+function renderToString(component) {
     return __awaiter(this, void 0, void 0, function* () {
         const instance = new component();
         const html = yield render(instance);
         return html;
     });
 }
+exports.renderToString = renderToString;
 function capitalizeFirstLetter(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
@@ -300,7 +316,7 @@ function hydrateScript(generator, name) {
         });
     `;
 }
-export function build(component, generators) {
+function build(component, generators) {
     return __awaiter(this, void 0, void 0, function* () {
         const ssr = yield renderToString(component);
         let javascript = '';
@@ -313,7 +329,7 @@ export function build(component, generators) {
         ${javascript}
     </script>
     `;
-        writeFileSync('index.html', /*html*/ `<!DOCTYPE html>
+        (0, fs_1.writeFileSync)('index.html', /*html*/ `<!DOCTYPE html>
     <html>
         <head>
             <title>Emmy DOM</title>
@@ -324,3 +340,4 @@ export function build(component, generators) {
     </html>`);
     });
 }
+exports.build = build;

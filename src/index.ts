@@ -1,6 +1,7 @@
 import reactToCSS from 'react-style-object-to-css';
 
 export type HTMLGenerator = ((component: EmmyComponent) => string) | ((component?: EmmyComponent) => string) | (() => string);
+export type HTMLGeneratorGenerator = ((component: EmmyComponent) => HTMLGenerator) | ((component?: EmmyComponent) => HTMLGenerator) | (() => HTMLGenerator);
 export type Callback = ((component: EmmyComponent) => void) | ((component?: EmmyComponent) => void) | (() => void);
 type StyleObject = {
     [key: string]: string
@@ -8,7 +9,7 @@ type StyleObject = {
 type DependencyArray = Array<(() => any) | any>;
 declare global {
     interface Window {
-      route: (event: Event) => void;
+        route: (event: Event) => void;
     }
 }
 export type ClassComponent = Component | LightComponent;
@@ -232,7 +233,7 @@ export class FunctionalComponent extends LightComponent {
     }
 
     state() {
-        return JSON.parse(this.getAttribute('state') || '');
+        return JSON.parse(this.getAttribute('state').replace(/'/g, '"') || '');
     }
 
     setState(newState: object) {

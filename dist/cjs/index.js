@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -187,10 +196,10 @@ class FunctionalComponent extends LightComponent {
         this.patchState({ rerenderCount: this.state().rerenderCount + 1 });
     }
     state() {
-        return JSON.parse(this.getAttribute('state') || '');
+        return JSON.parse(this.getAttribute('state').replace(/'/g, '"') || '');
     }
     setState(newState) {
-        this.setAttribute('state', JSON.stringify(newState));
+        this.setAttribute('state', JSON.stringify(newState).replace(/"/g, "'"));
     }
     querySelector(selector) {
         let element = HTMLElement.prototype.querySelector.call(this, vanillaElement(selector));
@@ -246,17 +255,20 @@ exports.Router = Router;
 function launch(component, name) {
     if (customElements.get(vanillaElement(name))) {
         console.warn(`Custom element ${vanillaElement(name)} already defined`);
-        return;
+        return component;
     }
     customElements.define(vanillaElement(name), component);
+    return component;
 }
 exports.launch = launch;
 function createPageComponent(url, name) {
-    fetch(url)
-        .then(res => res.text())
-        .then(html => {
-        load(() => html, name);
+    let component;
+    () => __awaiter(this, void 0, void 0, function* () {
+        const result = yield fetch(url);
+        const html = yield result.text();
+        component = load(() => html, name);
     });
+    return component;
 }
 function load(func, name) {
     if (typeof func === 'string') {
@@ -268,7 +280,7 @@ function load(func, name) {
                 super(func);
             }
         }
-        launch(X, name);
+        return launch(X, name);
     }
     return launch(func, name);
 }
