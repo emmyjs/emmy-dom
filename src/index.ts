@@ -16,8 +16,11 @@ export type ClassComponent = Component | LightComponent;
 type RouteString = `/${string}`;
 type ComponentType = ClassComponent | FunctionalComponent | HTMLGenerator | RouteString;
 
+export function html(strings: TemplateStringsArray, ...values: Array<any>): string {
+    return String.raw(strings, ...values);
+}
 
-function processGenerator (generator: string): string {
+function processGenerator(generator: string): string {
     let processedGenerator = generator.replace(/<\/?[^>]+>/g, match => {
         let element = match.slice(0, -1);
         if (/^[A-Z]/.test(match.slice(1, -1))) {
@@ -35,7 +38,7 @@ function processGenerator (generator: string): string {
     return processedGenerator;
 }
 
-function parseCSS (cssString: string): object {
+function parseCSS(cssString: string): object {
     const styleObj = {};
     cssString.split(';').forEach((declaration) => {
         const [property, value] = declaration.split(':');
@@ -46,7 +49,7 @@ function parseCSS (cssString: string): object {
     return styleObj;
 }
 
-function createInlineStyle (cssString: string | object): string {
+function createInlineStyle(cssString: string | object): string {
     if (typeof cssString !== 'string') return reactToCSS(cssString).trim();
     const styleObj = parseCSS(cssString);
     let inlineStyle = '';
@@ -58,7 +61,7 @@ function createInlineStyle (cssString: string | object): string {
     return inlineStyle.trim();
 }
 
-function vanillaElement (element: string): string {
+function vanillaElement(element: string): string {
     if (/^[A-Z]/.test(element)) {
         element = 'emmy-' + element.toLowerCase();
     }
@@ -137,7 +140,7 @@ export class LightComponent extends EmmyComponent {
     }
 }
 
-export function useState (initialValue): [() => any, (newValue: any) => void] {
+export function useState(initialValue): [() => any, (newValue: any) => void] {
     let value = initialValue;
     const state = () => value;
     const setState = (newValue) => {
@@ -146,7 +149,7 @@ export function useState (initialValue): [() => any, (newValue: any) => void] {
     return [state, setState];
 }
 
-function getValues (dependencies: DependencyArray): Array<any> {
+function getValues(dependencies: DependencyArray): Array<any> {
     return dependencies.map((dependency) => {
         if (typeof dependency === 'function') {
             return dependency();
@@ -155,7 +158,7 @@ function getValues (dependencies: DependencyArray): Array<any> {
     });
 }
 
-export function useEffect (callback: Callback, dependencies: DependencyArray) {
+export function useEffect(callback: Callback, dependencies: DependencyArray) {
     const oldEffectCallback = this.effectCallback;
     if (!dependencies || dependencies.length === 0) {
         this.effectCallback = (component) => {
@@ -187,7 +190,7 @@ export function useEffect (callback: Callback, dependencies: DependencyArray) {
     });
 }
 
-function bindHooks (component: FunctionalComponent) {
+function bindHooks(component: FunctionalComponent) {
     component.useState = useState.bind(component);
     component.useEffect = useEffect.bind(component);
 }
@@ -276,13 +279,13 @@ export class Router extends LightComponent {
     constructor() {
         super();
         this.behave('div');
-        this.className = 'flex flex-col justify-center items-center space-y-3 text-center w-full h-full box-border';
+        this.className = 'flex flex-col justify-center items-center space-y-3 text-center w-full h-fit box-border';
 
         this.handleLocation = () => {
             const path = window.location.pathname;
-            const html = (path === '/' ? Route.routes['/root'] : Route.routes[path])
-                || Route.routes['/404'] || '<h1>404</h1>';
-            if (this.innerHTML !== html) this.innerHTML = html;
+            const htmlText = (path === '/' ? Route.routes['/root'] : Route.routes[path])
+                || Route.routes['/404'] || html`<h1>404</h1>`;
+            if (this.innerHTML !== htmlText) this.innerHTML = htmlText;
         }
 
         window.route = (event) => {
@@ -299,7 +302,7 @@ export class Router extends LightComponent {
     }
 }
 
-export function launch (component: ClassComponent | FunctionalComponent, name: string) {
+export function launch(component: ClassComponent | FunctionalComponent, name: string) {
     if (customElements.get(vanillaElement(name))) {
         console.warn(`Custom element ${vanillaElement(name)} already defined`);
         return component;
@@ -308,17 +311,17 @@ export function launch (component: ClassComponent | FunctionalComponent, name: s
     return component;
 }
 
-function createPageComponent (url: string, name: string): ClassComponent | FunctionalComponent {
+function createPageComponent(url: string, name: string): ClassComponent | FunctionalComponent {
     let component;
     async () => {
         const result = await fetch(url);
-        const html = await result.text();
-        component = load(() => html, name);
+        const htmlText = await result.text();
+        component = load(() => htmlText, name);
     }
     return component;
 }
 
-export function load (func: ComponentType, name: string): ClassComponent | FunctionalComponent {
+export function load(func: ComponentType, name: string): ClassComponent | FunctionalComponent {
     if (typeof func === 'string') {
         return createPageComponent(func, name);
     }

@@ -13,6 +13,7 @@ declare global {
 export type ClassComponent = Component | LightComponent;
 type RouteString = `/${string}`;
 type ComponentType = ClassComponent | FunctionalComponent | HTMLGenerator | RouteString;
+export declare function html(strings: TemplateStringsArray, ...values: Array<any>): string;
 declare abstract class EmmyComponent extends HTMLElement {
     contentGenerator: HTMLGenerator;
     callback: Callback;

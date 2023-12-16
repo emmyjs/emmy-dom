@@ -8,6 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import reactToCSS from 'react-style-object-to-css';
+export function html(strings, ...values) {
+    return String.raw(strings, ...values);
+}
 function processGenerator(generator) {
     let processedGenerator = generator.replace(/<\/?[^>]+>/g, match => {
         let element = match.slice(0, -1);
@@ -219,13 +222,13 @@ export class Router extends LightComponent {
     constructor() {
         super();
         this.behave('div');
-        this.className = 'flex flex-col justify-center items-center space-y-3 text-center w-full h-full box-border';
+        this.className = 'flex flex-col justify-center items-center space-y-3 text-center w-full h-fit box-border';
         this.handleLocation = () => {
             const path = window.location.pathname;
-            const html = (path === '/' ? Route.routes['/root'] : Route.routes[path])
-                || Route.routes['/404'] || '<h1>404</h1>';
-            if (this.innerHTML !== html)
-                this.innerHTML = html;
+            const htmlText = (path === '/' ? Route.routes['/root'] : Route.routes[path])
+                || Route.routes['/404'] || html `<h1>404</h1>`;
+            if (this.innerHTML !== htmlText)
+                this.innerHTML = htmlText;
         };
         window.route = (event) => {
             event.preventDefault();
@@ -251,8 +254,8 @@ function createPageComponent(url, name) {
     let component;
     () => __awaiter(this, void 0, void 0, function* () {
         const result = yield fetch(url);
-        const html = yield result.text();
-        component = load(() => html, name);
+        const htmlText = yield result.text();
+        component = load(() => htmlText, name);
     });
     return component;
 }

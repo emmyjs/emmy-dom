@@ -8,12 +8,12 @@
     <img alt="npm package minimized gzipped size (select exports)" src="https://img.shields.io/bundlejs/size/emmy-dom"/>
     <img alt="tests" src="https://github.com/emmyjs/emmy-dom/actions/workflows/vitest.yml/badge.svg"/>
   </div>
-  <i>A tiny simple front-end library for building web applications.</i>
+  <i>A tiny simple way for building web user interfaces</i>
 </section>
 <hr />
 
 ## Why Emmy.js?
-Emmy.js is a tiny simple front-end library for building web applications. It is based on the [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) standard.
+Emmy.js is a tiny simple way for building web user interfaces. It is based on the [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) standard.
 It is specially designed for building web applications with server-side frameworks like Ruby on Rails, Django, Laravel, etc.
 
 <hr />
@@ -40,16 +40,13 @@ Just add the following script tag to your HTML file:
 Then, use the `emmy-dom` package in your JavaScript files:
 
 ```javascript
-import { LightComponent, launch } from "emmy-dom";
+import { load, html } from "emmy-dom";
 
-class MyComponent extends LightComponent {
-    constructor() {
-        super();
-        render(`<div>Hello World!</div>`);
-    }
+function MyComponent() {
+  return html`<div>Hello World!</div>`;
 }
 
-launch(MyComponent);
+load(MyComponent, 'MyComponent');
 ```
 
 ### Using npm
@@ -62,16 +59,13 @@ npm install emmy-dom
 Then, use the `emmy-dom` package in your JavaScript files:
 
 ```javascript
-import { LightComponent, launch } from "emmy-dom";
+import { load, html } from "emmy-dom";
 
-class MyComponent extends LightComponent {
-    constructor() {
-        super();
-        render(`<div>Hello World!</div>`);
-    }
+function MyComponent() {
+  return html`<div>Hello World!</div>`;
 }
 
-launch(MyComponent);
+load(MyComponent, 'MyComponent');
 ```
 
 ## Release 0.0.3

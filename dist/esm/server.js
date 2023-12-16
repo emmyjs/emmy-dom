@@ -13,6 +13,9 @@ import { writeFileSync } from 'fs';
 //const require = createRequire(import.meta.url);
 const render = require('./ssr');
 require('./ssr/register');
+export function html(strings, ...values) {
+    return String.raw(strings, ...values);
+}
 function processGenerator(generator) {
     let processedGenerator = generator.replace(/<\/?[^>]+>/g, match => {
         let element = match.slice(0, -1);
@@ -228,13 +231,13 @@ export class Router extends LightComponent {
     constructor() {
         super();
         this.behave('div');
-        this.className = 'flex flex-col justify-center items-center space-y-3 text-center w-full h-full box-border';
+        this.className = 'flex flex-col justify-center items-center space-y-3 text-center w-full h-fit box-border';
         this.handleLocation = () => {
             const path = window.location.pathname;
-            const html = (path === '/' ? Route.routes['/root'] : Route.routes[path])
-                || Route.routes['/404'] || '<h1>404</h1>';
-            if (this.innerHTML !== html)
-                this.innerHTML = html;
+            const htmlText = (path === '/' ? Route.routes['/root'] : Route.routes[path])
+                || Route.routes['/404'] || html `<h1>404</h1>`;
+            if (this.innerHTML !== htmlText)
+                this.innerHTML = htmlText;
         };
         window.route = (event) => {
             event.preventDefault();
@@ -260,8 +263,8 @@ function createPageComponent(url, name) {
     let component;
     () => __awaiter(this, void 0, void 0, function* () {
         const result = yield fetch(url);
-        const html = yield result.text();
-        component = load(() => html, name);
+        const htmlText = yield result.text();
+        component = load(() => htmlText, name);
     });
     return component;
 }
@@ -284,8 +287,8 @@ load(Router, 'Router');
 export function renderToString(component) {
     return __awaiter(this, void 0, void 0, function* () {
         const instance = new component();
-        const html = yield render(instance);
-        return html;
+        const htmlText = yield render(instance);
+        return htmlText;
     });
 }
 function capitalizeFirstLetter(str) {
@@ -307,13 +310,13 @@ export function build(component, generators) {
         for (const name in generators) {
             javascript += hydrateScript(generators[name], name);
         }
-        let content = /*html*/ `${ssr}
+        let content = html `${ssr}
     <script type="module">
         import { load } from './dist/esm/index.js';
         ${javascript}
     </script>
     `;
-        writeFileSync('index.html', /*html*/ `<!DOCTYPE html>
+        writeFileSync('index.html', html `<!DOCTYPE html>
     <html>
         <head>
             <title>Emmy DOM</title>

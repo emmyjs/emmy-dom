@@ -12,8 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.load = exports.launch = exports.Router = exports.Route = exports.FunctionalComponent = exports.useEffect = exports.useState = exports.LightComponent = exports.Component = void 0;
+exports.load = exports.launch = exports.Router = exports.Route = exports.FunctionalComponent = exports.useEffect = exports.useState = exports.LightComponent = exports.Component = exports.html = void 0;
 const react_style_object_to_css_1 = __importDefault(require("react-style-object-to-css"));
+function html(strings, ...values) {
+    return String.raw(strings, ...values);
+}
+exports.html = html;
 function processGenerator(generator) {
     let processedGenerator = generator.replace(/<\/?[^>]+>/g, match => {
         let element = match.slice(0, -1);
@@ -231,13 +235,13 @@ class Router extends LightComponent {
     constructor() {
         super();
         this.behave('div');
-        this.className = 'flex flex-col justify-center items-center space-y-3 text-center w-full h-full box-border';
+        this.className = 'flex flex-col justify-center items-center space-y-3 text-center w-full h-fit box-border';
         this.handleLocation = () => {
             const path = window.location.pathname;
-            const html = (path === '/' ? Route.routes['/root'] : Route.routes[path])
-                || Route.routes['/404'] || '<h1>404</h1>';
-            if (this.innerHTML !== html)
-                this.innerHTML = html;
+            const htmlText = (path === '/' ? Route.routes['/root'] : Route.routes[path])
+                || Route.routes['/404'] || html `<h1>404</h1>`;
+            if (this.innerHTML !== htmlText)
+                this.innerHTML = htmlText;
         };
         window.route = (event) => {
             event.preventDefault();
@@ -265,8 +269,8 @@ function createPageComponent(url, name) {
     let component;
     () => __awaiter(this, void 0, void 0, function* () {
         const result = yield fetch(url);
-        const html = yield result.text();
-        component = load(() => html, name);
+        const htmlText = yield result.text();
+        component = load(() => htmlText, name);
     });
     return component;
 }

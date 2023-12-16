@@ -21,6 +21,10 @@ export type ClassComponent = Component | LightComponent;
 type RouteString = `/${string}`;
 type ComponentType = ClassComponent | FunctionalComponent | HTMLGeneratorGenerator | RouteString;
 
+export function html(strings: TemplateStringsArray, ...values: Array<any>): string {
+    return String.raw(strings, ...values);
+}
+
 function processGenerator (generator: string): string {
     let processedGenerator = generator.replace(/<\/?[^>]+>/g, match => {
         let element = match.slice(0, -1);
@@ -285,13 +289,13 @@ export class Router extends LightComponent {
     constructor() {
         super();
         this.behave('div');
-        this.className = 'flex flex-col justify-center items-center space-y-3 text-center w-full h-full box-border';
+        this.className = 'flex flex-col justify-center items-center space-y-3 text-center w-full h-fit box-border';
 
         this.handleLocation = () => {
             const path = window.location.pathname;
-            const html = (path === '/' ? Route.routes['/root'] : Route.routes[path])
-                || Route.routes['/404'] || '<h1>404</h1>';
-            if (this.innerHTML !== html) this.innerHTML = html;
+            const htmlText = (path === '/' ? Route.routes['/root'] : Route.routes[path])
+                || Route.routes['/404'] || html`<h1>404</h1>`;
+            if (this.innerHTML !== htmlText) this.innerHTML = htmlText;
         }
 
         window.route = (event) => {
@@ -321,8 +325,8 @@ function createPageComponent (url: string, name: string): ClassComponent | Funct
     let component;
     async () => {
         const result = await fetch(url);
-        const html = await result.text();
-        component = load(() => html, name);
+        const htmlText = await result.text();
+        component = load(() => htmlText, name);
     }
     return component;
 }
@@ -349,8 +353,8 @@ load(Router as unknown as ComponentType, 'Router');
 
 export async function renderToString(component: ClassComponent | FunctionalComponent): Promise<string> {
     const instance = new (component as any)();
-    const html = await render(instance);
-    return html;
+    const htmlText = await render(instance);
+    return htmlText;
 }
 
 function capitalizeFirstLetter(str: string): string {
@@ -373,13 +377,13 @@ export async function build(component: FunctionalComponent | ClassComponent, gen
     for (const name in generators) {
         javascript += hydrateScript(generators[name], name);
     }
-    let content = /*html*/`${ssr}
+    let content = html`${ssr}
     <script type="module">
         import { load } from './dist/esm/index.js';
         ${javascript}
     </script>
     `;
-    writeFileSync('index.html', /*html*/`<!DOCTYPE html>
+    writeFileSync('index.html', html`<!DOCTYPE html>
     <html>
         <head>
             <title>Emmy DOM</title>
