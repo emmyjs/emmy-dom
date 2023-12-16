@@ -16,18 +16,27 @@
 Emmy.js is a tiny simple way for building web user interfaces. It is based on the [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) standard.
 It is specially designed for building web applications with server-side frameworks like Ruby on Rails, Django, Laravel, etc.
 
+> [!NOTE]
+> Emmy.js is still in an experimental phase, so it is not recommended to use it in production, but you can try it out and give us your feedback.
+
 <hr />
 
-## _Experimental_ `npx create-emmy`
-[create-emmy](https://www.npmjs.com/package/create-emmy) is a command line tool that allows you to create a new emmy.js project.
-It is still in an experimental phase, so it is not recommended to use it in production, but you can try it out and give us your feedback. [More info](https://github.com/emmyjs/create-emmy#readme)
+## `npx create-emmy`
+
+> [!NOTE]  
+> create-emmy is still in an experimental phase, so it is not recommended to use it in production, but you can try it out and give us your feedback.
+
+[create-emmy](https://www.npmjs.com/package/create-emmy) is a command line tool that allows you to create a new Emmy.js project.
+
+For example, to create a new Emmy.js + Vite project called `my-app`, you can run the following command:
+```bash
+npx create-emmy my-app --vanilla --tailwind --run
+```
+[More info](https://github.com/emmyjs/create-emmy#readme)
 
 ## Frameworks Guides
 For your specific framework, see the following guides:
 1. [Ruby on Rails](docs/0.0.2/guides/ruby-on-rails.md)
-
-## Important Notes
-1. Emmy.js is still in an experimental phase, so it is not recommended to use it in production, but you can try it out and give us your feedback.
 
 ## Quick Start
 ### Using CDN
@@ -49,6 +58,8 @@ function MyComponent() {
 load(MyComponent, 'MyComponent');
 ```
 
+This option is recommended for quick testing, but it will not allow you to use the pre-rendering feature.
+
 ### Using npm
 First install the package:
 
@@ -68,7 +79,7 @@ function MyComponent() {
 load(MyComponent, 'MyComponent');
 ```
 
-## Release 0.0.3
+## Release 1.0.0 [Coming Soon]
 It includes the following features:
 1. [Class Components](docs/0.0.3/docs.md)
 2. [Functional Components](docs/0.0.3/docs.md)
@@ -76,6 +87,5 @@ It includes the following features:
 4. [Emmy Hooks](docs/0.0.3/docs.md)
 5. [Load Function](docs/0.0.3/docs.md)
 6. [Emmy Router](docs/0.0.3/docs.md)
-7. **BREAKING CHANGE**: Remove `git clone` support. Now you can use `npx create-emmy` to create a new emmy.js project.
 
 [Release Notes](docs/releases.md)
