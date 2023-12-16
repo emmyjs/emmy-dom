@@ -1,11 +1,11 @@
 <section align="center" style="display: flex; flex-direction: column">
   <h1>Emmy.js</h1>
   <div>
-    <img alt="npm" src="https://img.shields.io/npm/v/emmy-dom"/>
-    <img alt="npm" src="https://img.shields.io/npm/dt/emmy-dom"/>
-    <img alt="NPM" src="https://img.shields.io/npm/l/emmy-dom"/>
-    <img alt="GitHub last commit (by committer)" src="https://img.shields.io/github/last-commit/emmyjs/emmy-dom"/>
-    <img alt="npm package minimized gzipped size (select exports)" src="https://img.shields.io/bundlejs/size/emmy-dom"/>
+    <img alt="version" src="https://img.shields.io/npm/v/emmy-dom"/>
+    <img alt="downloads" src="https://img.shields.io/npm/dt/emmy-dom"/>
+    <img alt="license" src="https://img.shields.io/npm/l/emmy-dom"/>
+    <img alt="github last commit" src="https://img.shields.io/github/last-commit/emmyjs/emmy-dom"/>
+    <img alt="npm package minimized gzipped size" src="https://img.shields.io/bundlejs/size/emmy-dom"/>
     <img alt="tests" src="https://github.com/emmyjs/emmy-dom/actions/workflows/vitest.yml/badge.svg"/>
   </div>
   <i>A tiny simple way for building web user interfaces</i>
@@ -23,17 +23,16 @@ It is specially designed for building web applications with server-side framewor
 
 ## `npx create-emmy`
 
-[create-emmy](https://www.npmjs.com/package/create-emmy) is a command line tool that allows you to create a new Emmy.js project.
+[create-emmy](https://www.npmjs.com/package/create-emmy) is a command line tool that allows you to create a new Emmy.js project. [More info](https://github.com/emmyjs/create-emmy#readme)
 
-For example, to create a new Emmy.js + Vite project called `my-app`, you can run the following command:
+In order to create a new Emmy.js project, you can run the following command and follow the instructions:
 ```bash
-npx create-emmy my-app --vanilla --tailwind --run
+npx create-emmy
 ```
-[More info](https://github.com/emmyjs/create-emmy#readme)
 
 ## Frameworks Guides
 For your specific framework, see the following guides:
-1. [Ruby on Rails](docs/0.0.2/guides/ruby-on-rails.md)
+1. [Ruby on Rails](docs-0.0.3/0.0.2/guides/ruby-on-rails.md)
 
 ## Quick Start
 ### Installation

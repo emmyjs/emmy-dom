@@ -23,14 +23,11 @@ bin/importmap pin emmy-dom@latest --from jsdelivr
 ```
 3. Use the `emmy-dom` package in your JavaScript files:
 ```javascript
-import { LightComponent, launch } from "emmy-dom";
+import { load } from "emmy-dom";
 
-class MyComponent extends LightComponent {
-    constructor() {
-        super();
-        render(`<div>Hello World!</div>`);
-    }
+function MyComponent() {
+  return `<div>Hello World!</div>`;
 }
 
-launch(MyComponent);
+load(MyComponent, 'MyComponent');
 ```
