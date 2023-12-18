@@ -8,10 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import reactToCSS from 'react-style-object-to-css';
-export function html(strings, ...values) {
-    return String.raw(strings, ...values);
-}
-function processGenerator(generator) {
+export const html = String.raw;
+export const javascript = String.raw;
+export function processGenerator(generator) {
     let processedGenerator = generator.replace(/<\/?[^>]+>/g, match => {
         let element = match.slice(0, -1);
         if (/^[A-Z]/.test(match.slice(1, -1))) {
@@ -28,7 +27,7 @@ function processGenerator(generator) {
     });
     return processedGenerator;
 }
-function parseCSS(cssString) {
+export function parseCSS(cssString) {
     const styleObj = {};
     cssString.split(';').forEach((declaration) => {
         const [property, value] = declaration.split(':');
@@ -38,7 +37,7 @@ function parseCSS(cssString) {
     });
     return styleObj;
 }
-function createInlineStyle(cssString) {
+export function createInlineStyle(cssString) {
     if (typeof cssString !== 'string')
         return reactToCSS(cssString).trim();
     const styleObj = parseCSS(cssString);
@@ -50,12 +49,35 @@ function createInlineStyle(cssString) {
     }
     return inlineStyle.trim();
 }
-function vanillaElement(element) {
+export function vanillaElement(element) {
     if (/^[A-Z]/.test(element)) {
         element = 'emmy-' + element.toLowerCase();
     }
     return element;
 }
+export function getValues(dependencies) {
+    return dependencies.map((dependency) => {
+        if (typeof dependency === 'function') {
+            return dependency();
+        }
+        return dependency;
+    });
+}
+export function useState(initialValue) {
+    let value = initialValue;
+    const state = () => value;
+    const setState = (newValue) => {
+        value = newValue;
+    };
+    return [state, setState];
+}
+export function capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+export function uncapitalizeFirstLetter(str) {
+    return str.charAt(0).toLowerCase() + str.slice(1);
+}
+export const routerClassNames = 'flex flex-col justify-center items-center space-y-3 text-center w-full h-fit box-border';
 class EmmyComponent extends HTMLElement {
     constructor() {
         super();
@@ -107,22 +129,6 @@ export class LightComponent extends EmmyComponent {
     querySelector(selector) {
         return HTMLElement.prototype.querySelector.call(this, vanillaElement(selector));
     }
-}
-export function useState(initialValue) {
-    let value = initialValue;
-    const state = () => value;
-    const setState = (newValue) => {
-        value = newValue;
-    };
-    return [state, setState];
-}
-function getValues(dependencies) {
-    return dependencies.map((dependency) => {
-        if (typeof dependency === 'function') {
-            return dependency();
-        }
-        return dependency;
-    });
 }
 export function useEffect(callback, dependencies) {
     const oldEffectCallback = this.effectCallback;
@@ -222,7 +228,7 @@ export class Router extends LightComponent {
     constructor() {
         super();
         this.behave('div');
-        this.className = 'flex flex-col justify-center items-center space-y-3 text-center w-full h-fit box-border';
+        this.className = routerClassNames;
         this.handleLocation = () => {
             const path = window.location.pathname;
             const htmlText = (path === '/' ? Route.routes['/root'] : Route.routes[path])
@@ -263,7 +269,14 @@ export function load(func, name) {
     if (typeof func === 'string') {
         return createPageComponent(func, name);
     }
-    if (typeof func === 'function') {
+    try {
+        const instance = new func();
+        if (instance instanceof Component || instance instanceof LightComponent || instance instanceof FunctionalComponent) {
+            return launch(func, name);
+        }
+        throw new Error('Not a valid component');
+    }
+    catch (e) {
         class X extends FunctionalComponent {
             constructor() {
                 super(func);
@@ -271,7 +284,6 @@ export function load(func, name) {
         }
         return launch(X, name);
     }
-    return launch(func, name);
 }
-load(Route, 'Route');
-load(Router, 'Router');
+launch(Route, 'Route');
+launch(Router, 'Router');
