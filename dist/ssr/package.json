@@ -1,0 +1,43 @@
+{
+  "author": "Trey Shugart <treshugart@gmail.com> (https://github.com/treshugart)",
+  "bin": "./bin/index",
+  "bugs": "https://github.com/skatejs/skatejs/issues",
+  "dependencies": {
+    "babel-register": "6.26.0",
+    "glob": "10.3.10",
+    "jest-environment-node": "29.7.0",
+    "js-beautify": "1.14.11",
+    "mkdirp": "3.0.1",
+    "outdent": "0.8.0",
+    "parse5": "7.1.2",
+    "preact": "10.19.2",
+    "uglify-js": "3.17.4",
+    "undom": "0.4.0",
+    "yargs": "17.7.2"
+  },
+  "description": "Server-side render your web components.",
+  "devDependencies": {
+    "@skatejs/val": "0.5.0"
+  },
+  "files": [
+    "bin",
+    "perf",
+    "register",
+    "index.js",
+    "jest.js",
+    "utils.js"
+  ],
+  "homepage": "https://skatejs.netlify.com",
+  "keywords": [
+    "web",
+    "components",
+    "custom",
+    "elements",
+    "shadow",
+    "dom"
+  ],
+  "license": "MIT",
+  "name": "@skatejs/ssr",
+  "repository": "skatejs/skatejs",
+  "version": "0.19.11"
+}

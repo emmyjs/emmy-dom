@@ -6,10 +6,11 @@
     "esModuleInterop": true,
     "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist/esm",
+    "outDir": "./dist",
     "declaration": true
   },
   "include": [
-    "./src"
+    "./src",
+    "./src/**/*"
   ]
 }

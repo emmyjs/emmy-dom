@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { Component, LightComponent, useState } from "../dist/esm/index.js";
+import { Component, LightComponent, useState } from "../dist/index.js";
 import { HTMLElement } from "happy-dom";
 
 function awaitDidMount(componentName) {

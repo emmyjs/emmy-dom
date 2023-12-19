@@ -12,7 +12,8 @@
   },
   "scripts": {
     "tsc": "tsc -p tsconfig.json",
-    "build": "npm run tsc && vitest run",
+    "cpdir": "cp -r ./src/ssr ./dist/ssr",
+    "build": "npm run tsc && npm run cpdir && vitest run",
     "co": "npm run build && git add . && sui-mono commit && git push",
     "test": "vitest",
     "coverage": "vitest run --coverage",

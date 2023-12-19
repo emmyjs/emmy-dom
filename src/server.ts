@@ -380,7 +380,7 @@ load(Router as unknown as ClassComponent, 'Router');
 
 export async function renderToString(component: ClassComponent | FunctionalComponent): Promise<string> {
   const instance = new (component as any)();
-  const htmlText = await render(instance);
+  const htmlText = await (render as any)(instance);
   return htmlText;
 }
 
