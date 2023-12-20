@@ -24,10 +24,10 @@ It is specially designed for building web applications with server-side framewor
 
 [create-emmy](https://www.npmjs.com/package/create-emmy) is a command line tool that allows you to create a new Emmy.js project. [More info](https://github.com/emmyjs/create-emmy#readme)
 
-In order to create a new Emmy.js project, you can run the following command and follow the instructions:
-```bash
-npx create-emmy
-```
+> [!TIP]
+> create-emmy 0.1.0 is now here! Try prerendering in a Vanilla Emmy app now!
+> In order to create a new Emmy.js project, you can run the following command and follow the instructions:
+> `npx create-emmy`
 
 ## Frameworks Guides
 For your specific framework, see the following guides:
@@ -67,12 +67,12 @@ load(MyComponent, 'MyComponent');
 
 ## Release 0.1.1
 It includes the following features:
-1. [Class Components]()
-2. [Functional Components]()
-3. [Page Components]()
-4. [Emmy Hooks]()
-5. [Emmy Router]()
-6. [Pre-rendering]()
-7. [Compatibility with server-side frameworks]()
+1. [Class Components](docs-0.0.3/0.0.3/docs.md)
+2. [Functional Components](docs-0.0.3/0.0.3/docs.md)
+3. [Page Components](docs-0.0.3/0.0.3/docs.md)
+4. [Emmy Hooks](docs-0.0.3/0.0.3/docs.md)
+5. [Emmy Router](docs-0.0.3/0.0.3/docs.md)
+6. [Pre-rendering](docs-0.0.3/0.0.3/docs.md)
+7. [Compatibility with server-side frameworks](docs-0.0.3/0.0.3/docs.md)
 
 [Release Notes](docs-0.0.3/releases.md)

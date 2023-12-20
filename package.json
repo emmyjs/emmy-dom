@@ -1,9 +1,9 @@
 {
   "name": "emmy-dom",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A tiny simple front-end library for building web applications",
   "main": "dist/index.js",
-  "module": "dist/index.js",
+  "type": "module",
   "files": [
     "dist/"
   ],
