@@ -5,7 +5,6 @@
     <img alt="downloads" src="https://img.shields.io/npm/dt/emmy-dom"/>
     <img alt="license" src="https://img.shields.io/npm/l/emmy-dom"/>
     <img alt="github last commit" src="https://img.shields.io/github/last-commit/emmyjs/emmy-dom"/>
-    <img alt="npm package minimized gzipped size" src="https://img.shields.io/bundlejs/size/emmy-dom"/>
     <img alt="tests" src="https://github.com/emmyjs/emmy-dom/actions/workflows/vitest.yml/badge.svg"/>
   </div>
   <i>A tiny simple way for building web user interfaces</i>
@@ -66,7 +65,7 @@ function MyComponent() {
 load(MyComponent, 'MyComponent');
 ```
 
-## Release 0.1.0 [Coming Soon]
+## Release 0.1.1
 It includes the following features:
 1. [Class Components]()
 2. [Functional Components]()
