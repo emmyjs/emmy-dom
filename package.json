@@ -15,6 +15,8 @@
     "cpdir": "cp -r ./src/ssr ./dist/",
     "build": "npm run tsc && npm run cpdir && vitest run && npm run lint",
     "co": "npm run build && git add . && sui-mono commit && git push",
+    "check": "sui-mono check",
+    "release": "sui-mono release",
     "lint": "eslint --ext .ts,.tsx ./src",
     "test": "vitest",
     "coverage": "vitest run --coverage",
