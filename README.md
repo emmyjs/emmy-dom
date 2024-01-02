@@ -67,6 +67,11 @@ function MyComponent() {
 load(MyComponent, 'MyComponent');
 ```
 
+## Documentation
+You can find the documentation [here](docs-0.0.3/0.0.3/docs.md).
+
+[Tutorial](https://www.youtube.com/watch?v=rOxAJ9c068c)
+
 ## Contributing
 We are open to contributions. If you want to contribute, please read the [contributing guide](CONTRIBUTING.md).
 

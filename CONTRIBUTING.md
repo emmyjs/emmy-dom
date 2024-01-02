@@ -40,7 +40,7 @@ git checkout -b your-feature-name
 npm run co
 ```
 
-[!IMPORTANT]
+> [!IMPORTANT]
 > Ensure that your changes pass the existing tests.
 
 This command is equivalent to:
