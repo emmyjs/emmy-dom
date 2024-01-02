@@ -3,6 +3,8 @@
     "Tobermory.es6-string-html",
     "zjcompt.es6-string-javascript",
     "GitHub.copilot",
-    "shd101wyy.markdown-preview-enhanced"
+    "shd101wyy.markdown-preview-enhanced",
+    "usernamehw.errorlens",
+    "dbaeumer.vscode-eslint"
   ]
 }

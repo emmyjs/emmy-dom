@@ -11,16 +11,16 @@ import reactToCSS from 'react-style-object-to-css';
 export const html = String.raw;
 export const javascript = String.raw;
 export function processGenerator(generator) {
-    let processedGenerator = generator.replace(/<\/?[^>]+>/g, match => {
-        let element = match.slice(0, -1);
+    const processedGenerator = generator.replace(/<\/?[^>]+>/g, match => {
+        const element = match.slice(0, -1);
         if (/^[A-Z]/.test(match.slice(1, -1))) {
-            let name = element.split(' ')[0].slice(1);
-            let attributes = element.split(' ').slice(1);
+            const name = element.split(' ')[0].slice(1);
+            const attributes = element.split(' ').slice(1);
             return `<emmy-${name.toLowerCase()} ${attributes.join(' ')}>`;
         }
         else if (/^[A-Z]/.test(match.slice(2, -2))) {
-            let name = element.split(' ')[0].slice(2);
-            let attributes = element.split(' ').slice(1);
+            const name = element.split(' ')[0].slice(2);
+            const attributes = element.split(' ').slice(1);
             return `</emmy-${name.toLowerCase()} ${attributes.join(' ')}>`;
         }
         return match;
@@ -29,7 +29,7 @@ export function processGenerator(generator) {
 }
 export function parseCSS(cssString) {
     const styleObj = {};
-    cssString.split(';').forEach((declaration) => {
+    cssString.split('').forEach((declaration) => {
         const [property, value] = declaration.split(':');
         if (property && value) {
             styleObj[property.trim()] = value.trim();
@@ -44,7 +44,7 @@ export function createInlineStyle(cssString) {
     let inlineStyle = '';
     for (const property in styleObj) {
         if (styleObj.hasOwnProperty(property)) {
-            inlineStyle += `${property}: ${styleObj[property]}; `;
+            inlineStyle += `${property}: ${styleObj[property]} `;
         }
     }
     return inlineStyle.trim();
@@ -81,10 +81,10 @@ export const routerClassNames = 'flex flex-col justify-center items-center space
 /*
 import { type DependencyArray, type RouteString, type StyleObject,
   html, javascript, createInlineStyle, processGenerator,
-  vanillaElement, getValues, useState, capitalizeFirstLetter, uncapitalizeFirstLetter, routerClassNames } from './utils.ts';
+  vanillaElement, getValues, useState, capitalizeFirstLetter, uncapitalizeFirstLetter, routerClassNames } from './utils.ts'
 */
 import { readFileSync, writeFileSync } from 'fs';
-import { createRequire } from "module";
+import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const render = require('./ssr');
 require('./ssr/register');
@@ -118,7 +118,7 @@ class EmmyComponent extends HTMLElement {
         }
     }
     querySelector(selector) {
-        this.setAttribute(`emmy-hydratation`, 'true');
+        this.setAttribute('emmy-hydratation', 'true');
         return this;
     }
 }
@@ -212,10 +212,10 @@ export class FunctionalComponent extends LightComponent {
         return JSON.parse(this.getAttribute('state').replace(/'/g, '"') || '');
     }
     setState(newState) {
-        this.setAttribute('state', JSON.stringify(newState).replace(/"/g, "'"));
+        this.setAttribute('state', JSON.stringify(newState).replace(/"/g, '\''));
     }
     __querySelector(selector) {
-        let element = HTMLElement.prototype.querySelector.call(this, vanillaElement(selector));
+        const element = HTMLElement.prototype.querySelector.call(this, vanillaElement(selector));
         element.__proto__.addEventListener = (event, callback) => {
             const newCallback = (event) => {
                 callback(event);
@@ -229,9 +229,9 @@ export class FunctionalComponent extends LightComponent {
 export class Route extends LightComponent {
     constructor() {
         super();
-        this.render(``, () => {
-            let to = this.getAttribute('to') || '';
-            const componentName = "emmy-" + to.toLowerCase();
+        this.render('', () => {
+            const to = this.getAttribute('to') || '';
+            const componentName = 'emmy-' + to.toLowerCase();
             const path = (this.getAttribute('href') === '/') ? '/root' : this.getAttribute('href') || '/404';
             Route.routes[path] = `<${componentName}></${componentName}>`;
         });
@@ -259,7 +259,7 @@ export class Router extends LightComponent {
             this.handleLocation();
         };
         window.onpopstate = this.handleLocation;
-        this.render(``, () => this.handleLocation());
+        this.render('', () => this.handleLocation());
     }
 }
 export function launch(component, name) {
@@ -311,10 +311,10 @@ export function renderToString(component) {
 function hydrateScript(generator, name) {
     return javascript `
     ${String(generator)}
-    load(${uncapitalizeFirstLetter(name)}, '${capitalizeFirstLetter(name)}');
+    load(${uncapitalizeFirstLetter(name)}, '${capitalizeFirstLetter(name)}')
     document.querySelectorAll('${vanillaElement(capitalizeFirstLetter(name))}').forEach((element) => {
-      element.connectedCallback();
-    });
+      element.connectedCallback()
+    })
   `;
 }
 export function build({ dependencies, template, app, generators, path }) {
@@ -329,7 +329,7 @@ export function build({ dependencies, template, app, generators, path }) {
                 continue;
             javascriptString += hydrateScript(generators[name], name);
         }
-        let content = html `${ssr}
+        const content = html `${ssr}
     <script type="module">
       ${dependencies}
       ${javascriptString}

@@ -2,3 +2,4 @@
 coverage/
 app.ts
 index.html
+package-lock.json
