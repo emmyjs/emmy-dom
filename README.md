@@ -67,7 +67,13 @@ function MyComponent() {
 load(MyComponent, 'MyComponent');
 ```
 
-## Release 0.1.1
+## Contributing
+We are open to contributions. If you want to contribute, please read the [contributing guide](CONTRIBUTING.md).
+
+## License
+Emmy.js is licensed under the [MIT License](LICENSE).
+
+## Release 0.1.2
 It includes the following features:
 1. [Class Components](docs-0.0.3/0.0.3/docs.md)
 2. [Functional Components](docs-0.0.3/0.0.3/docs.md)
