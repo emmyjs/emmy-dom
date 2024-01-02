@@ -12,9 +12,10 @@
   },
   "scripts": {
     "tsc": "tsc -p tsconfig.json",
-    "cpdir": "cp -r ./src/ssr ./dist/ssr",
-    "build": "npm run tsc && npm run cpdir && vitest run",
+    "cpdir": "cp -r ./src/ssr ./dist/",
+    "build": "npm run tsc && npm run cpdir && vitest run && npm run lint",
     "co": "npm run build && git add . && sui-mono commit && git push",
+    "lint": "eslint --ext .ts,.tsx ./src",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "prepublishOnly": "npm run build"
