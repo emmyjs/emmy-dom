@@ -1,4 +1,5 @@
 import reactToCSS from 'react-style-object-to-css';
+import fs from 'node:fs';
 
 export type DependencyArray = Array<(() => any) | any>;
 export type RouteString = `/${string}`;
@@ -112,7 +113,8 @@ export type BuildOptions = {
   template: string,
   app: FunctionalComponent | ClassComponent,
   generators: { [key: string]: HTMLGeneratorGenerator },
-  path?: string
+  path?: string,
+  folder: string
 }
 
 abstract class EmmyComponent extends HTMLElement {
@@ -387,14 +389,33 @@ export async function renderToString(component: ClassComponent | FunctionalCompo
 function hydrateScript(generator: HTMLGeneratorGenerator, name: string) {
   return javascript`
     ${String(generator)}
-    load(${uncapitalizeFirstLetter(name)}, '${capitalizeFirstLetter(name)}');
+    load(${name}, '${capitalizeFirstLetter(name)}');
     document.querySelectorAll('${vanillaElement(capitalizeFirstLetter(name))}').forEach((element) => {
       element.connectedCallback();
     });
   `;
 }
 
-export async function build ({ dependencies, template, app, generators, path }: BuildOptions) {
+// Recursive function to get files
+function getFiles(dir: string, files: Array<string> = []) {
+  // Get an array of all files and directories in the passed directory using fs.readdirSync
+  const fileList = fs.readdirSync(dir);
+  // Create the full path of the file/directory by concatenating the passed directory and file/directory name
+  for (const file of fileList) {
+    const name = `${dir}/${file}`;
+    // Check if the current file/directory is a directory using fs.statSync
+    if (fs.statSync(name).isDirectory()) {
+      // If it is a directory, recursively call the getFiles function with the directory path and the files array
+      getFiles(name, files);
+    } else {
+      // If it is a file, push the full path to the files array
+      files.push(name);
+    }
+  }
+  return files;
+}
+
+export async function build ({ dependencies, template, app, generators, path, folder }: BuildOptions) {
   if (!path) path = 'index.html';
   const templateString = readFileSync(template, 'utf-8');
   const ssr = await renderToString(app);
@@ -409,6 +430,15 @@ export async function build ({ dependencies, template, app, generators, path }: 
       ${javascriptString}
     </script>
   `;
+  if (folder) {
+    //read all files in folder and add them to content, recursively
+    const files = getFiles(folder);
+    files.forEach((file) => {
+      console.log(file);
+      const fileString = readFileSync(file, 'utf-8');
+      content += html`${fileString.replace('emmy-dom/dist/server.js', 'emmy-dom')}`;
+    });
+  }
   const htmlString = templateString.replace('{content}', content);
   writeFileSync(path, htmlString);
 }

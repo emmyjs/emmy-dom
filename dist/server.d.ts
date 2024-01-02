@@ -36,6 +36,7 @@ export type BuildOptions = {
         [key: string]: HTMLGeneratorGenerator;
     };
     path?: string;
+    folder: string;
 };
 declare abstract class EmmyComponent extends HTMLElement {
     contentGenerator: HTMLGenerator;
@@ -86,5 +87,5 @@ export declare class Router extends LightComponent {
 export declare function launch(component: ClassComponent | FunctionalComponent, name: string): ClassComponent | FunctionalComponent;
 export declare function load(func: ComponentType, name: string): ClassComponent | FunctionalComponent;
 export declare function renderToString(component: ClassComponent | FunctionalComponent): Promise<string>;
-export declare function build({ dependencies, template, app, generators, path }: BuildOptions): Promise<void>;
+export declare function build({ dependencies, template, app, generators, path, folder }: BuildOptions): Promise<void>;
 export {};
