@@ -1,6 +1,8 @@
 <section align="center" style="display: flex; flex-direction: column">
   <h1>Emmy.js</h1>
   <div>
+    <a href="https://github.com/firstcontributions/open-source-badges" alt="Open Source Love"><img src="https://firstcontributions.github.io/open-source-badges/badges/open-source-v1/open-source.svg" />
+    </a>
     <img alt="version" src="https://img.shields.io/npm/v/emmy-dom"/>
     <img alt="downloads" src="https://img.shields.io/npm/dt/emmy-dom"/>
     <img alt="license" src="https://img.shields.io/npm/l/emmy-dom"/>
