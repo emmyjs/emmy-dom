@@ -8,7 +8,8 @@
     "dist/"
   ],
   "directories": {
-    "dist": "dist"
+    "dist": "dist",
+    "doc": "docs"
   },
   "scripts": {
     "tsc": "tsc -p tsconfig.json",
@@ -16,7 +17,7 @@
     "build": "npm run tsc && npm run cpdir && vitest run && npm run lint",
     "co": "npm run build && git add . && sui-mono commit && git push",
     "check": "sui-mono check",
-    "release": "sui-mono release",
+    "release": "node scripts/release.js",
     "lint": "eslint --ext .ts,.tsx ./src",
     "test": "vitest",
     "coverage": "vitest run --coverage",
