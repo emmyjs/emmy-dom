@@ -60,11 +60,11 @@ Then, use the `emmy-dom` package in your JavaScript files:
 ```javascript
 import { load, html } from "emmy-dom";
 
-function MyComponent() {
+const myComponent = () =>  {
   return html`<div>Hello World!</div>`;
 }
 
-load(MyComponent, 'MyComponent');
+load(myComponent, 'MyComponent');
 ```
 
 ## Documentation
@@ -78,14 +78,16 @@ We are open to contributions. If you want to contribute, please read the [contri
 ## License
 Emmy.js is licensed under the [MIT License](LICENSE).
 
-## Release 0.1.2
+## Release 1.0.0
 It includes the following features:
-1. [Class Components](docs-0.0.3/0.0.3/docs.md)
-2. [Functional Components](docs-0.0.3/0.0.3/docs.md)
-3. [Page Components](docs-0.0.3/0.0.3/docs.md)
-4. [Emmy Hooks](docs-0.0.3/0.0.3/docs.md)
-5. [Emmy Router](docs-0.0.3/0.0.3/docs.md)
-6. [Pre-rendering](docs-0.0.3/0.0.3/docs.md)
-7. [Compatibility with server-side frameworks](docs-0.0.3/0.0.3/docs.md)
+1. [Class Components](docs/1.0.0.md)
+2. [Functional Components](docs/1.0.0.md)
+3. [Page Components](docs/1.0.0.md)
+4. [Emmy Hooks](docs/1.0.0.md)
+5. [Emmy Router](docs/1.0.0.md)
+6. [Pre-rendering](docs/1.0.0.md)
+7. [Compatibility with server-side frameworks](docs/1.0.0.md)
 
-[Release Notes](docs-0.0.3/releases.md)
+**Breaking changes:**
+1. `behave` method is no longer supported, use the platform `is` attribute instead.
+2. Now `this` is not an argument of the functional components. If you want to access the `this` object, you can use the `function` keyword instead of the arrow function, or the use the `el` attribute of the argument.
