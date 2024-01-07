@@ -239,8 +239,25 @@ export class FunctionalComponent extends LightComponent {
     this.effectCallback = (component: FunctionalComponent) => {}
     bindHooks.call(this, this)
     this.setState({ rerenderCount: 0 })
-    const renderFunctionOrString = func.call(this, this)
+    const renderFunctionOrString = func.call(this, {el: this, props: () => this.props})
     this.render(renderFunctionOrString)
+  }
+
+  get props() {
+    return Array.from(this.attributes).reduce((acc, attr) => {
+      const name = attr.name as any === 'class' ? 'className' : attr.name
+      return { ...acc, [name]: () => this.getAttribute(attr.name) }
+    }, {})
+  }
+
+  set props(props: object) {
+    for (const [key, value] of Object.entries(props)) {
+      if (key === 'className') {
+        this.className = value
+        continue
+      }
+      this.setAttribute(key, value)
+    }
   }
 
   connectedCallback() {

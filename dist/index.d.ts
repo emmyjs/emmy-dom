@@ -54,6 +54,8 @@ export declare class FunctionalComponent extends LightComponent {
     useState: (initialValue: any) => [() => any, (newValue: any) => void];
     useEffect: (callback: Callback, dependencies: DependencyArray) => void;
     constructor(func: HTMLGenerator);
+    get props(): object;
+    set props(props: object);
     connectedCallback(): void;
     static get observedAttributes(): string[];
     attributeChangedCallback(name: any, oldValue: any, newValue: any): void;
