@@ -136,10 +136,6 @@ abstract class EmmyComponent extends HTMLElement {
     }
   }
 
-  behave(element: string) {
-    this.setAttribute('is', element)
-  }
-
   abstract connectedCallback(): void
 
   render(generator: string | HTMLGenerator, callback?: Callback) {
@@ -328,7 +324,6 @@ export class Router extends LightComponent {
 
   constructor() {
     super()
-    this.behave('div')
     this.className = routerClassNames
 
     this.handleLocation = () => {

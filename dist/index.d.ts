@@ -34,7 +34,6 @@ declare abstract class EmmyComponent extends HTMLElement {
     Style: StyleObject;
     constructor();
     addStyle(style: StyleObject): void;
-    behave(element: string): void;
     abstract connectedCallback(): void;
     render(generator: string | HTMLGenerator, callback?: Callback): void;
     abstract querySelector(selector: string): HTMLElement | null;

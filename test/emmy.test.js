@@ -37,9 +37,6 @@ describe('Component', () => {
   it('should have a addStyle method', () => {
     expect(new Component().addStyle).toBeDefined()
   })
-  it('should have a behave method', () => {
-    expect(new Component().behave).toBeDefined()
-  })
   it('should have a Style property', () => {
     expect(new Component().Style).toBeDefined()
   })
@@ -84,20 +81,6 @@ describe('Component', () => {
       document.body.innerHTML = '<emmy-a></emmy-a>'
       return document.querySelector('emmy-a').Style['this']
     })()).toBe('background-color: red;')
-  })
-  it('behave method should set the is attribute', () => {
-    expect((() => {
-      class A extends Component {
-        constructor() {
-          super()
-          this.render('<div></div>')
-          this.behave('div')
-        }
-      }
-      customElements.define('emmy-a', A)
-      document.body.innerHTML = '<emmy-a></emmy-a>'
-      return document.querySelector('emmy-a').getAttribute('is')
-    })()).toBe('div')
   })
   it('querySelector method should return an HTMLElement', () => {
     expect((() => {
@@ -147,9 +130,6 @@ describe('LightComponent', () => {
   it('should have a addStyle method', () => {
     expect(new LightComponent().addStyle).toBeDefined()
   })
-  it('should have a behave method', () => {
-    expect(new LightComponent().behave).toBeDefined()
-  })
   it('should have a Style property', () => {
     expect(new LightComponent().Style).toBeDefined()
   })
@@ -194,20 +174,6 @@ describe('LightComponent', () => {
       document.body.innerHTML = '<emmy-a></emmy-a>'
       return document.querySelector('emmy-a').Style['this']
     })()).toBe('background-color: red;')
-  })
-  it('behave method should set the is attribute', () => {
-    expect((() => {
-      class A extends LightComponent {
-        constructor() {
-          super()
-          this.render(() => '<div></div>')
-          this.behave('div')
-        }
-      }
-      customElements.define('emmy-a', A)
-      document.body.innerHTML = '<emmy-a></emmy-a>'
-      return document.querySelector('emmy-a').getAttribute('is')
-    })()).toBe('div')
   })
   it('querySelector method should return an HTMLElement', () => {
     expect((() => {
@@ -299,9 +265,6 @@ describe('FunctionalComponent', () => {
   it('should have a addStyle method', () => {
     expect(new FunctionalComponent(() => '').addStyle).toBeDefined()
   })
-  it('should have a behave method', () => {
-    expect(new FunctionalComponent(() => '').behave).toBeDefined()
-  })
   it('should have a Style property', () => {
     expect(new FunctionalComponent(() => '').Style).toBeDefined()
   })
@@ -345,19 +308,6 @@ describe('FunctionalComponent', () => {
       return document.querySelector('emmy-a').Style['this']
     })()).toBe('background-color: red;')
   })
-  it('behave method should set the is attribute', () => {
-    expect((() => {
-      class A extends FunctionalComponent {
-        constructor() {
-          super(() => '<div></div>')
-          this.behave('div')
-        }
-      }
-      customElements.define('emmy-a', A)
-      document.body.innerHTML = '<emmy-a></emmy-a>'
-      return document.querySelector('emmy-a').getAttribute('is')
-    })()).toBe('div')
-  })
   it('querySelector method should return an HTMLElement', () => {
     expect((() => {
       class A extends FunctionalComponent {
@@ -399,5 +349,16 @@ describe('FunctionalComponent', () => {
       document.body.innerHTML = '<emmy-b></emmy-b>'
       return document.querySelector('emmy-b').querySelector('div')
     })()).toBeDefined()
+  })
+  it ('should render with functional syntax and props', () => {
+    expect((() => {
+      function a({ props }) {
+        return `<div>${props().state()}</div>`
+      }
+      load(a, 'C')
+      document.body.innerHTML = '<emmy-c></emmy-c>'
+      awaitDidMount('emmy-c')
+      return String(document.querySelector('emmy-c').querySelector('div'))
+    })()).toBe('<div>{\'rerenderCount\':0}</div>')
   })
 })

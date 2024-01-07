@@ -103,9 +103,6 @@ class EmmyComponent extends HTMLElement {
             }
         }
     }
-    behave(element) {
-        this.setAttribute('is', element);
-    }
     render(generator, callback) {
         if (typeof generator !== 'function') {
             this.contentGenerator = () => generator;
@@ -256,7 +253,6 @@ Route.routes = {};
 export class Router extends LightComponent {
     constructor() {
         super();
-        this.behave('div');
         this.className = routerClassNames;
         this.handleLocation = () => {
             const path = window.location.pathname;
