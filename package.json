@@ -37,12 +37,12 @@
   "bugs": {
     "url": "https://github.com/emmyjs/emmy-dom/issues"
   },
-  "homepage": "https://emmyjs.github.io/",
+  "homepage": "https://emmyjs.pages.dev/",
   "devDependencies": {
     "@s-ui/mono": "2.41.0",
     "@types/eslint": "8.44.7",
-    "@typescript-eslint/eslint-plugin": "^6.17.0",
-    "@typescript-eslint/parser": "^6.17.0",
+    "@typescript-eslint/eslint-plugin": "6.17.0",
+    "@typescript-eslint/parser": "6.17.0",
     "@vitest/coverage-v8": "0.34.6",
     "eslint": "8.56.0",
     "happy-dom": "12.10.3",

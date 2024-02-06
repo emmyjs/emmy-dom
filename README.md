@@ -78,7 +78,7 @@ We are open to contributions. If you want to contribute, please read the [contri
 ## License
 Emmy.js is licensed under the [MIT License](LICENSE).
 
-## Release 1.0.0
+## Release 1.0.1
 It includes the following features:
 1. [Class Components](docs/1.0.0.md)
 2. [Functional Components](docs/1.0.0.md)
