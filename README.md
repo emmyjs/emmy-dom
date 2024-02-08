@@ -15,7 +15,7 @@
 
 ## Why Emmy.js?
 Emmy.js is a tiny simple way for building web user interfaces. It is based on the [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) standard.
-It is specially designed for building web applications with server-side frameworks like Ruby on Rails, Django, Laravel, etc.
+It is specially designed for building web applications with server-side frameworks like Ruby on Rails, Django, Laravel, etc. [More info](https://emmyjs.pages.dev/docs)
 
 <hr />
 
@@ -58,13 +58,13 @@ npm install emmy-dom
 Then, use the `emmy-dom` package in your JavaScript files:
 
 ```javascript
-import { load, html } from "emmy-dom";
+import { load, html } from "emmy-dom"
 
 const myComponent = () =>  {
-  return html`<div>Hello World!</div>`;
+  return html`<div>Hello World!</div>`
 }
 
-load(myComponent, 'MyComponent');
+load(myComponent, 'MyComponent')
 ```
 
 ## Documentation
@@ -87,7 +87,3 @@ It includes the following features:
 5. [Emmy Router](https://emmyjs.pages.dev/documentation)
 6. [Pre-rendering](https://emmyjs.pages.dev/documentation)
 8. [Compatibility with server-side frameworks](https://emmyjs.pages.dev/documentation)
-
-**Breaking changes:**
-1. `behave` method is no longer supported, use the platform `is` attribute instead.
-2. Now `this` is not an argument of the functional components. If you want to access the `this` object, you can use the `function` keyword instead of the arrow function, or the use the `el` attribute of the argument.
