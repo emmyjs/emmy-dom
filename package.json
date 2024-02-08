@@ -8,8 +8,7 @@
     "dist/"
   ],
   "directories": {
-    "dist": "dist",
-    "doc": "docs"
+    "dist": "dist"
   },
   "scripts": {
     "tsc": "tsc -p tsconfig.json",
