@@ -1,6 +1,19 @@
 # CHANGELOG
 
+# 1.1.0 (2024-02-08)
+
+
+### Features
+
+* **Root:** Add Auto-close tags feat ([a1546a0](https://github.com/emmyjs/emmy-dom/commit/a1546a00e16b667bffa2a78e4a80e1e148612543))
+
+
+
 # 1.0.0 (2024-01-07)
+
+
+
+# [1.0.0](https://github.com/emmyjs/emmy-dom/compare/0.1.2...1.0.0) (2024-01-07)
 
 
 ### Bug Fixes
