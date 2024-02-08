@@ -11,8 +11,8 @@ const {
   checkIsMonoPackage,
   getChangelogFilename,
   getPublishAccess
-} = require('../src/config.js')
-const checker = require('../src/check.js')
+} = require('../node_modules/@s-ui/mono/src/config.js')
+const checker = require('../node_modules/@s-ui/mono/src/check.js')
 
 program
   .option('-S, --scope <scope>', 'release a single scope')

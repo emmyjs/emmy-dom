@@ -17,7 +17,7 @@
     "build": "npm run tsc && npm run cpdir && vitest run && npm run lint",
     "co": "npm run build && git add . && sui-mono commit && git push",
     "check": "sui-mono check",
-    "release": "node scripts/release.js",
+    "release": "node scripts/release.cjs",
     "lint": "eslint --ext .ts,.tsx ./src",
     "test": "vitest",
     "coverage": "vitest run --coverage",
