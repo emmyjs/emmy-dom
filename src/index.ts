@@ -24,7 +24,10 @@ export function processGenerator(generator: string): string {
     }
     return match
   })
-  return processedGenerator
+  return processedGenerator.replace(/<emmy-[^>]+\/>/g, match => {
+    const name = match.slice(6, -2)
+    return `<emmy-${name}></emmy-${name}>`
+  })
 }
 
 export function parseCSS(cssString: string): object {

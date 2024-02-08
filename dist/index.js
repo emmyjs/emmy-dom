@@ -25,7 +25,10 @@ export function processGenerator(generator) {
         }
         return match;
     });
-    return processedGenerator;
+    return processedGenerator.replace(/<emmy-[^>]+\/>/g, match => {
+        const name = match.slice(6, -2);
+        return `<emmy-${name}></emmy-${name}>`;
+    });
 }
 export function parseCSS(cssString) {
     const styleObj = {};
@@ -168,7 +171,11 @@ export class FunctionalComponent extends LightComponent {
         this.effectCallback = (component) => { };
         bindHooks.call(this, this);
         this.setState({ rerenderCount: 0 });
-        const renderFunctionOrString = func.call(this, { el: this, props: () => this.props });
+        const renderFunctionOrString = func.call(this, {
+            el: this,
+            props: () => this.props,
+            children: () => this.innerHTML
+        });
         this.render(renderFunctionOrString);
     }
     get props() {
