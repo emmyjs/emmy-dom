@@ -34,6 +34,7 @@ It is specially designed for building web applications with server-side framewor
 ## Frameworks Guides
 For your specific framework, see the following guides:
 1. [Ruby on Rails](https://emmyjs.pages.dev/documentation/rails)
+2. [Vite](https://emmyjs.pages.dev/documentation/vite)
 
 ## Quick Start
 ### Installation
@@ -78,8 +79,7 @@ We are open to contributions. If you want to contribute, please read the [contri
 ## License
 Emmy.js is licensed under the [MIT License](LICENSE).
 
-## Release 1.0.1
-It includes the following features:
+## Features
 1. [Class Components](https://emmyjs.pages.dev/documentation)
 2. [Functional Components](https://emmyjs.pages.dev/documentation)
 3. [Page Components](https://emmyjs.pages.dev/documentation)
