@@ -33,7 +33,7 @@ It is specially designed for building web applications with server-side framewor
 
 ## Frameworks Guides
 For your specific framework, see the following guides:
-1. [Ruby on Rails](docs-0.0.3/0.0.2/guides/ruby-on-rails.md)
+1. [Ruby on Rails](https://emmyjs.pages.dev/documentation/rails)
 
 ## Quick Start
 ### Installation
@@ -68,7 +68,7 @@ load(myComponent, 'MyComponent');
 ```
 
 ## Documentation
-You can find the documentation [here](docs-0.0.3/0.0.3/docs.md).
+You can find the documentation [here](https://emmyjs.pages.dev/documentation).
 
 [Tutorial](https://www.youtube.com/watch?v=rOxAJ9c068c)
 
@@ -80,13 +80,13 @@ Emmy.js is licensed under the [MIT License](LICENSE).
 
 ## Release 1.0.1
 It includes the following features:
-1. [Class Components](docs/1.0.0.md)
-2. [Functional Components](docs/1.0.0.md)
-3. [Page Components](docs/1.0.0.md)
-4. [Emmy Hooks](docs/1.0.0.md)
-5. [Emmy Router](docs/1.0.0.md)
-6. [Pre-rendering](docs/1.0.0.md)
-7. [Compatibility with server-side frameworks](docs/1.0.0.md)
+1. [Class Components](https://emmyjs.pages.dev/documentation)
+2. [Functional Components](https://emmyjs.pages.dev/documentation)
+3. [Page Components](https://emmyjs.pages.dev/documentation)
+4. [Emmy Hooks](https://emmyjs.pages.dev/documentation)
+5. [Emmy Router](https://emmyjs.pages.dev/documentation)
+6. [Pre-rendering](https://emmyjs.pages.dev/documentation)
+8. [Compatibility with server-side frameworks](https://emmyjs.pages.dev/documentation)
 
 **Breaking changes:**
 1. `behave` method is no longer supported, use the platform `is` attribute instead.
