@@ -218,7 +218,11 @@ export class FunctionalComponent extends LightComponent {
     this.effectCallback = (component: FunctionalComponent) => {}
     bindHooks.call(this, this)
     this.setState({ rerenderCount: 0 })
-    const renderFunctionOrString = func.call(this, {el: this, props: () => this.props})
+    const renderFunctionOrString = func.call(this, {
+      el: this,
+      props: () => this.props,
+      children: () => this.innerHTML
+    })
     this.render(renderFunctionOrString)
   }
 
