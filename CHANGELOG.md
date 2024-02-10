@@ -1,6 +1,15 @@
 # CHANGELOG
 
-# 1.1.0 (2024-02-08)
+# 1.2.0 (2024-02-10)
+
+
+### Features
+
+* **Root:** Add global variable Emmy & Add jsx function for JSX in client side ([e5c9043](https://github.com/emmyjs/emmy-dom/commit/e5c904335599a9240f063ba17fbf7f10778731ab))
+
+
+
+# [1.1.0](https://github.com/emmyjs/emmy-dom/compare/1.0.0...1.1.0) (2024-02-08)
 
 
 ### Features
