@@ -15,7 +15,7 @@
 
 ## Why Emmy.js?
 Emmy.js is a tiny simple way for building web user interfaces. It is based on the [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) standard.
-It is specially designed for building web applications with server-side frameworks like Ruby on Rails, Django, Laravel, etc. [More info](https://emmyjs.pages.dev/docs)
+It is specially designed for building web applications with server-side frameworks like Ruby on Rails, Django, Laravel, etc. [More info](https://emmyjs.pages.dev/getting-started)
 
 <hr />
 
