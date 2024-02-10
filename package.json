@@ -50,6 +50,7 @@
     "vitest": "0.34.6"
   },
   "dependencies": {
+    "jsx-to-html": "1.1.0",
     "parse5": "7.1.2",
     "react-style-object-to-css": "1.1.2",
     "undom": "0.4.0"

@@ -1,4 +1,5 @@
 import reactToCSS from 'react-style-object-to-css'
+import { render as renderJSX } from 'jsx-to-html'
 
 export type DependencyArray = Array<(() => any) | any>
 export type RouteString = `/${string}`
@@ -8,6 +9,13 @@ export type StyleObject = {
 
 export const html = String.raw
 export const javascript = String.raw
+export const jsx = renderJSX
+export const Emmy = {}
+export const loadGlobalEmmy = (obj: object) => {
+  Object.entries(obj).forEach(([key, value]) => {
+    Emmy[key] = value
+  })
+}
 
 export function processGenerator(generator: string): string {
   const processedGenerator = generator.replace(/<\/?[^>]+>/g, match => {
@@ -130,7 +138,17 @@ abstract class EmmyComponent extends HTMLElement {
   abstract connectedCallback(): void
 
   render(generator: string | HTMLGenerator, callback?: Callback) {
-    if (typeof generator !== 'function') {
+    if (typeof generator !== 'function' && typeof generator !== 'string') {
+      try {
+        const htmlFromJSX = jsx(generator)
+        console.log(htmlFromJSX)
+        this.contentGenerator = () => htmlFromJSX
+      }
+      catch (e) {
+        this.contentGenerator = () => generator
+      }
+    }
+    else if (typeof generator !== 'function') {
       this.contentGenerator = () => generator
     }
     else {

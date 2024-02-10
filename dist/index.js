@@ -8,8 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import reactToCSS from 'react-style-object-to-css';
+import { render as renderJSX } from 'jsx-to-html';
 export const html = String.raw;
 export const javascript = String.raw;
+export const jsx = renderJSX;
+export const Emmy = {};
+export const loadGlobalEmmy = (obj) => {
+    Object.entries(obj).forEach(([key, value]) => {
+        Emmy[key] = value;
+    });
+};
 export function processGenerator(generator) {
     const processedGenerator = generator.replace(/<\/?[^>]+>/g, match => {
         const element = match.slice(0, -1);
@@ -97,7 +105,17 @@ class EmmyComponent extends HTMLElement {
         }
     }
     render(generator, callback) {
-        if (typeof generator !== 'function') {
+        if (typeof generator !== 'function' && typeof generator !== 'string') {
+            try {
+                const htmlFromJSX = jsx(generator);
+                console.log(htmlFromJSX);
+                this.contentGenerator = () => htmlFromJSX;
+            }
+            catch (e) {
+                this.contentGenerator = () => generator;
+            }
+        }
+        else if (typeof generator !== 'function') {
             this.contentGenerator = () => generator;
         }
         else {

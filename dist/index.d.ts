@@ -9,6 +9,9 @@ export declare const html: (template: {
 export declare const javascript: (template: {
     raw: readonly string[] | ArrayLike<string>;
 }, ...substitutions: any[]) => string;
+export declare const jsx: any;
+export declare const Emmy: {};
+export declare const loadGlobalEmmy: (obj: object) => void;
 export declare function processGenerator(generator: string): string;
 export declare function parseCSS(cssString: string): object;
 export declare function createInlineStyle(cssString: string | object): string;

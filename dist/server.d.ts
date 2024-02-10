@@ -9,6 +9,9 @@ export declare const html: (template: {
 export declare const javascript: (template: {
     raw: readonly string[] | ArrayLike<string>;
 }, ...substitutions: any[]) => string;
+export declare const jsx: any;
+export declare const Emmy: {};
+export declare const loadGlobalEmmy: (obj: object) => void;
 export declare function processGenerator(generator: string): string;
 export declare function parseCSS(cssString: string): object;
 export declare function createInlineStyle(cssString: string | object): string;
@@ -87,5 +90,7 @@ export declare class Router extends LightComponent {
 export declare function launch(component: ClassComponent | FunctionalComponent, name: string): ClassComponent | FunctionalComponent;
 export declare function load(func: ComponentType, name: string): ClassComponent | FunctionalComponent;
 export declare function renderToString(component: ClassComponent | FunctionalComponent): Promise<string>;
+export declare function renderFunctionToString(generator: HTMLGeneratorGenerator): string;
+export declare function hydrateScript(generator: HTMLGeneratorGenerator, name: string): string;
 export declare function build({ dependencies, template, app, generators, path }: BuildOptions): Promise<void>;
 export {};

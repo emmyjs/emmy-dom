@@ -1,4 +1,5 @@
 import reactToCSS from 'react-style-object-to-css'
+import { render as renderJSX } from 'jsx-to-html'
 
 export type DependencyArray = Array<(() => any) | any>
 export type RouteString = `/${string}`
@@ -8,6 +9,13 @@ export type StyleObject = {
 
 export const html = String.raw
 export const javascript = String.raw
+export const jsx = renderJSX
+export const Emmy = {}
+export const loadGlobalEmmy = (obj: object) => {
+  Object.entries(obj).forEach(([key, value]) => {
+    Emmy[key] = value
+  })
+}
 
 export function processGenerator(generator: string): string {
   const processedGenerator = generator.replace(/<\/?[^>]+>/g, match => {
@@ -142,7 +150,17 @@ abstract class EmmyComponent extends HTMLElement {
   abstract connectedCallback(): void
 
   render(generator: string | HTMLGenerator, callback?: Callback) {
-    if (typeof generator !== 'function') {
+    if (typeof generator !== 'function' && typeof generator !== 'string') {
+      try {
+        const htmlFromJSX = jsx(generator)
+        console.log(htmlFromJSX)
+        this.contentGenerator = () => htmlFromJSX
+      }
+      catch (e) {
+        this.contentGenerator = () => generator
+      }
+    }
+    else if (typeof generator !== 'function') {
       this.contentGenerator = () => generator
     }
     else {
@@ -403,9 +421,23 @@ export async function renderToString(component: ClassComponent | FunctionalCompo
   return htmlText
 }
 
-function hydrateScript(generator: HTMLGeneratorGenerator, name: string) {
+export function renderFunctionToString(generator: HTMLGeneratorGenerator) {
+  const stringFromGenerator = String(generator)
+  /*
+  type HTMLGeneratorWithOptionalComponent = ((component?: EmmyComponent) => string) | (() => string)
+  const el = new FunctionalComponent(generator)
+  let result = (generator.bind(el) as any)({ el: el })
+  if (typeof result === 'function') {
+    result = (result as HTMLGeneratorWithOptionalComponent)()
+  }
+  console.log(result)
+  */
+  return stringFromGenerator
+}
+
+export function hydrateScript(generator: HTMLGeneratorGenerator, name: string) {
   return javascript`
-    ${String(generator)}
+    ${renderFunctionToString(generator)}
     load(${uncapitalizeFirstLetter(name)}, '${capitalizeFirstLetter(name)}')
     document.querySelectorAll('${vanillaElement(capitalizeFirstLetter(name))}').forEach((element) => {
       element.connectedCallback()
@@ -415,6 +447,7 @@ function hydrateScript(generator: HTMLGeneratorGenerator, name: string) {
 
 export async function build ({ dependencies, template, app, generators, path }: BuildOptions) {
   if (!path) path = 'index.html'
+  console.log(`> Building app in ${path}`)
   const templateString = readFileSync(template, 'utf-8')
   const ssr = await renderToString(app)
   let javascriptString = ''
@@ -422,8 +455,11 @@ export async function build ({ dependencies, template, app, generators, path }: 
     if ([ 'Route', 'Router' ].includes(name)) continue
     javascriptString += hydrateScript(generators[name], name)
   }
-  const content = html`${ssr}
+  const content = html`
+    ${ssr}
     <script type="module">
+      import { loadGlobalEmmy } from 'emmy-dom'
+      loadGlobalEmmy(${JSON.stringify(Emmy)})
       ${dependencies}
       ${javascriptString}
     </script>
