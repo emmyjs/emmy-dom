@@ -1,106 +1,26 @@
-import reactToCSS from 'react-style-object-to-css'
 import { render as renderJSX } from 'jsx-to-html'
+import { UseEffect, UseState, useEffect, useState } from './hooks'
+import {
+  RouteString,
+  StyleObject,
+  createInlineStyle,
+  html,
+  processGenerator,
+  routerClassNames,
+  vanillaElement
+} from './utils'
 
-export type DependencyArray = Array<(() => any) | any>
-export type RouteString = `/${string}`
-export type StyleObject = {
-  [key: string]: string
-}
+export { useEffect, useState } from './hooks'
+export {
+  Emmy, loadGlobalEmmy,
+  RouteString, StyleObject,
+  capitalizeFirstLetter, uncapitalizeFirstLetter,
+  createInlineStyle, parseCSS,
+  html, javascript,
+  processGenerator, routerClassNames,  vanillaElement
+} from './utils'
 
-export const html = String.raw
-export const javascript = String.raw
 export const jsx = renderJSX
-export const Emmy = {}
-export const loadGlobalEmmy = (obj: object) => {
-  Object.entries(obj).forEach(([key, value]) => {
-    Emmy[key] = value
-  })
-}
-
-export function processGenerator(generator: string): string {
-  const processedGenerator = generator.replace(/<\/?[^>]+>/g, match => {
-    const element = match.slice(0, -1)
-    if (/^[A-Z]/.test(match.slice(1, -1))) {
-      const name = element.split(' ')[0].slice(1)
-      const attributes = element.split(' ').slice(1)
-      return `<emmy-${name.toLowerCase()} ${attributes.join(' ')}>`
-    }
-    else if (/^[A-Z]/.test(match.slice(2, -2))) {
-      const name = element.split(' ')[0].slice(2)
-      const attributes = element.split(' ').slice(1)
-      return `</emmy-${name.toLowerCase()} ${attributes.join(' ')}>`
-    }
-    return match
-  })
-  return processedGenerator.replace(/<emmy-[^>]+\/>/g, match => {
-    const name = match.slice(6, -2)
-    return `<emmy-${name}></emmy-${name}>`
-  })
-}
-
-export function parseCSS(cssString: string): object {
-  const styleObj = {}
-  cssString.split('').forEach((declaration) => {
-    const [property, value] = declaration.split(':')
-    if (property && value) {
-      styleObj[property.trim()] = value.trim()
-    }
-  })
-  return styleObj
-}
-
-export function createInlineStyle(cssString: string | object): string {
-  if (typeof cssString !== 'string') return reactToCSS(cssString).trim()
-  const styleObj = parseCSS(cssString)
-  let inlineStyle = ''
-  for (const property in styleObj) {
-    if (styleObj.hasOwnProperty(property)) {
-      inlineStyle += `${property}: ${styleObj[property]} `
-    }
-  }
-  return inlineStyle.trim()
-}
-
-export function vanillaElement(element: string): string {
-  if (/^[A-Z]/.test(element)) {
-    element = 'emmy-' + element.toLowerCase()
-  }
-  return element
-}
-
-export function getValues(dependencies: DependencyArray): Array<any> {
-  return dependencies.map((dependency) => {
-    if (typeof dependency === 'function') {
-      return dependency()
-    }
-    return dependency
-  })
-}
-
-export function useState(initialValue): [() => any, (newValue: any) => void] {
-  let value = initialValue
-  const state = () => value
-  const setState = (newValue) => {
-    value = newValue
-  }
-  return [state, setState]
-}
-
-export function capitalizeFirstLetter(str: string): string {
-  return str.charAt(0).toUpperCase() + str.slice(1)
-}
-
-export function uncapitalizeFirstLetter(str: string): string {
-  return str.charAt(0).toLowerCase() + str.slice(1)
-}
-
-export const routerClassNames = 'flex flex-col justify-center items-center space-y-3 text-center w-full h-fit box-border'
-
-/*
-import { type DependencyArray, type RouteString, type StyleObject,
-  html, createInlineStyle, processGenerator,
-  vanillaElement, getValues, useState, routerClassNames } from './utils.ts'
-*/
 
 export type HTMLGenerator = ((component: EmmyComponent) => string) | ((component?: EmmyComponent) => string) | (() => string)
 export type HTMLGeneratorGenerator = ((component: EmmyComponent) => HTMLGenerator) | ((component?: EmmyComponent) => HTMLGenerator) | (() => HTMLGenerator)
@@ -191,38 +111,6 @@ export class LightComponent extends EmmyComponent {
   }
 }
 
-export function useEffect(callback: Callback, dependencies: DependencyArray) {
-  const oldEffectCallback = this.effectCallback
-  if (!dependencies || dependencies.length === 0) {
-    this.effectCallback = (component) => {
-      oldEffectCallback(component)
-      callback.call(component, component)
-    }
-    return
-  }
-  let oldDependencies = getValues(dependencies)
-  this.effectCallback = (component) => {
-    oldEffectCallback(component)
-    const newDependencies = getValues(dependencies)
-    if (JSON.stringify(oldDependencies) !== JSON.stringify(newDependencies)) {
-      oldDependencies = newDependencies
-      callback.call(component, component)
-    }
-  }
-  dependencies.find((dependency) => {
-    if (typeof dependency === 'string') {
-      if (dependency === 'didMount') {
-        const oldCallback = this.callback
-        this.callback = (component) => {
-          oldCallback.call(component, component)
-          callback.call(component, component)
-        }
-      }
-    }
-    return false
-  })
-}
-
 function bindHooks(component: FunctionalComponent) {
   component.useState = useState.bind(component)
   component.useEffect = useEffect.bind(component)
@@ -231,8 +119,8 @@ function bindHooks(component: FunctionalComponent) {
 
 export class FunctionalComponent extends LightComponent {
   effectCallback: (component: FunctionalComponent) => void
-  useState: (initialValue: any) => [() => any, (newValue: any) => void]
-  useEffect: (callback: Callback, dependencies: DependencyArray) => void
+  useState: UseState
+  useEffect: UseEffect
 
   constructor(func: HTMLGenerator) {
     super()

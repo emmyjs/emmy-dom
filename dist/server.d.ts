@@ -1,26 +1,8 @@
-export type DependencyArray = Array<(() => any) | any>;
-export type RouteString = `/${string}`;
-export type StyleObject = {
-    [key: string]: string;
-};
-export declare const html: (template: {
-    raw: readonly string[] | ArrayLike<string>;
-}, ...substitutions: any[]) => string;
-export declare const javascript: (template: {
-    raw: readonly string[] | ArrayLike<string>;
-}, ...substitutions: any[]) => string;
+import { UseEffect, UseState } from './hooks';
+import { RouteString, StyleObject } from './utils';
+export { useEffect, useState } from './hooks';
+export { Emmy, loadGlobalEmmy, RouteString, StyleObject, capitalizeFirstLetter, uncapitalizeFirstLetter, createInlineStyle, parseCSS, html, javascript, processGenerator, routerClassNames, vanillaElement } from './utils';
 export declare const jsx: any;
-export declare const Emmy: {};
-export declare const loadGlobalEmmy: (obj: object) => void;
-export declare function processGenerator(generator: string): string;
-export declare function parseCSS(cssString: string): object;
-export declare function createInlineStyle(cssString: string | object): string;
-export declare function vanillaElement(element: string): string;
-export declare function getValues(dependencies: DependencyArray): Array<any>;
-export declare function useState(initialValue: any): [() => any, (newValue: any) => void];
-export declare function capitalizeFirstLetter(str: string): string;
-export declare function uncapitalizeFirstLetter(str: string): string;
-export declare const routerClassNames = "flex flex-col justify-center items-center space-y-3 text-center w-full h-fit box-border";
 export type HTMLGenerator = ((component: EmmyComponent) => string) | ((component?: EmmyComponent) => string) | (() => string);
 export type HTMLGeneratorGenerator = ((component: EmmyComponent) => HTMLGenerator) | ((component?: EmmyComponent) => HTMLGenerator) | (() => HTMLGenerator) | HTMLGenerator;
 export type Callback = ((component: EmmyComponent) => void) | ((component?: EmmyComponent) => void) | (() => void);
@@ -60,11 +42,10 @@ export declare class LightComponent extends EmmyComponent {
     connectedCallback(): void;
     __querySelector(selector: string): HTMLElement | null;
 }
-export declare function useEffect(callback: Callback, dependencies: DependencyArray): void;
 export declare class FunctionalComponent extends LightComponent {
     effectCallback: (component: FunctionalComponent) => void;
-    useState: (initialValue: any) => [() => any, (newValue: any) => void];
-    useEffect: (callback: Callback, dependencies: DependencyArray) => void;
+    useState: UseState;
+    useEffect: UseEffect;
     constructor(func: HTMLGenerator);
     get props(): object;
     set props(props: object);
@@ -93,4 +74,3 @@ export declare function renderToString(component: ClassComponent | FunctionalCom
 export declare function renderFunctionToString(generator: HTMLGeneratorGenerator): string;
 export declare function hydrateScript(generator: HTMLGeneratorGenerator, name: string): string;
 export declare function build({ dependencies, template, app, generators, path }: BuildOptions): Promise<void>;
-export {};
