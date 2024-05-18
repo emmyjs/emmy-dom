@@ -1,4 +1,4 @@
-import reactToCSS from 'react-style-object-to-css'
+import styleToCssString from './react-style-object-to-css'
 
 export function processGenerator(generator: string): string {
   const processedGenerator = generator.replace(/<\/?[^>]+>/g, match => {
@@ -33,7 +33,7 @@ export function parseCSS(cssString: string): object {
 }
 
 export function createInlineStyle(cssString: string | object): string {
-  if (typeof cssString !== 'string') return reactToCSS(cssString).trim()
+  if (typeof cssString !== 'string') return styleToCssString(cssString)
   const styleObj = parseCSS(cssString)
   let inlineStyle = ''
   for (const property in styleObj) {

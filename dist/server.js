@@ -7,7 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { render as renderJSX } from 'jsx-to-html';
+import jsxToHtml from 'jsx-to-html';
+const { render: renderJSX } = jsxToHtml;
 import { useEffect, useState } from './hooks';
 import { Emmy, capitalizeFirstLetter, createInlineStyle, html, javascript, processGenerator, routerClassNames, uncapitalizeFirstLetter, vanillaElement } from './utils';
 export { useEffect, useState } from './hooks';

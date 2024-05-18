@@ -12,7 +12,7 @@
   },
   "scripts": {
     "tsc": "tsc -p tsconfig.json",
-    "cpdir": "cp -r ./src/ssr ./dist/",
+    "cpdir": "cp -r ./src/ssr ./dist/ && cp -r ./src/react-style-object-to-css ./dist/",
     "build": "npm run tsc && npm run cpdir && vitest run && npm run lint",
     "co": "npm run build && git add . && sui-mono commit && git push",
     "check": "sui-mono check",
@@ -52,7 +52,6 @@
   "dependencies": {
     "jsx-to-html": "1.1.0",
     "parse5": "7.1.2",
-    "react-style-object-to-css": "1.1.2",
     "undom": "0.4.0"
   }
 }

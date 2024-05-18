@@ -1,4 +1,5 @@
-import { render as renderJSX } from 'jsx-to-html'
+import jsxToHtml from 'jsx-to-html'
+const { render: renderJSX } = jsxToHtml
 import { UseEffect, UseState, useEffect, useState } from './hooks'
 import {
   Emmy,
