@@ -9,12 +9,12 @@
     <img alt="github last commit" src="https://img.shields.io/github/last-commit/emmyjs/emmy-dom"/>
     <img alt="tests" src="https://github.com/emmyjs/emmy-dom/actions/workflows/vitest.yml/badge.svg"/>
   </div>
-  <i>A tiny simple way for building web user interfaces</i>
+  <i>A tiny simple way for building web user interfaces using functional Web Components</i>
 </section>
 <hr />
 
 ## Why Emmy.js?
-Emmy.js is a tiny simple way for building web user interfaces. It is based on the [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) standard.
+Emmy.js is a tiny simple way for building web user interfaces using functional Web Components. It is based on the [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) standard.
 It is specially designed for building web applications with server-side frameworks like Ruby on Rails, Django, Laravel, etc. [More info](https://emmyjs.pages.dev/getting-started)
 
 <hr />
@@ -27,7 +27,7 @@ It is specially designed for building web applications with server-side framewor
 [create-emmy](https://www.npmjs.com/package/create-emmy) is a command line tool that allows you to create a new Emmy.js project. [More info](https://github.com/emmyjs/create-emmy#readme)
 
 > [!TIP]
-> create-emmy 0.1.0 is now here! Try prerendering in a Vanilla Emmy app now!
+> create-emmy 0.2.0 is now here! Try prerendering in a Vanilla Emmy app now!
 > In order to create a new Emmy.js project, you can run the following command and follow the instructions:
 > `npx create-emmy`
 
