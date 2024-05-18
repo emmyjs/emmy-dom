@@ -1,6 +1,15 @@
 # CHANGELOG
 
-# 1.2.0 (2024-02-10)
+# 1.3.0 (2024-05-18)
+
+
+### Bug Fixes
+
+* **Root:** Fix cdn compatibility migrating commonjs dependencies ([d8f3c30](https://github.com/emmyjs/emmy-dom/commit/d8f3c308e312d4c8ae86ef602b6b996da5736b12))
+
+
+
+# [1.2.0](https://github.com/emmyjs/emmy-dom/compare/1.1.0...1.2.0) (2024-02-10)
 
 
 ### Features
