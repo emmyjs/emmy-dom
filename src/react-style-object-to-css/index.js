@@ -1,12 +1,11 @@
 'use strict'
 
-import { isUnitlessNumber } from './lib/CSSProperty'
+import isUnitlessNumber from './lib/CSSProperty'
 import hyphenateStyleName from './lib/hyphenateStyleName'
 
 var isArray = Array.isArray
 var keys = Object.keys
 
-var counter = 1
 // Follows syntax at https://developer.mozilla.org/en-US/docs/Web/CSS/content,
 // including multiple space separated values.
 var unquotedContentValueRegex = /^(normal|none|(\b(url\([^)]*\)|chapter_counter|attr\([^)]*\)|(no-)?(open|close)-quote|inherit)((\b\s*)|$|\s+))+)$/
