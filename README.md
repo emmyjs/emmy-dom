@@ -5,8 +5,7 @@
     </a>
     <img alt="version" src="https://img.shields.io/npm/v/emmy-dom"/>
     <img alt="downloads" src="https://img.shields.io/npm/dt/emmy-dom"/>
-    <img alt="minified + gzipped" src="https://img.shields.io/bundlephobia/minzip/emmy-dom
-    "/>
+    <img alt="minified + gzipped" src="https://img.shields.io/bundlephobia/minzip/emmy-dom"/>
     <img alt="license" src="https://img.shields.io/npm/l/emmy-dom"/>
     <img alt="github last commit" src="https://img.shields.io/github/last-commit/emmyjs/emmy-dom"/>
     <img alt="tests" src="https://github.com/emmyjs/emmy-dom/actions/workflows/vitest.yml/badge.svg"/>
