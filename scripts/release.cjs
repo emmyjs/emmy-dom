@@ -16,7 +16,6 @@ const checker = require('../node_modules/@s-ui/mono/src/check.js')
 
 program
   .option('-S, --scope <scope>', 'release a single scope')
-  .option('-P, --path <path>', 'release a path version')
   .option('-T, --github-token <token>', 'github token')
   .option('-U, --github-user <user>', 'github user')
   .option('-E, --github-email <email>', 'github email')
@@ -48,7 +47,6 @@ program
 
 const {
   scope: packageScope,
-  path: pathVersion,
   githubEmail,
   githubToken,
   githubUser,
@@ -165,9 +163,6 @@ checkShouldRelease()
     }
 
     return checker.check().then(async status => {
-      if (pathVersion) {
-        status = 1
-      }
       if (isAutomaticRelease) {
         await prepareAutomaticRelease({
           githubEmail,
