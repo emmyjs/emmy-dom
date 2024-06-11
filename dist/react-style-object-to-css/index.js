@@ -1,7 +1,7 @@
 'use strict'
 
-import isUnitlessNumber from './lib/CSSProperty'
-import hyphenateStyleName from './lib/hyphenateStyleName'
+import isUnitlessNumber from './lib/CSSProperty.js'
+import hyphenateStyleName from './lib/hyphenateStyleName.js'
 
 var isArray = Array.isArray
 var keys = Object.keys

@@ -1,4 +1,4 @@
-import styleToCssString from './react-style-object-to-css'
+import styleToCssString from './react-style-object-to-css/index.js'
 
 export function processGenerator(generator: string): string {
   const processedGenerator = generator.replace(/<\/?[^>]+>/g, match => {
