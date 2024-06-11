@@ -8,10 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { render as renderJSX } from 'jsx-to-html';
-import { useEffect, useState } from './hooks';
-import { createInlineStyle, html, processGenerator, routerClassNames, vanillaElement } from './utils';
-export { useEffect, useState } from './hooks';
-export { Emmy, loadGlobalEmmy, capitalizeFirstLetter, uncapitalizeFirstLetter, createInlineStyle, parseCSS, html, javascript, processGenerator, routerClassNames, vanillaElement } from './utils';
+import { useEffect, useState } from './hooks.js';
+import { createInlineStyle, html, processGenerator, routerClassNames, vanillaElement } from './utils.js';
+export { useEffect, useState } from './hooks.js';
+export { Emmy, loadGlobalEmmy, capitalizeFirstLetter, uncapitalizeFirstLetter, createInlineStyle, parseCSS, html, javascript, processGenerator, routerClassNames, vanillaElement } from './utils.js';
 export const jsx = renderJSX;
 class EmmyComponent extends HTMLElement {
     constructor() {

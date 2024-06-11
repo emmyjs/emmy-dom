@@ -1,6 +1,6 @@
 import jsxToHtml from 'jsx-to-html'
 const { render: renderJSX } = jsxToHtml
-import { UseEffect, UseState, useEffect, useState } from './hooks'
+import { UseEffect, UseState, useEffect, useState } from './hooks.js'
 import {
   Emmy,
   RouteString,
@@ -13,9 +13,9 @@ import {
   routerClassNames,
   uncapitalizeFirstLetter,
   vanillaElement
-} from './utils'
+} from './utils.js'
 
-export { useEffect, useState } from './hooks'
+export { useEffect, useState } from './hooks.js'
 export {
   Emmy, loadGlobalEmmy,
   RouteString, StyleObject,
@@ -23,7 +23,7 @@ export {
   createInlineStyle, parseCSS,
   html, javascript,
   processGenerator, routerClassNames,  vanillaElement
-} from './utils'
+} from './utils.js'
 
 export const jsx = renderJSX
 

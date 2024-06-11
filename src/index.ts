@@ -1,5 +1,5 @@
 import { render as renderJSX } from 'jsx-to-html'
-import { UseEffect, UseState, useEffect, useState } from './hooks'
+import { UseEffect, UseState, useEffect, useState } from './hooks.js'
 import {
   RouteString,
   StyleObject,
@@ -8,9 +8,9 @@ import {
   processGenerator,
   routerClassNames,
   vanillaElement
-} from './utils'
+} from './utils.js'
 
-export { useEffect, useState } from './hooks'
+export { useEffect, useState } from './hooks.js'
 export {
   Emmy, loadGlobalEmmy,
   RouteString, StyleObject,
@@ -18,7 +18,7 @@ export {
   createInlineStyle, parseCSS,
   html, javascript,
   processGenerator, routerClassNames,  vanillaElement
-} from './utils'
+} from './utils.js'
 
 export const jsx = renderJSX
 

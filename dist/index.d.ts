@@ -1,7 +1,7 @@
-import { UseEffect, UseState } from './hooks';
-import { RouteString, StyleObject } from './utils';
-export { useEffect, useState } from './hooks';
-export { Emmy, loadGlobalEmmy, RouteString, StyleObject, capitalizeFirstLetter, uncapitalizeFirstLetter, createInlineStyle, parseCSS, html, javascript, processGenerator, routerClassNames, vanillaElement } from './utils';
+import { UseEffect, UseState } from './hooks.js';
+import { RouteString, StyleObject } from './utils.js';
+export { useEffect, useState } from './hooks.js';
+export { Emmy, loadGlobalEmmy, RouteString, StyleObject, capitalizeFirstLetter, uncapitalizeFirstLetter, createInlineStyle, parseCSS, html, javascript, processGenerator, routerClassNames, vanillaElement } from './utils.js';
 export declare const jsx: any;
 export type HTMLGenerator = ((component: EmmyComponent) => string) | ((component?: EmmyComponent) => string) | (() => string);
 export type HTMLGeneratorGenerator = ((component: EmmyComponent) => HTMLGenerator) | ((component?: EmmyComponent) => HTMLGenerator) | (() => HTMLGenerator);
