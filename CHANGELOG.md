@@ -1,6 +1,20 @@
 # CHANGELOG
 
-# 1.3.0 (2024-05-18)
+# 1.4.0 (2024-06-10)
+
+
+### Bug Fixes
+
+* **Root:** Add explicit import extensions because typescript do not include extensions automatically ([f88e5ba](https://github.com/emmyjs/emmy-dom/commit/f88e5ba49d0d8c547e875b3377d57ece1fd1cdf5))
+
+
+### Performance Improvements
+
+* **Root:** Remove unused code ([14c433b](https://github.com/emmyjs/emmy-dom/commit/14c433b242555ffb8ea108ae304d6afd5f4677cd))
+
+
+
+# [1.3.0](https://github.com/emmyjs/emmy-dom/compare/1.2.0...1.3.0) (2024-05-18)
 
 
 ### Bug Fixes
