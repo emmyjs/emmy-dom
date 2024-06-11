@@ -1,45 +1,45 @@
 // const outdent = require('outdent');
-const { prop } = require('../util');
+const { prop } = require('../util')
 
 class CustomElementRegistry {
   constructor() {
-    this.promises = {};
-    this.registry = {};
+    this.promises = {}
+    this.registry = {}
   }
   define(name, func) {
     // We must invoke the getter for observedAttributes to mimic the spec'd
     // behaviour just in case consumer getters require side-effects happen
     // within it.
-    func.observedAttributes;
-    prop(func.prototype, 'nodeName', { value: name });
-    this.registry[name] = func;
+    func.observedAttributes
+    prop(func.prototype, 'nodeName', { value: name })
+    this.registry[name] = func
     if (this.promises[name]) {
-      this.promises[name]();
-      delete this.promises[name];
+      this.promises[name]()
+      delete this.promises[name]
     }
   }
   get(name) {
-    return this.registry[name];
+    return this.registry[name]
   }
   whenDefined(name) {
     return new Promise(yay => {
       if (this.registry[name]) {
-        yay();
+        yay()
       } else {
-        this.promises[name] = yay;
+        this.promises[name] = yay
       }
-    });
+    })
   }
   __fixLostNodeNameForElement(elem) {
     for (let name in this.registry) {
-      const test = this.registry[name];
+      const test = this.registry[name]
 
       // `elem instanceof test` did NOT work. The constructor must be being
       // rewritten somehow.
       if (new test() instanceof elem.constructor) {
-        const ucName = name.toUpperCase();
-        prop(test.prototype, 'nodeName', { value: ucName });
-        return ucName;
+        const ucName = name.toUpperCase()
+        prop(test.prototype, 'nodeName', { value: ucName })
+        return ucName
       }
     }
 
@@ -60,4 +60,4 @@ class CustomElementRegistry {
   }
 }
 
-module.exports = CustomElementRegistry;
+module.exports = CustomElementRegistry

@@ -10,6 +10,6 @@ const NodeFilter = {
   SHOW_ELEMENT: 1,
   SHOW_PROCESSING_INSTRUCTION: 64,
   SHOW_TEXT: 4
-};
+}
 
-module.exports = NodeFilter;
+module.exports = NodeFilter

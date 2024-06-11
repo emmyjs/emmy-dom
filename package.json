@@ -17,7 +17,7 @@
     "co": "npm run build && git add . && sui-mono commit && git push",
     "check": "sui-mono check",
     "release": "node scripts/release.cjs",
-    "lint": "eslint --ext .ts,.tsx ./src",
+    "lint": "eslint --ext .ts ./src --fix",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "prepublishOnly": "npm run build"

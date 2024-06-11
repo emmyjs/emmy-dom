@@ -1,7 +1,7 @@
 class Navigator {
   get userAgent() {
-    return 'Node';
+    return 'Node'
   }
 }
 
-module.exports = Navigator;
+module.exports = Navigator

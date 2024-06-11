@@ -1,28 +1,28 @@
-const Node = require('./Node');
+const Node = require('./Node')
 
 const Comment = class extends Node {
   constructor() {
-    super();
-    this._nodeValue = '';
+    super()
+    this._nodeValue = ''
   }
   get nodeName() {
-    return '#comment';
+    return '#comment'
   }
   get nodeType() {
-    return Node.COMMENT_NODE;
+    return Node.COMMENT_NODE
   }
   get nodeValue() {
-    return this._nodeValue;
+    return this._nodeValue
   }
   set nodeValue(nodeValue) {
-    this._nodeValue = nodeValue;
+    this._nodeValue = nodeValue
   }
   get textContent() {
-    return this.nodeValue;
+    return this.nodeValue
   }
   set textContent(textContent) {
-    this.nodeValue = textContent;
+    this.nodeValue = textContent
   }
-};
+}
 
-module.exports = Comment;
+module.exports = Comment

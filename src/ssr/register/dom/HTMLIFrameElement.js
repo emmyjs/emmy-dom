@@ -1,3 +1,3 @@
-const Element = require('./Element');
+const Element = require('./Element')
 
-module.exports = class extends Element {};
+module.exports = class extends Element {}

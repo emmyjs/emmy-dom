@@ -3,8 +3,8 @@
 class StyleSheet {
   /*:: ownerNode: Node */
   constructor(ownerNode /*: Node */) {
-    this.ownerNode = ownerNode;
+    this.ownerNode = ownerNode
   }
 }
 
-module.exports = StyleSheet;
+module.exports = StyleSheet

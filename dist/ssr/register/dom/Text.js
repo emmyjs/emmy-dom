@@ -1,28 +1,28 @@
-const Node = require('./Node');
+const Node = require('./Node')
 
 class Text extends Node {
   constructor() {
-    super();
-    this._nodeValue = '';
+    super()
+    this._nodeValue = ''
   }
   get nodeName() {
-    return '#text';
+    return '#text'
   }
   get nodeType() {
-    return Node.TEXT_NODE;
+    return Node.TEXT_NODE
   }
   get nodeValue() {
-    return this._nodeValue;
+    return this._nodeValue
   }
   set nodeValue(nodeValue) {
-    this._nodeValue = nodeValue;
+    this._nodeValue = nodeValue
   }
   get textContent() {
-    return this.nodeValue;
+    return this.nodeValue
   }
   set textContent(textContent) {
-    this.nodeValue = textContent;
+    this.nodeValue = textContent
   }
 }
 
-module.exports = Text;
+module.exports = Text
