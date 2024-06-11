@@ -1,6 +1,15 @@
 # CHANGELOG
 
-# 1.4.0 (2024-06-10)
+# 1.5.0 (2024-06-10)
+
+
+### Bug Fixes
+
+* **Root:** Add import extension to react-style-object-to-css ([c4c236a](https://github.com/emmyjs/emmy-dom/commit/c4c236ab176f1db50f1691a144c0201740da7dd7))
+
+
+
+# [1.4.0](https://github.com/emmyjs/emmy-dom/compare/1.3.0...1.4.0) (2024-06-10)
 
 
 ### Bug Fixes
