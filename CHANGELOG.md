@@ -1,6 +1,10 @@
 # CHANGELOG
 
-# 1.5.0 (2024-06-10)
+## 1.5.1 (2024-07-22)
+
+
+
+# [1.5.0](https://github.com/emmyjs/emmy-dom/compare/1.4.0...1.5.0) (2024-06-10)
 
 
 ### Bug Fixes
