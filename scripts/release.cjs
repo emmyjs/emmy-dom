@@ -61,7 +61,7 @@ const changelogFilename = getChangelogFilename()
 
 const RELEASE_CODES = {
   0: 'clean',
-  1: 'path',
+  1: 'patch',
   2: 'minor',
   3: 'major'
 }
