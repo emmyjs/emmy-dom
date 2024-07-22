@@ -1,5 +1,42 @@
 import { describe, it, expect } from 'vitest'
-import { Emmy, loadGlobalEmmy, html, javascript } from '../src/utils.ts'
+import { processGenerator, parseCSS, createInlineStyle, capitalizeFirstLetter, uncapitalizeFirstLetter, Emmy, loadGlobalEmmy, html, javascript } from '../src/utils.ts'
+
+describe('processGenerator', () => {
+  it('should return a string', () => {
+    expect(processGenerator('<Div></Div>')).toBe('<emmy-div ></emmy-div >')
+    expect(processGenerator('<Div color="red"></Div>')).toBe('<emmy-div color="red"></emmy-div >')
+    expect(processGenerator('<Div />')).toBe('<emmy-div ></emmy-div >')
+    //expect(processGenerator('<Div color="red" />')).toBe('<emmy-div color="red" ></emmy-div >')
+  })
+})
+
+describe('parseCSS', () => {
+  it('should return an object', () => {
+    expect(parseCSS('color: red; background-color: blue;'))
+      .toEqual({ color: 'red', 'background-color': 'blue' })
+  })
+})
+
+describe('createInlineStyle', () => {
+  it('should return a string', () => {
+    expect(createInlineStyle({ color: 'red', backgroundColor: 'blue' }))
+      .toBe('color: red; background-color: blue;')
+    expect(createInlineStyle('color: red; background-color: blue;'))
+      .toBe('color: red; background-color: blue;')
+  })
+})
+
+describe('capitalizeFirstLetter', () => {
+  it('should capitalize the first letter of a string', () => {
+    expect(capitalizeFirstLetter('hello')).toBe('Hello')
+  })
+})
+
+describe('uncapitalizeFirstLetter', () => {
+  it('should uncapitalize the first letter of a string', () => {
+    expect(uncapitalizeFirstLetter('Hello')).toBe('hello')
+  })
+})
 
 describe('Emmy', () => {
   it('should be an object', () => {

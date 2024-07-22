@@ -23,7 +23,7 @@ export function processGenerator(generator: string): string {
 
 export function parseCSS(cssString: string): object {
   const styleObj = {}
-  cssString.split('').forEach((declaration) => {
+  cssString.split(';').forEach((declaration) => {
     const [property, value] = declaration.split(':')
     if (property && value) {
       styleObj[property.trim()] = value.trim()
@@ -38,7 +38,7 @@ export function createInlineStyle(cssString: string | object): string {
   let inlineStyle = ''
   for (const property in styleObj) {
     if (styleObj.hasOwnProperty(property)) {
-      inlineStyle += `${property}: ${styleObj[property]} `
+      inlineStyle += `${property}: ${styleObj[property]}; `
     }
   }
   return inlineStyle.trim()
