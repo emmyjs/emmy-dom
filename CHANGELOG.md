@@ -1,6 +1,16 @@
 # CHANGELOG
 
-## 1.5.1 (2024-07-22)
+## 1.5.2 (2024-07-22)
+
+
+### Bug Fixes
+
+* **Root:** Fix css parsing of strings ([443c0c5](https://github.com/emmyjs/emmy-dom/commit/443c0c55b9c7e3c669c00a1f2a4af560e95111cc))
+* **Root:** Fix processGenerator: closing tags must not have attributes and tags must not have unnece ([1f280fd](https://github.com/emmyjs/emmy-dom/commit/1f280fd434d5569f478d317a561b5b8cb2035234))
+
+
+
+## [1.5.1](https://github.com/emmyjs/emmy-dom/compare/1.5.0...1.5.1) (2024-07-22)
 
 
 
