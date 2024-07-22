@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { Component, LightComponent, useState, FunctionalComponent, load } from '../dist/index.js'
+import { Component, LightComponent, FunctionalComponent, load } from '../dist/index.js'
 import { HTMLElement } from 'happy-dom'
 
 function awaitDidMount(componentName) {
@@ -14,12 +14,6 @@ function awaitDidMount(componentName) {
 }
 
 // @vitest-environment happy-dom
-
-describe('emmy-dom', () => {
-  it('should work', () => {
-    expect(1).toBe(1)
-  })
-})
 
 describe('Component', () => {
   it('should be defined', () => {
@@ -208,44 +202,6 @@ describe('LightComponent', () => {
       awaitDidMount('emmy-a')
       return document.querySelector('emmy-a').querySelector('div')
     })()).toBeDefined()
-  })
-})
-
-describe('useState', () => {
-  it('should be defined', () => {
-    expect(useState).toBeDefined()
-  })
-  it('should return a state', () => {
-    expect((() => {
-      class A extends Component {
-        constructor() {
-          super()
-          const [state, setState] = useState(0)
-          this.render('<div></div>', () => {
-            this.setAttribute('state', state())
-          })
-        }
-      }
-      customElements.define('emmy-a', A)
-      document.body.innerHTML = '<emmy-a></emmy-a>'
-      return document.querySelector('emmy-a').getAttribute('state')
-    })()).toBe('0')
-  })
-  it('should update a state', () => {
-    expect((() => {
-      class A extends Component {
-        constructor() {
-          super()
-          this.render('<div></div>')
-          const [state, setState] = useState(0)
-          setState(1)
-          this.setAttribute('state', state())
-        }
-      }
-      customElements.define('emmy-a', A)
-      document.body.innerHTML = '<emmy-a></emmy-a>'
-      return document.querySelector('emmy-a').getAttribute('state')
-    })()).toBe('1')
   })
 })
 
