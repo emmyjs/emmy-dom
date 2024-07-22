@@ -12,7 +12,7 @@ const {
   getChangelogFilename,
   getPublishAccess
 } = require('../node_modules/@s-ui/mono/src/config.js')
-const checker = require('../node_modules/@s-ui/mono/src/check.js')
+const checker = require('./checker.cjs')
 
 program
   .option('-S, --scope <scope>', 'release a single scope')

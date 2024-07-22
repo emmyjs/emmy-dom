@@ -15,7 +15,7 @@
     "cpdir": "cp -r ./src/ssr ./dist/ && cp -r ./src/react-style-object-to-css ./dist/",
     "build": "npm run tsc && npm run cpdir && vitest run && npm run lint",
     "co": "npm run build && git add . && sui-mono commit && git push",
-    "check": "sui-mono check",
+    "check": "node scripts/check.cjs",
     "release": "node scripts/release.cjs",
     "lint": "eslint --ext .ts ./src --fix",
     "test": "vitest",
