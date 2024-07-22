@@ -6,18 +6,19 @@ export function processGenerator(generator: string): string {
     if (/^[A-Z]/.test(match.slice(1, -1))) {
       const name = element.split(' ')[0].slice(1)
       const attributes = element.split(' ').slice(1)
-      return `<emmy-${name.toLowerCase()} ${attributes.join(' ')}>`
+      const nameWithAttributes = `${name.toLowerCase()} ${attributes.join(' ')}`.trim()
+      return `<emmy-${nameWithAttributes}>`
     }
     else if (/^[A-Z]/.test(match.slice(2, -2))) {
       const name = element.split(' ')[0].slice(2)
-      const attributes = element.split(' ').slice(1)
-      return `</emmy-${name.toLowerCase()} ${attributes.join(' ')}>`
+      return `</emmy-${name.toLocaleLowerCase()}>`
     }
     return match
   })
   return processedGenerator.replace(/<emmy-[^>]+\/>/g, match => {
-    const name = match.slice(6, -2)
-    return `<emmy-${name}></emmy-${name}>`
+    const element = match.slice(6, -2)
+    const name = element.split(' ')[0]
+    return `<emmy-${element.trim()}></emmy-${name}>`
   })
 }
 

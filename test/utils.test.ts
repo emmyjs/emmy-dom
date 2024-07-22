@@ -3,10 +3,10 @@ import { processGenerator, parseCSS, createInlineStyle, capitalizeFirstLetter, u
 
 describe('processGenerator', () => {
   it('should return a string', () => {
-    expect(processGenerator('<Div></Div>')).toBe('<emmy-div ></emmy-div >')
-    expect(processGenerator('<Div color="red"></Div>')).toBe('<emmy-div color="red"></emmy-div >')
-    expect(processGenerator('<Div />')).toBe('<emmy-div ></emmy-div >')
-    //expect(processGenerator('<Div color="red" />')).toBe('<emmy-div color="red" ></emmy-div >')
+    expect(processGenerator('<Div></Div>')).toBe('<emmy-div></emmy-div>')
+    expect(processGenerator('<Div color="red"></Div>')).toBe('<emmy-div color="red"></emmy-div>')
+    expect(processGenerator('<Div />')).toBe('<emmy-div></emmy-div>')
+    expect(processGenerator('<Div color="red" />')).toBe('<emmy-div color="red"></emmy-div>')
   })
 })
 
