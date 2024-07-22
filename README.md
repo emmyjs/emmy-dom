@@ -60,11 +60,11 @@ npm install emmy-dom
 Then, use the `emmy-dom` package in your JavaScript files:
 
 ```javascript
-import { load, html } from "emmy-dom"
+import { load, html } from 'emmy-dom'
 
-const myComponent = () =>  {
-  return html`<div>Hello World!</div>`
-}
+const myComponent = () => html`
+  <div>Hello World!</div>
+`
 
 load(myComponent, 'MyComponent')
 ```
