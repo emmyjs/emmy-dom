@@ -3,7 +3,7 @@
 /**
  * CSS properties which accept numbers but are not in units of "px".
  */
-var isUnitlessNumber = {
+const isUnitlessNumber = {
   boxFlex: true,
   boxFlexGroup: true,
   columnCount: true,
@@ -43,7 +43,7 @@ function prefixKey(prefix, key) {
  * Support style names that may come passed in prefixed by adding permutations
  * of vendor prefixes.
  */
-var prefixes = ['Webkit', 'ms', 'Moz', 'O']
+const prefixes = ['Webkit', 'ms', 'Moz', 'O']
 
 // Using Object.keys here, or else the vanilla for-in loop makes IE8 go into an
 // infinite loop, because it iterates over the newly added props too.

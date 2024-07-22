@@ -1,6 +1,9 @@
-'use strict';
-const msPattern = /^ms-/;
-const _uppercasePattern = /([A-Z])/g;
+'use strict'
+
+const msPattern = /^ms-/
+
+const _uppercasePattern = /([A-Z])/g
+
 /**
  * Hyphenates a camelcased string, for example:
  *
@@ -14,8 +17,9 @@ const _uppercasePattern = /([A-Z])/g;
  * @return {string}
  */
 function hyphenate(string) {
-    return string.replace(_uppercasePattern, '-$1').toLowerCase();
+  return string.replace(_uppercasePattern, '-$1').toLowerCase()
 }
+
 /**
  * Hyphenates a camelcased CSS property name, for example:
  *
@@ -33,5 +37,5 @@ function hyphenate(string) {
  * @return {string}
  */
 export default function hyphenateStyleName(string) {
-    return hyphenate(string).replace(msPattern, '-ms-');
+  return hyphenate(string).replace(msPattern, '-ms-')
 }
