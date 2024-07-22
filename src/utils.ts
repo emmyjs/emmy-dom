@@ -75,4 +75,3 @@ export type RouteString = `/${string}`
 export type StyleObject = {
   [key: string]: string
 }
-

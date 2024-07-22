@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { Component, useState } from '../dist/index.js'
+import { Component } from '../src/index.ts'
+import { useState } from '../src/hooks.ts'
 // Even VSCode doesn't recognize the usage of HTMLElement, it is necessary to test components
 import { HTMLElement } from 'happy-dom'
 
@@ -22,7 +23,8 @@ describe('useState', () => {
       }
       customElements.define('emmy-a', A)
       document.body.innerHTML = '<emmy-a></emmy-a>'
-      return document.querySelector('emmy-a').getAttribute('state')
+      const emmyElement = document.querySelector('emmy-a')
+      return emmyElement?.getAttribute('state')
     })()).toBe('0')
   })
   it('should update a state', () => {
@@ -38,7 +40,8 @@ describe('useState', () => {
       }
       customElements.define('emmy-a', A)
       document.body.innerHTML = '<emmy-a></emmy-a>'
-      return document.querySelector('emmy-a').getAttribute('state')
+      const emmyElement = document.querySelector('emmy-a')
+      return emmyElement?.getAttribute('state')
     })()).toBe('1')
   })
 })

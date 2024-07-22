@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { Component, LightComponent, FunctionalComponent, load } from '../dist/index.js'
+import { Component, LightComponent, FunctionalComponent, load } from '../src/index.ts'
 import { HTMLElement } from 'happy-dom'
 
 function awaitDidMount(componentName) {
