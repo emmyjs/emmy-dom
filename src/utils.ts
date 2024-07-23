@@ -73,6 +73,6 @@ export const javascript = String.raw
 export const routerClassNames = 'flex flex-col justify-center items-center space-y-3 text-center w-full h-fit box-border'
 
 export type RouteString = `/${string}`
-export type StyleObject = {
-  [key: string]: string
+export type StyleObject = string | {
+  [key: string]: StyleObject
 }
