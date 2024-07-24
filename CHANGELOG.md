@@ -1,6 +1,16 @@
 # CHANGELOG
 
-## 1.5.3 (2024-07-24)
+## 1.5.4 (2024-07-24)
+
+
+### Bug Fixes
+
+* **Root:** Fix import typo in server.ts ([fdc80b8](https://github.com/emmyjs/emmy-dom/commit/fdc80b8bfbd46b8ac4e0c0a41f7c9893d8d7e76c))
+* **Root:** Revert index importing in server side ([2d2b953](https://github.com/emmyjs/emmy-dom/commit/2d2b953f83d8b89a53105f588bf6f0e256fecfa1))
+
+
+
+## [1.5.3](https://github.com/emmyjs/emmy-dom/compare/1.5.2...1.5.3) (2024-07-24)
 
 
 ### Bug Fixes
