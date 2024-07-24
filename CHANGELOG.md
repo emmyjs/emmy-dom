@@ -1,6 +1,17 @@
 # CHANGELOG
 
-## 1.5.2 (2024-07-22)
+## 1.5.3 (2024-07-24)
+
+
+### Bug Fixes
+
+* **Root:** Fix createPageComponent: must asyncronously fetch the html and load it as a component ([0af976f](https://github.com/emmyjs/emmy-dom/commit/0af976f3a37e0ab82b163f3dfba025702484d642))
+* **Root:** Fix StyleObject type: now it accepts Objects inside Objects, not just string values ([7701d02](https://github.com/emmyjs/emmy-dom/commit/7701d022333671e3800431d249e7064d18cb8075))
+* **Root:** Update ComponentType to support the new functional components sintax with props ([de72d26](https://github.com/emmyjs/emmy-dom/commit/de72d2624ccf7ac43a5ef96ad28c870a8e621b93))
+
+
+
+## [1.5.2](https://github.com/emmyjs/emmy-dom/compare/1.5.1...1.5.2) (2024-07-22)
 
 
 ### Bug Fixes
