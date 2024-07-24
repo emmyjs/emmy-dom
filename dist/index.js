@@ -72,7 +72,7 @@ export class LightComponent extends EmmyComponent {
         return HTMLElement.prototype.querySelector.call(this, vanillaElement(selector));
     }
 }
-function bindHooks(component) {
+export function bindHooks(component) {
     component.useState = useState.bind(component);
     component.useEffect = useEffect.bind(component);
 }

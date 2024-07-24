@@ -22,8 +22,18 @@ export {
 
 export const jsx = renderJSX
 
-export type HTMLGenerator = ((component: EmmyComponent) => string) | ((component?: EmmyComponent) => string) | (() => string)
+export type MetaProps = {
+  el: EmmyComponent,
+  props: () => object,
+  children: () => string
+}
+
+export type HTMLGenerator = ((props: EmmyComponent) => string) | ((component?: EmmyComponent) => string) | (() => string)
 export type HTMLGeneratorGenerator = ((component: EmmyComponent) => HTMLGenerator) | ((component?: EmmyComponent) => HTMLGenerator) | (() => HTMLGenerator)
+
+type Render = string | (() => string)
+export type FunctionalComponentHtmlGenerator = ((props: MetaProps) => Render) | ((props?: MetaProps) => Render) | (() => Render)
+
 export type Callback = ((component: EmmyComponent) => void) | ((component?: EmmyComponent) => void) | (() => void)
 declare global {
   interface Window {
@@ -31,7 +41,7 @@ declare global {
   }
 }
 export type ClassComponent = Component | LightComponent
-export type ComponentType = ClassComponent | FunctionalComponent | HTMLGenerator | RouteString
+export type ComponentType = ClassComponent | FunctionalComponent | FunctionalComponentHtmlGenerator | RouteString
 
 
 export abstract class EmmyComponent extends HTMLElement {
@@ -111,7 +121,7 @@ export class LightComponent extends EmmyComponent {
   }
 }
 
-function bindHooks(component: FunctionalComponent) {
+export function bindHooks(component: FunctionalComponent) {
   component.useState = useState.bind(component)
   component.useEffect = useEffect.bind(component)
 }

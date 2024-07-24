@@ -310,4 +310,9 @@ describe('FunctionalComponent', () => {
       return String(document.querySelector('emmy-a')?.querySelector('div'))
     })()).toBe('<div>1</div>')
   })*/
+  it('should render functional component with querySelector', () => {
+    const c = () => '<div></div>'
+    load(c, 'C')
+    expect((attachToDocument('emmy-c').querySelector('div'))).toBeDefined()
+  })
 })

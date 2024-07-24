@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { Component, FunctionalComponent, HTMLGenerator } from '../src/index.ts'
+import { Component, FunctionalComponent, HTMLGenerator, bindHooks } from '../src/index.ts'
 import { getValues, useState, useEffect } from '../src/hooks.ts'
 import { awaitDidMount } from './utils.ts'
 // Even VSCode doesn't recognize the usage of HTMLElement, it is necessary to test components
@@ -123,5 +123,22 @@ describe('useEffect', () => {
       const emmyElement = document.querySelector('emmy-a')
       return emmyElement?.getAttribute('callback')
     })()).toBe('1')
+  })
+})
+
+describe('bindHooks', () => {
+  it('should be defined', () => {
+    expect(bindHooks).toBeDefined()
+  })
+  it('should bind hooks', () => {
+    class A extends Component {
+      constructor() {
+        super()
+      }
+    }
+    const componentToBind = new A() as FunctionalComponent
+    bindHooks(componentToBind)
+    expect(componentToBind.useState).toBeDefined()
+    expect(componentToBind.useEffect).toBeDefined()
   })
 })

@@ -1,4 +1,4 @@
-import { expect } from 'vitest'
+import { assert, expect } from 'vitest'
 import { EmmyComponent } from '../src/index.ts'
 
 export function awaitDidMount(componentName) {
@@ -19,6 +19,12 @@ export function attachToDocument(elementName: string = 'emmy-a') {
 }
 
 export function expectToBeSubclassOf(actual, expected) {
-  const instance = new actual()
-  expect(actual.prototype).toBeInstanceOf(expected)
+  const assertMessage = `Expected ${actual.name} to be a subclass of ${expected.name}`
+  try {
+    const instance = new actual()
+    assert(!!instance, assertMessage)
+  }
+  catch (e) {
+    assert.fail(assertMessage)
+  }
 }
