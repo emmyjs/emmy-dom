@@ -1,9 +1,10 @@
-import { Component } from '../src/index.ts'
+import { expect } from 'vitest'
+import { EmmyComponent } from '../src/index.ts'
 
 export function awaitDidMount(componentName) {
   return new Promise((resolve, reject) => {
     const interval = setInterval(() => {
-      if (document.querySelector(componentName).didMount) {
+      if (document.querySelector(componentName)?.didMount) {
         clearInterval(interval)
         resolve(true)
       }
@@ -14,5 +15,10 @@ export function awaitDidMount(componentName) {
 export function attachToDocument(elementName: string = 'emmy-a') {
   document.body.innerHTML = `<${elementName}></${elementName}>`
   awaitDidMount(elementName)
-  return document.querySelector(elementName) as Component
+  return document.querySelector(elementName) as EmmyComponent
+}
+
+export function expectToBeSubclassOf(actual, expected) {
+  const instance = new actual()
+  expect(actual.prototype).toBeInstanceOf(expected)
 }

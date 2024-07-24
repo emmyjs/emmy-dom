@@ -34,7 +34,7 @@ export type ClassComponent = Component | LightComponent
 export type ComponentType = ClassComponent | FunctionalComponent | HTMLGenerator | RouteString
 
 
-abstract class EmmyComponent extends HTMLElement {
+export abstract class EmmyComponent extends HTMLElement {
   contentGenerator: HTMLGenerator
   callback: Callback
   Style: StyleObject
@@ -252,19 +252,15 @@ export function launch(component: ClassComponent | FunctionalComponent, name: st
   return component
 }
 
-function createPageComponent(url: string, name: string): ClassComponent | FunctionalComponent {
-  let component
-  async () => {
-    const result = await fetch(url)
-    const htmlText = await result.text()
-    component = load(() => htmlText, name)
-  }
-  return component
+export async function createPageComponent(url: string, name: string): Promise<ClassComponent | FunctionalComponent> {
+  const result = await fetch(url)
+  const htmlText = await result.text()
+  return load(() => htmlText, name)
 }
 
-export function load(func: ComponentType, name: string): ClassComponent | FunctionalComponent {
+export async function load(func: ComponentType, name: string): Promise<ClassComponent | FunctionalComponent> {
   if (typeof func === 'string') {
-    return createPageComponent(func, name)
+    return await createPageComponent(func, name)
   }
   try {
     const instance = new (func as any)() as any

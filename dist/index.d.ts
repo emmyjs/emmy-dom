@@ -13,7 +13,7 @@ declare global {
 }
 export type ClassComponent = Component | LightComponent;
 export type ComponentType = ClassComponent | FunctionalComponent | HTMLGenerator | RouteString;
-declare abstract class EmmyComponent extends HTMLElement {
+export declare abstract class EmmyComponent extends HTMLElement {
     contentGenerator: HTMLGenerator;
     callback: Callback;
     Style: StyleObject;
@@ -59,4 +59,5 @@ export declare class Router extends LightComponent {
     constructor();
 }
 export declare function launch(component: ClassComponent | FunctionalComponent, name: string): ClassComponent | FunctionalComponent;
-export declare function load(func: ComponentType, name: string): ClassComponent | FunctionalComponent;
+export declare function createPageComponent(url: string, name: string): Promise<ClassComponent | FunctionalComponent>;
+export declare function load(func: ComponentType, name: string): Promise<ClassComponent | FunctionalComponent>;

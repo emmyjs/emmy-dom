@@ -13,7 +13,7 @@ import { createInlineStyle, html, processGenerator, routerClassNames, vanillaEle
 export { useEffect, useState } from './hooks.js';
 export { Emmy, loadGlobalEmmy, capitalizeFirstLetter, uncapitalizeFirstLetter, createInlineStyle, parseCSS, html, javascript, processGenerator, routerClassNames, vanillaElement } from './utils.js';
 export const jsx = renderJSX;
-class EmmyComponent extends HTMLElement {
+export class EmmyComponent extends HTMLElement {
     constructor() {
         super();
         this.contentGenerator = () => '';
@@ -185,34 +185,34 @@ export function launch(component, name) {
     customElements.define(vanillaElement(name), component);
     return component;
 }
-function createPageComponent(url, name) {
-    let component;
-    () => __awaiter(this, void 0, void 0, function* () {
+export function createPageComponent(url, name) {
+    return __awaiter(this, void 0, void 0, function* () {
         const result = yield fetch(url);
         const htmlText = yield result.text();
-        component = load(() => htmlText, name);
+        return load(() => htmlText, name);
     });
-    return component;
 }
 export function load(func, name) {
-    if (typeof func === 'string') {
-        return createPageComponent(func, name);
-    }
-    try {
-        const instance = new func();
-        if (instance instanceof Component || instance instanceof LightComponent || instance instanceof FunctionalComponent) {
-            return launch(func, name);
+    return __awaiter(this, void 0, void 0, function* () {
+        if (typeof func === 'string') {
+            return yield createPageComponent(func, name);
         }
-        throw new Error('Not a valid component');
-    }
-    catch (e) {
-        class X extends FunctionalComponent {
-            constructor() {
-                super(func);
+        try {
+            const instance = new func();
+            if (instance instanceof Component || instance instanceof LightComponent || instance instanceof FunctionalComponent) {
+                return launch(func, name);
             }
+            throw new Error('Not a valid component');
         }
-        return launch(X, name);
-    }
+        catch (e) {
+            class X extends FunctionalComponent {
+                constructor() {
+                    super(func);
+                }
+            }
+            return launch(X, name);
+        }
+    });
 }
 launch(Route, 'Route');
 launch(Router, 'Router');

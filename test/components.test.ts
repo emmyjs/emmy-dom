@@ -1,5 +1,5 @@
-import { describe, it, expect, assert } from 'vitest'
-import { Component, LightComponent, FunctionalComponent, load, HTMLGenerator } from '../src/index.ts'
+import { describe, it, expect } from 'vitest'
+import { Component, LightComponent, FunctionalComponent, load, HTMLGenerator, EmmyComponent } from '../src/index.ts'
 import { attachToDocument, awaitDidMount } from './utils.ts'
 import { HTMLElement } from 'happy-dom'
 
@@ -45,7 +45,7 @@ describe('Component', () => {
       }
       customElements.define('emmy-a', A)
       document.body.innerHTML = '<emmy-a></emmy-a>'
-      return (document.querySelector('emmy-a') as Component).Style['this']
+      return (document.querySelector('emmy-a') as EmmyComponent).Style['this']
     })()).toBe('background-color: red;')
   })
   it('addStyle method should add a React style', () => {
@@ -63,7 +63,7 @@ describe('Component', () => {
       }
       customElements.define('emmy-a', A)
       document.body.innerHTML = '<emmy-a></emmy-a>'
-      return (document.querySelector('emmy-a') as Component).Style['this']
+      return (document.querySelector('emmy-a') as EmmyComponent).Style['this']
     })()).toBe('background-color: red;')
   })
   it('querySelector method should return an HTMLElement', () => {
@@ -139,7 +139,7 @@ describe('LightComponent', () => {
       }
       customElements.define('emmy-a', A)
       document.body.innerHTML = '<emmy-a></emmy-a>'
-      return (document.querySelector('emmy-a') as Component).Style['this']
+      return (document.querySelector('emmy-a') as EmmyComponent).Style['this']
     })()).toBe('background-color: red;')
   })
   it('addStyle method should add a React style', () => {
@@ -157,7 +157,7 @@ describe('LightComponent', () => {
       }
       customElements.define('emmy-a', A)
       document.body.innerHTML = '<emmy-a></emmy-a>'
-      return (document.querySelector('emmy-a') as Component).Style['this']
+      return (document.querySelector('emmy-a') as EmmyComponent).Style['this']
     })()).toBe('background-color: red;')
   })
   it('querySelector method should return an HTMLElement', () => {
@@ -237,7 +237,7 @@ describe('FunctionalComponent', () => {
       }
       customElements.define('emmy-a', A)
       document.body.innerHTML = '<emmy-a></emmy-a>'
-      return (document.querySelector('emmy-a') as Component)?.Style['this']
+      return (document.querySelector('emmy-a') as EmmyComponent)?.Style['this']
     })()).toBe('background-color: red;')
   })
   it('addStyle method should add a React style', () => {
@@ -254,7 +254,7 @@ describe('FunctionalComponent', () => {
       }
       customElements.define('emmy-a', A)
       document.body.innerHTML = '<emmy-a></emmy-a>'
-      return (document.querySelector('emmy-a') as Component)?.Style['this']
+      return (document.querySelector('emmy-a') as EmmyComponent)?.Style['this']
     })()).toBe('background-color: red;')
   })
   it('querySelector method should return an HTMLElement', () => {
@@ -293,10 +293,9 @@ describe('FunctionalComponent', () => {
   })
   it('should render with functional syntax', () => {
     expect((() => {
-      const a = () => '<div></div>'
-      load(a, 'A')
-      document.body.innerHTML = '<emmy-a></emmy-a>'
-      return document.querySelector('emmy-a')?.querySelector('div')
+      const b = () => '<div></div>'
+      load(b, 'B')
+      return attachToDocument('emmy-b').querySelector('div')
     })()).toBeDefined()
   })
   /* Test not working, probably it is a bug in the mocking or test
