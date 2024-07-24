@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { Component, LightComponent, load, HTMLGenerator, launch, createPageComponent, FunctionalComponent, RouteString, EmmyComponent, ClassComponent } from '../src/index.ts'
+import { Component, LightComponent, load, launch, createPageComponent, FunctionalComponent, RouteString, EmmyComponent, ClassComponent } from '../src/index.ts'
 import { attachToDocument, expectToBeSubclassOf } from './utils.ts'
 import { HTMLElement } from 'happy-dom'
 

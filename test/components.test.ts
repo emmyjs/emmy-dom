@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { Component, LightComponent, FunctionalComponent, load, HTMLGenerator, EmmyComponent } from '../src/index.ts'
+import { Component, LightComponent, FunctionalComponent, load, EmmyComponent } from '../src/index.ts'
 import { attachToDocument, awaitDidMount } from './utils.ts'
 import { HTMLElement } from 'happy-dom'
 

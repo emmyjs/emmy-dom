@@ -9,9 +9,8 @@ export type MetaProps = {
     children: () => string;
 };
 export type HTMLGenerator = ((props: EmmyComponent) => string) | ((component?: EmmyComponent) => string) | (() => string);
-export type HTMLGeneratorGenerator = ((component: EmmyComponent) => HTMLGenerator) | ((component?: EmmyComponent) => HTMLGenerator) | (() => HTMLGenerator);
 type Render = string | (() => string);
-export type FunctionalComponentHtmlGenerator = ((props: MetaProps) => Render) | ((props?: MetaProps) => Render) | (() => Render);
+export type FunctionalComponentGenerator = ((props: MetaProps) => Render) | ((props?: MetaProps) => Render) | (() => Render);
 export type Callback = ((component: EmmyComponent) => void) | ((component?: EmmyComponent) => void) | (() => void);
 declare global {
     interface Window {
@@ -19,7 +18,7 @@ declare global {
     }
 }
 export type ClassComponent = Component | LightComponent;
-export type ComponentType = ClassComponent | FunctionalComponent | FunctionalComponentHtmlGenerator | RouteString;
+export type ComponentType = ClassComponent | FunctionalComponent | FunctionalComponentGenerator | RouteString;
 export declare abstract class EmmyComponent extends HTMLElement {
     contentGenerator: HTMLGenerator;
     callback: Callback;
