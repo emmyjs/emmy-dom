@@ -27,8 +27,8 @@ const require = createRequire(import.meta.url)
 const render = require('./ssr')
 require('./ssr/register')
 
-import { EmmyComponent, FunctionalComponent, HTMLGenerator, ClassComponent } from '../src/index.js'
-export * from '../src/index.js'
+import { EmmyComponent, FunctionalComponent, HTMLGenerator, ClassComponent } from './index.js'
+export * from './index.js'
 
 type HTMLGeneratorGenerator = ((component: EmmyComponent) => HTMLGenerator) | ((component?: EmmyComponent) => HTMLGenerator) | (() => HTMLGenerator)
 

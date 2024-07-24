@@ -1,8 +1,8 @@
 export { useEffect, useState } from './hooks.js';
 export { Emmy, loadGlobalEmmy, RouteString, StyleObject, capitalizeFirstLetter, uncapitalizeFirstLetter, createInlineStyle, parseCSS, html, javascript, processGenerator, routerClassNames, vanillaElement } from './utils.js';
 export declare const jsx: any;
-import { EmmyComponent, FunctionalComponent, HTMLGenerator, ClassComponent } from '../src/index.js';
-export * from '../src/index.js';
+import { EmmyComponent, FunctionalComponent, HTMLGenerator, ClassComponent } from './index.js';
+export * from './index.js';
 type HTMLGeneratorGenerator = ((component: EmmyComponent) => HTMLGenerator) | ((component?: EmmyComponent) => HTMLGenerator) | (() => HTMLGenerator);
 export type BuildOptions = {
     dependencies: string;

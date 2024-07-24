@@ -18,7 +18,7 @@ import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const render = require('./ssr');
 require('./ssr/register');
-export * from '../src/index.js';
+export * from './index.js';
 export function renderToString(component) {
     return __awaiter(this, void 0, void 0, function* () {
         const instance = new component();
