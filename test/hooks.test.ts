@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vitest } from 'vitest'
 import { Component, FunctionalComponent, HTMLGenerator, MetaProps, bindHooks } from '../src/index.ts'
 import { getValues, useState, useEffect, useRef } from '../src/hooks.ts'
 import { awaitDidMount } from './utils.ts'
@@ -6,6 +6,8 @@ import { awaitDidMount } from './utils.ts'
 import { HTMLElement } from 'happy-dom'
 
 // @vitest-environment happy-dom
+
+const isServerMock = vitest.fn(() => false)
 
 describe('getValues', () => {
   it('should be defined', () => {
@@ -68,7 +70,7 @@ describe('useEffect', () => {
       const functionalComponent = ({ el }: MetaProps) => {
         el.useEffect(() => {
           el.setAttribute('callback', 'called')
-        }, [])
+        }, [], isServerMock)
         return ''
       }
       class A extends FunctionalComponent {
@@ -87,7 +89,7 @@ describe('useEffect', () => {
       const functionalComponent = ({ el }) => {
         el.useEffect(() => {
           el.setAttribute('callback', 'called')
-        }, ['didMount'])
+        }, ['didMount'], isServerMock)
         return ''
       }
       class A extends FunctionalComponent {
@@ -108,7 +110,7 @@ describe('useEffect', () => {
         const [state, setState] = useState(0)
         el.useEffect(() => {
           el.setAttribute('callback', state())
-        }, [state])
+        }, [state], isServerMock)
         setState(1)
         return ''
       }

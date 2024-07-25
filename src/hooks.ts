@@ -1,8 +1,10 @@
+import { isServer } from './utils.js'
+
 type placeholderCallback = ((component: object) => void) | ((component?: object) => void) | (() => void)
 
 export type DependencyArray = Array<(() => any) | any>
 export type UseState = <T>(initialValue: T) => [() => T, (newValue: T) => void]
-export type UseEffect = (callback: placeholderCallback, dependencies: DependencyArray) => void
+export type UseEffect = (callback: placeholderCallback, dependencies: DependencyArray, isServerFunction?: () => boolean) => void
 
 export function getValues(dependencies: DependencyArray): Array<any> {
   return dependencies.map((dependency) => {
@@ -22,10 +24,9 @@ export function useState<T>(initialValue: T): [() => T, (newValue: T) => void] {
   return [state, setState]
 }
 
-export function useEffect(callback: placeholderCallback, dependencies: DependencyArray) {
-  const isServer = globalThis.navigator.userAgent === 'Node'
-  if (isServer) {
-    console.warn('useEffect is not supported on the server')
+export function useEffect(callback: placeholderCallback, dependencies: DependencyArray, isServerFunction: () => boolean = isServer) {
+  if (isServerFunction()) {
+    console.warn('Skipping useEffect on server')
     return
   }
   const oldEffectCallback = this.effectCallback

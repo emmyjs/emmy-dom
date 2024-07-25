@@ -1,3 +1,4 @@
+import { isServer } from './utils.js';
 export function getValues(dependencies) {
     return dependencies.map((dependency) => {
         if (typeof dependency === 'function') {
@@ -14,10 +15,9 @@ export function useState(initialValue) {
     };
     return [state, setState];
 }
-export function useEffect(callback, dependencies) {
-    const isServer = globalThis.navigator.userAgent === 'Node';
-    if (isServer) {
-        console.warn('useEffect is not supported on the server');
+export function useEffect(callback, dependencies, isServerFunction = isServer) {
+    if (isServerFunction()) {
+        console.warn('Skipping useEffect on server');
         return;
     }
     const oldEffectCallback = this.effectCallback;
