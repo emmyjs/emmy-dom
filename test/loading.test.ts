@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { Component, LightComponent, load, launch, createPageComponent, FunctionalComponent, RouteString, EmmyComponent, ClassComponent } from '../src/index.ts'
+import { Component, LightComponent, load, launch, createPageComponent, FunctionalComponent, ClassComponent } from '../src/index.ts'
 import { attachToDocument, expectToBeSubclassOf } from './utils.ts'
 import { HTMLElement } from 'happy-dom'
 
@@ -32,7 +32,7 @@ describe('load', () => {
     expect(attachToDocument()).to.be.instanceOf(HTMLElement)
   })
   it('should load a page component', async () => {
-    load('https://github.com/' as RouteString, 'D')
+    load('https://github.com/', 'D')
     expect(attachToDocument('emmy-d')).to.be.instanceOf(HTMLElement)
   })
   it('should load a component with an invalid type as Functional Component', async () => {

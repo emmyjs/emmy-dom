@@ -1,5 +1,5 @@
 export * from './commonExports.js';
-import { RouteString, StyleObject } from './utils.js';
+import { Render, StyleObject } from './utils.js';
 import { Hoakable, UseEffect, UseState } from './hooks.js';
 export declare const jsx: any;
 export type MetaProps = {
@@ -8,7 +8,6 @@ export type MetaProps = {
     children: () => string;
 };
 export type HTMLGenerator = ((props: EmmyComponent) => string) | ((component?: EmmyComponent) => string) | (() => string);
-type Render = string | (() => string);
 export type FunctionalComponentGenerator = ((props: MetaProps) => Render) | ((props?: MetaProps) => Render) | (() => Render);
 export type Callback = ((component: EmmyComponent) => void) | ((component?: EmmyComponent) => void) | (() => void);
 declare global {
@@ -17,7 +16,7 @@ declare global {
     }
 }
 export type ClassComponent = Component | LightComponent;
-export type ComponentType = ClassComponent | FunctionalComponent | FunctionalComponentGenerator | RouteString;
+export type ComponentType = ClassComponent | FunctionalComponent | FunctionalComponentGenerator | string;
 type HTMLGeneratorGenerator = ((component: EmmyComponent) => HTMLGenerator) | ((component?: EmmyComponent) => HTMLGenerator) | (() => HTMLGenerator);
 export type BuildOptions = {
     dependencies: string;
@@ -65,7 +64,7 @@ export declare class FunctionalComponent extends LightComponent implements Hoaka
 }
 export declare class Route extends LightComponent {
     static routes: {
-        [key: RouteString]: string;
+        [key: string]: string;
     };
     constructor();
 }

@@ -1,7 +1,7 @@
 export { useEffect, useState, useRef } from './hooks.js'
 export {
   Emmy, loadGlobalEmmy,
-  RouteString, StyleObject,
+  StyleObject,
   capitalizeFirstLetter, uncapitalizeFirstLetter,
   createInlineStyle, parseCSS,
   html, javascript,
