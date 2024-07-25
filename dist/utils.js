@@ -64,5 +64,5 @@ export const html = String.raw;
 export const javascript = String.raw;
 export const routerClassNames = 'flex flex-col justify-center items-center space-y-3 text-center w-full h-fit box-border';
 export function isServer() {
-    return globalThis.navigator.userAgent === 'Node' || !!process;
+    return globalThis.navigator.userAgent === 'Node' || globalThis.hasOwnProperty('process');
 }

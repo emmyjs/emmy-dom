@@ -78,5 +78,5 @@ export type StyleObject = string | {
 }
 
 export function isServer() {
-  return globalThis.navigator.userAgent === 'Node' || !!process
+  return globalThis.navigator.userAgent === 'Node' || globalThis.hasOwnProperty('process')
 }
