@@ -1,6 +1,6 @@
 {
   "name": "emmy-dom",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "A tiny simple front-end library for building web applications",
   "main": "dist/index.js",
   "type": "module",

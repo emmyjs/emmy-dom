@@ -1,6 +1,16 @@
 # CHANGELOG
 
-# 1.6.0 (2024-07-25)
+## 1.6.1 (2024-07-25)
+
+
+### Bug Fixes
+
+* **Root:** Avoid Reference Error asking for process in client side ([d2c163a](https://github.com/emmyjs/emmy-dom/commit/d2c163afb45b9ec642b8beaa570727bbce9667c0))
+* **Root:** Avoid useEffect calling twice while using didMount ([a02aa1b](https://github.com/emmyjs/emmy-dom/commit/a02aa1bac27f3408b67c435f54249480a339dc78))
+
+
+
+# [1.6.0](https://github.com/emmyjs/emmy-dom/compare/1.5.4...1.6.0) (2024-07-25)
 
 
 ### Bug Fixes
