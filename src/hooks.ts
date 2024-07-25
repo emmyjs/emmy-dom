@@ -6,6 +6,18 @@ export type DependencyArray = Array<(() => any) | any>
 export type UseState = <T>(initialValue: T) => [() => T, (newValue: T) => void]
 export type UseEffect = (callback: placeholderCallback, dependencies: DependencyArray, isServerFunction?: () => boolean) => void
 
+export interface Hoakable {
+  effectCallback: (component: object) => void
+  callback: (component: object) => void
+  useEffect: UseEffect
+  useState: UseState
+}
+
+export function bindHooks(component: Hoakable) {
+  component.useState = useState.bind(component)
+  component.useEffect = useEffect.bind(component)
+}
+
 export function getValues(dependencies: DependencyArray): Array<any> {
   return dependencies.map((dependency) => {
     if (typeof dependency === 'function') {

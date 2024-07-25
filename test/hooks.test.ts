@@ -1,6 +1,6 @@
 import { describe, it, expect, vitest } from 'vitest'
-import { Component, FunctionalComponent, HTMLGenerator, MetaProps, bindHooks } from '../src/index.ts'
-import { getValues, useState, useEffect, useRef } from '../src/hooks.ts'
+import { Component, FunctionalComponent, HTMLGenerator, MetaProps } from '../src/index.ts'
+import { getValues, useState, useEffect, useRef, bindHooks, Hoakable } from '../src/hooks.ts'
 import { awaitDidMount } from './utils.ts'
 // Even VSCode doesn't recognize the usage of HTMLElement, it is necessary to test components
 import { HTMLElement } from 'happy-dom'
@@ -139,7 +139,7 @@ describe('bindHooks', () => {
       }
     }
     const componentToBind = new A() as FunctionalComponent
-    bindHooks(componentToBind)
+    bindHooks(componentToBind as Hoakable)
     expect(componentToBind.useState).toBeDefined()
     expect(componentToBind.useEffect).toBeDefined()
   })

@@ -1,7 +1,7 @@
 export * from './commonExports.js'
 
 import { render as renderJSX } from 'jsx-to-html'
-import { UseEffect, UseState, useEffect, useState } from './hooks.js'
+import { Hoakable, UseEffect, UseState, bindHooks } from './hooks.js'
 import {
   RouteString,
   StyleObject,
@@ -112,13 +112,7 @@ export class LightComponent extends EmmyComponent {
   }
 }
 
-export function bindHooks(component: FunctionalComponent) {
-  component.useState = useState.bind(component)
-  component.useEffect = useEffect.bind(component)
-}
-
-
-export class FunctionalComponent extends LightComponent {
+export class FunctionalComponent extends LightComponent implements Hoakable {
   effectCallback: (component: FunctionalComponent) => void
   useState: UseState
   useEffect: UseEffect

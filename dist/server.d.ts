@@ -1,6 +1,6 @@
 export * from './commonExports.js';
 import { RouteString, StyleObject } from './utils.js';
-import { UseEffect, UseState } from './hooks.js';
+import { Hoakable, UseEffect, UseState } from './hooks.js';
 export declare const jsx: any;
 export type MetaProps = {
     el: FunctionalComponent;
@@ -47,8 +47,7 @@ export declare class LightComponent extends EmmyComponent {
     connectedCallback(): void;
     querySelector(selector: string): HTMLElement | null;
 }
-export declare function bindHooks(component: FunctionalComponent): void;
-export declare class FunctionalComponent extends LightComponent {
+export declare class FunctionalComponent extends LightComponent implements Hoakable {
     effectCallback: (component: FunctionalComponent) => void;
     useState: UseState;
     useEffect: UseEffect;

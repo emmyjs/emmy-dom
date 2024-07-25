@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 export * from './commonExports.js';
 import { render as renderJSX } from 'jsx-to-html';
-import { useEffect, useState } from './hooks.js';
+import { bindHooks } from './hooks.js';
 import { createInlineStyle, html, processGenerator, routerClassNames, vanillaElement } from './utils.js';
 export const jsx = renderJSX;
 export class EmmyComponent extends HTMLElement {
@@ -70,10 +70,6 @@ export class LightComponent extends EmmyComponent {
     querySelector(selector) {
         return HTMLElement.prototype.querySelector.call(this, vanillaElement(selector));
     }
-}
-export function bindHooks(component) {
-    component.useState = useState.bind(component);
-    component.useEffect = useEffect.bind(component);
 }
 export class FunctionalComponent extends LightComponent {
     constructor(func) {

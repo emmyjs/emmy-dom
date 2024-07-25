@@ -1,4 +1,8 @@
 import { isServer } from './utils.js';
+export function bindHooks(component) {
+    component.useState = useState.bind(component);
+    component.useEffect = useEffect.bind(component);
+}
 export function getValues(dependencies) {
     return dependencies.map((dependency) => {
         if (typeof dependency === 'function') {

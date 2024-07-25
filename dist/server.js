@@ -12,7 +12,7 @@ import { render as renderJSX } from 'jsx-to-html';
 import { Emmy, capitalizeFirstLetter, createInlineStyle, html, javascript, processGenerator, routerClassNames, uncapitalizeFirstLetter, vanillaElement } from './utils.js';
 import { readFileSync, writeFileSync } from 'fs';
 import { createRequire } from 'module';
-import { useEffect, useState } from './hooks.js';
+import { bindHooks } from './hooks.js';
 const require = createRequire(import.meta.url);
 const render = require('./ssr');
 require('./ssr/register');
@@ -75,10 +75,6 @@ export class LightComponent extends EmmyComponent {
     querySelector(selector) {
         return HTMLElement.prototype.querySelector.call(this, vanillaElement(selector));
     }
-}
-export function bindHooks(component) {
-    component.useState = useState.bind(component);
-    component.useEffect = useEffect.bind(component);
 }
 export class FunctionalComponent extends LightComponent {
     constructor(func) {
