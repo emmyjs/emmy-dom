@@ -1,6 +1,20 @@
 # CHANGELOG
 
-## 1.5.4 (2024-07-24)
+# 1.6.0 (2024-07-25)
+
+
+### Bug Fixes
+
+* **Root:** Skip useEffect on server ([3cf4277](https://github.com/emmyjs/emmy-dom/commit/3cf42776a700e67e4b258a989f1428cff0b361a5))
+
+
+### Features
+
+* **Root:** Add useRef ([925ec46](https://github.com/emmyjs/emmy-dom/commit/925ec46a80739d93c37e9e8bebba621d7b5f6452))
+
+
+
+## [1.5.4](https://github.com/emmyjs/emmy-dom/compare/1.5.3...1.5.4) (2024-07-24)
 
 
 ### Bug Fixes
