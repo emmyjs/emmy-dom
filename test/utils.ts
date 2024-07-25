@@ -1,4 +1,4 @@
-import { assert, expect } from 'vitest'
+import { assert } from 'vitest'
 import { EmmyComponent } from '../src/index.ts'
 
 export function awaitDidMount(componentName) {

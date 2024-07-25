@@ -4,7 +4,7 @@ export { useEffect, useState } from './hooks.js';
 export { Emmy, loadGlobalEmmy, RouteString, StyleObject, capitalizeFirstLetter, uncapitalizeFirstLetter, createInlineStyle, parseCSS, html, javascript, processGenerator, routerClassNames, vanillaElement } from './utils.js';
 export declare const jsx: any;
 export type MetaProps = {
-    el: EmmyComponent;
+    el: FunctionalComponent;
     props: () => object;
     children: () => string;
 };
@@ -65,6 +65,6 @@ export declare class Router extends LightComponent {
     handleLocation: () => void;
     constructor();
 }
-export declare function launch(component: ClassComponent | FunctionalComponent, name: string): ClassComponent | FunctionalComponent;
+export declare function launch(component: ClassComponent | FunctionalComponent, name: string): FunctionalComponent | ClassComponent;
 export declare function createPageComponent(url: string, name: string): Promise<ClassComponent | FunctionalComponent>;
 export declare function load(func: ComponentType, name: string): Promise<ClassComponent | FunctionalComponent>;

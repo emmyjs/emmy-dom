@@ -1,7 +1,7 @@
 type placeholderCallback = ((component: object) => void) | ((component?: object) => void) | (() => void)
 
 export type DependencyArray = Array<(() => any) | any>
-export type UseState = (initialValue: any) => [() => any, (newValue: any) => void]
+export type UseState = <T>(initialValue: T) => [() => T, (newValue: T) => void]
 export type UseEffect = (callback: placeholderCallback, dependencies: DependencyArray) => void
 
 export function getValues(dependencies: DependencyArray): Array<any> {
@@ -13,7 +13,7 @@ export function getValues(dependencies: DependencyArray): Array<any> {
   })
 }
 
-export function useState(initialValue): [() => any, (newValue: any) => void] {
+export function useState<T>(initialValue: T): [() => T, (newValue: T) => void] {
   let value = initialValue
   const state = () => value
   const setState = (newValue) => {
@@ -22,7 +22,12 @@ export function useState(initialValue): [() => any, (newValue: any) => void] {
   return [state, setState]
 }
 
-export function useEffect (callback: placeholderCallback, dependencies: DependencyArray) {
+export function useEffect(callback: placeholderCallback, dependencies: DependencyArray) {
+  const isServer = globalThis.navigator.userAgent === 'Node'
+  if (isServer) {
+    console.warn('useEffect is not supported on the server')
+    return
+  }
   const oldEffectCallback = this.effectCallback
   if (!dependencies || dependencies.length === 0) {
     this.effectCallback = (component) => {
@@ -52,4 +57,8 @@ export function useEffect (callback: placeholderCallback, dependencies: Dependen
     }
     return false
   })
+}
+
+export function useRef<T>(value?: T) {
+  return { current: value }
 }

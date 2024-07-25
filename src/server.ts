@@ -34,7 +34,7 @@ require('./ssr/register')
 export const jsx = renderJSX
 
 export type MetaProps = {
-  el: EmmyComponent,
+  el: FunctionalComponent,
   props: () => object,
   children: () => string
 }

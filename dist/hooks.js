@@ -15,6 +15,11 @@ export function useState(initialValue) {
     return [state, setState];
 }
 export function useEffect(callback, dependencies) {
+    const isServer = globalThis.navigator.userAgent === 'Node';
+    if (isServer) {
+        console.warn('useEffect is not supported on the server');
+        return;
+    }
     const oldEffectCallback = this.effectCallback;
     if (!dependencies || dependencies.length === 0) {
         this.effectCallback = (component) => {
@@ -44,4 +49,7 @@ export function useEffect(callback, dependencies) {
         }
         return false;
     });
+}
+export function useRef(value) {
+    return { current: value };
 }

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { Component, FunctionalComponent, HTMLGenerator, bindHooks } from '../src/index.ts'
-import { getValues, useState, useEffect } from '../src/hooks.ts'
+import { Component, FunctionalComponent, HTMLGenerator, MetaProps, bindHooks } from '../src/index.ts'
+import { getValues, useState, useEffect, useRef } from '../src/hooks.ts'
 import { awaitDidMount } from './utils.ts'
 // Even VSCode doesn't recognize the usage of HTMLElement, it is necessary to test components
 import { HTMLElement } from 'happy-dom'
@@ -30,7 +30,7 @@ describe('useState', () => {
           super()
           const [state, setState] = useState(0)
           this.render('<div></div>', () => {
-            this.setAttribute('state', state())
+            this.setAttribute('state', state().toString())
           })
         }
       }
@@ -48,7 +48,7 @@ describe('useState', () => {
           this.render('<div></div>')
           const [state, setState] = useState(0)
           setState(1)
-          this.setAttribute('state', state())
+          this.setAttribute('state', state().toString())
         }
       }
       customElements.define('emmy-a', A)
@@ -65,10 +65,10 @@ describe('useEffect', () => {
   })
   it('should call a callback', () => {
     expect((() => {
-      const functionalComponent = ({ el }) => {
+      const functionalComponent = ({ el }: MetaProps) => {
         el.useEffect(() => {
           el.setAttribute('callback', 'called')
-        })
+        }, [])
         return ''
       }
       class A extends FunctionalComponent {
@@ -140,5 +140,30 @@ describe('bindHooks', () => {
     bindHooks(componentToBind)
     expect(componentToBind.useState).toBeDefined()
     expect(componentToBind.useEffect).toBeDefined()
+  })
+})
+
+describe('useRef', () => {
+  it('should be defined', () => {
+    expect(useRef).toBeDefined()
+  })
+  it('should return a ref', () => {
+    expect((() => {
+      const functionalComponent = ({ el } : MetaProps) => {
+        const ref = useRef(0)
+        el.setAttribute('ref', ref.current!.toString())
+        return ''
+      }
+      class A extends FunctionalComponent {
+        constructor() {
+          super(functionalComponent as HTMLGenerator)
+        }
+      }
+      customElements.define('emmy-a', A)
+      document.body.innerHTML = '<emmy-a></emmy-a>'
+      awaitDidMount('emmy-a')
+      const emmyElement = document.querySelector('emmy-a')
+      return emmyElement?.getAttribute('ref')
+    })()).toBe('0')
   })
 })
