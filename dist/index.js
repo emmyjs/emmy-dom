@@ -7,11 +7,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+export * from './commonExports.js';
 import { render as renderJSX } from 'jsx-to-html';
 import { useEffect, useState } from './hooks.js';
 import { createInlineStyle, html, processGenerator, routerClassNames, vanillaElement } from './utils.js';
-export { useEffect, useState } from './hooks.js';
-export { Emmy, loadGlobalEmmy, capitalizeFirstLetter, uncapitalizeFirstLetter, createInlineStyle, parseCSS, html, javascript, processGenerator, routerClassNames, vanillaElement } from './utils.js';
 export const jsx = renderJSX;
 export class EmmyComponent extends HTMLElement {
     constructor() {
