@@ -146,6 +146,28 @@ describe('useEffect', () => {
       return emmyElement?.getAttribute('callback')
     })()).toBeNull()
   })
+  it('should call a callback with didMount just once', () => {
+    expect((() => {
+      const functionalComponent = ({ el }) => {
+        const [callsCount, setCallsCount] = el.useState(0)
+        el.useEffect(() => {
+          setCallsCount(callsCount() + 1)
+          el.setAttribute('callback', callsCount().toString())
+        }, ['didMount'], isServerMock)
+        return ''
+      }
+      class A extends FunctionalComponent {
+        constructor() {
+          super(functionalComponent as HTMLGenerator)
+        }
+      }
+      customElements.define('emmy-a', A)
+      document.body.innerHTML = '<emmy-a></emmy-a>'
+      awaitDidMount('emmy-a')
+      const emmyElement = document.querySelector('emmy-a')
+      return emmyElement?.getAttribute('callback')
+    })()).toBe('1')
+  })
 })
 
 describe('bindHooks', () => {

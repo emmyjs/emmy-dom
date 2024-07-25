@@ -41,12 +41,16 @@ export function useEffect(callback, dependencies, isServerFunction = isServer) {
             callback.call(component, component);
         }
     };
+    let didMount = false;
     dependencies.find((dependency) => {
         if (typeof dependency === 'string') {
             if (dependency === 'didMount') {
                 const oldCallback = this.callback;
                 this.callback = (component) => {
                     oldCallback.call(component, component);
+                    if (didMount)
+                        return;
+                    didMount = true;
                     callback.call(component, component);
                 };
             }
