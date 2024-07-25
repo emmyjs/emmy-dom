@@ -8,10 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 export * from './commonExports.js';
-import { render as renderJSX } from 'jsx-to-html';
 import { bindHooks } from './hooks.js';
-import { createInlineStyle, html, processGenerator, routerClassNames, vanillaElement } from './utils.js';
-export const jsx = renderJSX;
+import { createInlineStyle, html, jsx, processGenerator, routerClassNames, vanillaElement } from './utils.js';
 export class EmmyComponent extends HTMLElement {
     constructor() {
         super();

@@ -8,15 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 export * from './commonExports.js';
-import { render as renderJSX } from 'jsx-to-html';
-import { Emmy, capitalizeFirstLetter, createInlineStyle, html, javascript, processGenerator, routerClassNames, uncapitalizeFirstLetter, vanillaElement } from './utils.js';
+import { Emmy, capitalizeFirstLetter, createInlineStyle, html, javascript, jsx, processGenerator, routerClassNames, uncapitalizeFirstLetter, vanillaElement } from './utils.js';
 import { readFileSync, writeFileSync } from 'fs';
-import { createRequire } from 'module';
 import { bindHooks } from './hooks.js';
+import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const render = require('./ssr');
 require('./ssr/register');
-export const jsx = renderJSX;
 export class EmmyComponent extends HTMLElement {
     constructor() {
         super();

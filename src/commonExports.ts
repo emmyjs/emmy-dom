@@ -4,6 +4,6 @@ export {
   StyleObject,
   capitalizeFirstLetter, uncapitalizeFirstLetter,
   createInlineStyle, parseCSS,
-  html, javascript,
-  processGenerator, routerClassNames,  vanillaElement
+  html, javascript, jsx,
+  processGenerator, routerClassNames, vanillaElement
 } from './utils.js'

@@ -1,18 +1,16 @@
 export * from './commonExports.js'
 
-import { render as renderJSX } from 'jsx-to-html'
 import { Hoakable, UseEffect, UseState, bindHooks } from './hooks.js'
 import {
   Render,
   StyleObject,
   createInlineStyle,
   html,
+  jsx,
   processGenerator,
   routerClassNames,
   vanillaElement
 } from './utils.js'
-
-export const jsx = renderJSX
 
 export type MetaProps = {
   el: FunctionalComponent,
@@ -80,7 +78,6 @@ export abstract class EmmyComponent extends HTMLElement {
   abstract querySelector(selector: string): HTMLElement | null
 }
 
-
 export class Component extends EmmyComponent {
   constructor() {
     super()
@@ -96,7 +93,6 @@ export class Component extends EmmyComponent {
     return this.shadowRoot!.querySelector(vanillaElement(selector))
   }
 }
-
 
 export class LightComponent extends EmmyComponent {
   connectedCallback() {
@@ -190,7 +186,6 @@ export class FunctionalComponent extends LightComponent implements Hoakable {
   }
 }
 
-
 export class Route extends LightComponent {
   static routes: { [key: string]: string } = {}
 
@@ -205,7 +200,6 @@ export class Route extends LightComponent {
     })
   }
 }
-
 
 export class Router extends LightComponent {
   handleLocation: () => void

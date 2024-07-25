@@ -126,6 +126,26 @@ describe('useEffect', () => {
       return emmyElement?.getAttribute('callback')
     })()).toBe('1')
   })
+  it('should skip useEffect on server', () => {
+    expect((() => {
+      const functionalComponent = ({ el }) => {
+        el.useEffect(() => {
+          el.setAttribute('callback', 'called')
+        }, [], () => true)
+        return ''
+      }
+      class A extends FunctionalComponent {
+        constructor() {
+          super(functionalComponent as HTMLGenerator)
+        }
+      }
+      customElements.define('emmy-a', A)
+      document.body.innerHTML = '<emmy-a></emmy-a>'
+      awaitDidMount('emmy-a')
+      const emmyElement = document.querySelector('emmy-a')
+      return emmyElement?.getAttribute('callback')
+    })()).toBeNull()
+  })
 })
 
 describe('bindHooks', () => {

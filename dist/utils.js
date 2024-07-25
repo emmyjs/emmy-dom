@@ -1,4 +1,6 @@
 import styleToCssString from './react-style-object-to-css/index.js';
+import { render as renderJsx } from 'jsx-to-html';
+export const jsx = renderJsx;
 export function processGenerator(generator) {
     const processedGenerator = generator.replace(/<\/?[^>]+>/g, match => {
         const element = match.slice(0, -1);

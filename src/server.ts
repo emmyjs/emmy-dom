@@ -1,6 +1,5 @@
 export * from './commonExports.js'
 
-import { render as renderJSX } from 'jsx-to-html'
 import {
   Emmy,
   Render,
@@ -9,6 +8,7 @@ import {
   createInlineStyle,
   html,
   javascript,
+  jsx,
   processGenerator,
   routerClassNames,
   uncapitalizeFirstLetter,
@@ -16,13 +16,12 @@ import {
 } from './utils.js'
 
 import { readFileSync, writeFileSync } from 'fs'
-import { createRequire } from 'module'
 import { bindHooks, Hoakable, UseEffect, UseState } from './hooks.js'
+
+import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
 const render = require('./ssr')
 require('./ssr/register')
-
-export const jsx = renderJSX
 
 export type MetaProps = {
   el: FunctionalComponent,
@@ -211,7 +210,6 @@ export class FunctionalComponent extends LightComponent implements Hoakable {
   }
 }
 
-
 export class Route extends LightComponent {
   static routes: { [key: string]: string } = {}
 
@@ -226,7 +224,6 @@ export class Route extends LightComponent {
     })
   }
 }
-
 
 export class Router extends LightComponent {
   handleLocation: () => void

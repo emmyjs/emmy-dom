@@ -1,7 +1,6 @@
 export * from './commonExports.js';
 import { Render, StyleObject } from './utils.js';
 import { Hoakable, UseEffect, UseState } from './hooks.js';
-export declare const jsx: any;
 export type MetaProps = {
     el: FunctionalComponent;
     props: () => object;
