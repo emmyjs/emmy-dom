@@ -9,7 +9,7 @@
     "./server": "./dist/server.js"
   },
   "files": [
-    "src/"
+    "dist/"
   ],
   "directories": {
     "dist": "dist"
