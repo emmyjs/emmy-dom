@@ -6,11 +6,10 @@
   "type": "module",
   "exports": {
     ".": "./dist/index.js",
-    "./server": "./dist/server.js",
-    "./dist/server": "./dist/server.js"
+    "./server": "./dist/server.js"
   },
   "files": [
-    "src/*"
+    "src/"
   ],
   "directories": {
     "dist": "dist"
