@@ -6,7 +6,8 @@
   "type": "module",
   "exports": {
     ".": "./dist/index.js",
-    "./server": "./dist/server.js"
+    "./server": "./dist/server.js",
+    "./dist/server": "./dist/server.js"
   },
   "files": [
     "src/*"
@@ -17,7 +18,7 @@
   "scripts": {
     "tsc": "tsc -p tsconfig.json",
     "cpdir": "cp -r ./src/ssr ./dist/",
-    "build": "npm run tsc && npm run cpdir && vitest run && npm run lint",
+    "build": "npm run tsc && npm run cpdir && npm run coverage && npm run lint",
     "co": "npm run build && git add . && sui-mono commit && git push",
     "check": "node scripts/check.cjs",
     "release": "node scripts/release.cjs",
