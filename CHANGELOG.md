@@ -1,6 +1,15 @@
 # CHANGELOG
 
-## 1.6.2 (2024-07-29)
+## 1.6.3 (2024-07-30)
+
+
+### Bug Fixes
+
+* **Root:** Restore emmy-dom/dist/server support ([048d2ba](https://github.com/emmyjs/emmy-dom/commit/048d2ba9ecd0dc13c4304b4757fe115910960957))
+
+
+
+## [1.6.2](https://github.com/emmyjs/emmy-dom/compare/1.6.1...1.6.2) (2024-07-29)
 
 
 
