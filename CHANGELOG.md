@@ -1,6 +1,15 @@
 # CHANGELOG
 
-## 1.6.3 (2024-07-30)
+## 1.6.4 (2024-07-30)
+
+
+### Bug Fixes
+
+* **Root:** Hot revert 1.6.3: it was not exporting other files than dist/index.js ([6304267](https://github.com/emmyjs/emmy-dom/commit/6304267ff3e77dde125b3bceb1587d9f455ede32))
+
+
+
+## [1.6.3](https://github.com/emmyjs/emmy-dom/compare/1.6.2...1.6.3) (2024-07-30)
 
 
 ### Bug Fixes
