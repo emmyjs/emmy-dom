@@ -1,9 +1,6 @@
 import { describe, it, expect } from 'vitest'
-
-import { createRequire } from 'module'
-const require = createRequire(import.meta.url)
-const render = require('../src/ssr')
-require('../src/ssr/register')
+import './register'
+const render = require('../../src/ssr')
 
 describe('render', () => {
   it('should be defined', () => {

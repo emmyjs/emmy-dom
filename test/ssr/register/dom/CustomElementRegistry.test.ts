@@ -1,9 +1,12 @@
+import { test, expect, vitest } from 'vitest'
+import '../../register'
+
 test('define() should invoke observedAttributes', () => {
   const registry = new CustomElementRegistry()
-  const spy = jest.fn()
+  const spy = vitest.fn()
   class CustomElement extends HTMLElement {
     static get observedAttributes() {
-      spy()
+      return spy() // a get accessor must return a value
     }
   }
   registry.define('x-test', CustomElement)

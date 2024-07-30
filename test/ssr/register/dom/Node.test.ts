@@ -1,3 +1,6 @@
+import { beforeEach, expect, describe, it, vitest, Mock } from 'vitest'
+import '../../register'
+
 describe('Node', () => {
   let host
 
@@ -6,14 +9,12 @@ describe('Node', () => {
   })
 
   describe('appendChild', () => {
-    let m1, m2
-
-    // For some reason this test has side effects and fails ever other run.
-    it.skip('should connect a custom element', () => {
+    it('should connect a custom element', () => {
       class CustomElement extends HTMLElement {
+        connectedCallback: Mock
         constructor() {
           super()
-          this.connectedCallback = jest.fn()
+          this.connectedCallback = vitest.fn()
         }
       }
       const node = new CustomElement()
@@ -96,7 +97,7 @@ describe('Node', () => {
     it('should return a documentFragment containing all children', () => {
       for (let i = 0; i < 10; i++) {
         const child = document.createElement('span')
-        child.textContent = i
+        child.textContent = i.toString()
         host.appendChild(child)
       }
       const content = host.content

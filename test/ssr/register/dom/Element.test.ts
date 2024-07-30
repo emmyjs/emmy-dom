@@ -1,3 +1,6 @@
+import { describe, it, expect } from 'vitest'
+import '../../register'
+
 describe('Element', () => {
   it('setAttribute', () => {
     const div = document.createElement('div')
