@@ -1,21 +1,17 @@
 import { describe, it, expect } from 'vitest'
+import { restoreGlobalThis } from './utils'
 import 'happy-dom'
 
-function awaitDidMount(componentName) {
-  return new Promise((resolve, reject) => {
-    const interval = setInterval(() => {
-      if (document.querySelector(componentName).didMount) {
-        clearInterval(interval)
-        resolve(true)
-      }
-    }, 100)
-  })
-}
-
 // @vitest-environment happy-dom
-
-describe('emmy-dom', () => {
+describe('@vitest-environment happy-dom', () => {
   it('should work', () => {
     expect(1).toBe(1)
+  })
+})
+
+describe('restoreGlobalThis', () => {
+  it('should restore globalThis properties', () => {
+    restoreGlobalThis({ foo: 'bar' })
+    expect(globalThis.foo).toBe('bar')
   })
 })

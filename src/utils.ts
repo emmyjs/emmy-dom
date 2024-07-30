@@ -81,5 +81,5 @@ export type StyleObject = string | {
 export type Render = string | (() => string)
 
 export function isServer() {
-  return globalThis.navigator.userAgent === 'Node' || globalThis.hasOwnProperty('process')
+  return globalThis.navigator?.userAgent === 'Node' || globalThis.hasOwnProperty('process')
 }

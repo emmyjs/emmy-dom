@@ -2,7 +2,6 @@ import { assert } from 'vitest'
 import { EmmyComponent } from '../src/index.ts'
 
 // @vitest-environment happy-dom
-
 export function awaitDidMount(componentName) {
   return new Promise((resolve, reject) => {
     const interval = setInterval(() => {
@@ -28,5 +27,11 @@ export function expectToBeSubclassOf(actual, expected) {
   }
   catch (e) {
     assert.fail(assertMessage)
+  }
+}
+
+export const restoreGlobalThis = (properties: Record<string, any>) => {
+  for (const key in properties) {
+    globalThis[key] = properties[key]
   }
 }
