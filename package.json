@@ -17,8 +17,9 @@
   "scripts": {
     "tsc": "tsc -p tsconfig.json",
     "cpdir": "cp -r ./src/ssr ./dist/",
+    "co:build": "npm run tsc && npm run cpdir && vitest run && npm run lint",
     "build": "npm run tsc && npm run cpdir && npm run coverage && npm run lint",
-    "co": "npm run build && git add . && sui-mono commit && git push",
+    "co": "npm run co:build && git add . && sui-mono commit && git push",
     "check": "node scripts/check.cjs",
     "release": "node scripts/release.cjs",
     "lint": "eslint --ext .ts ./src --fix",
