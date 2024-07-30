@@ -1,6 +1,8 @@
 import { assert } from 'vitest'
 import { EmmyComponent } from '../src/index.ts'
 
+// @vitest-environment happy-dom
+
 export function awaitDidMount(componentName) {
   return new Promise((resolve, reject) => {
     const interval = setInterval(() => {
