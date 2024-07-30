@@ -10,7 +10,6 @@
     "declaration": true
   },
   "include": [
-    "./src",
     "./src/**/*"
-, "test/ssr/register/window.test.ts", "test/ssr/register/Document.test.ts", "test/ssr/register/dom/ClassList.test.ts", "test/ssr/register/dom/CustomElementRegistry.test.ts", "test/ssr/register/dom/Element.test.ts", "test/ssr/register/dom/HTMLElement.test.ts", "test/ssr/register/dom/MutationObserver.test.ts", "test/ssr/register/dom/Node.test.ts", "test/ssr/register/dom/Object.test.ts"  ]
+  ]
 }

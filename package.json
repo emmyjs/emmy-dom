@@ -9,14 +9,14 @@
     "./server": "./dist/server.js"
   },
   "files": [
-    "dist/"
+    "src/*"
   ],
   "directories": {
     "dist": "dist"
   },
   "scripts": {
     "tsc": "tsc -p tsconfig.json",
-    "cpdir": "cp -r ./src/ssr ./dist/ && cp -r ./src/react-style-object-to-css ./dist/",
+    "cpdir": "cp -r ./src/ssr ./dist/",
     "build": "npm run tsc && npm run cpdir && vitest run && npm run lint",
     "co": "npm run build && git add . && sui-mono commit && git push",
     "check": "node scripts/check.cjs",
