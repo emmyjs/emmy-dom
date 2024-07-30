@@ -1,6 +1,15 @@
 # CHANGELOG
 
-## 1.6.4 (2024-07-30)
+## 1.6.5 (2024-07-30)
+
+
+### Bug Fixes
+
+* **Root:** Add dist/ to files and remove src/ from it ([b1a49ac](https://github.com/emmyjs/emmy-dom/commit/b1a49ac3062db36e8e149841a2aafee4324130cd))
+
+
+
+## [1.6.4](https://github.com/emmyjs/emmy-dom/compare/1.6.3...1.6.4) (2024-07-30)
 
 
 ### Bug Fixes
