@@ -41,7 +41,7 @@
     "url": "https://github.com/emmyjs/emmy-dom/issues"
   },
   "homepage": "https://emmyjs.pages.dev/",
-  "sideEffects": "false",
+  "sideEffects": false,
   "devDependencies": {
     "@s-ui/mono": "2.41.0",
     "@types/eslint": "8.44.7",
