@@ -1,5 +1,5 @@
 import { describe, it, expect, vitest } from 'vitest'
-import { restoreGlobalThis } from './utils.ts'
+import { restoreGlobalThis } from './testing.ts'
 import { processGenerator, parseCSS, createInlineStyle, capitalizeFirstLetter, uncapitalizeFirstLetter, Emmy, loadGlobalEmmy, html, javascript, isServer } from '../src/utils.ts'
 
 describe('processGenerator', () => {

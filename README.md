@@ -28,7 +28,7 @@ It is specially designed for building web applications with server-side framewor
 [create-emmy](https://www.npmjs.com/package/create-emmy) is a command line tool that allows you to create a new Emmy.js project. [More info](https://github.com/emmyjs/create-emmy#readme)
 
 > [!TIP]
-> create-emmy 0.2.0 is now here! Try prerendering in a Vanilla Emmy app now!
+> create-emmy 0.2.2 is now here! Try prerendering in a Vanilla Emmy app now!
 > In order to create a new Emmy.js project, you can run the following command and follow the instructions:
 > `npx create-emmy`
 

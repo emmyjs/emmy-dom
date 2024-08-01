@@ -15,7 +15,7 @@ const {
   dispatchEvent,
   getAttribute,
   removeAttribute,
-  setAttribute
+  setAttribute,
 } = ElementProto
 
 let settingProp = false
@@ -109,6 +109,7 @@ ElementProto.assignedNodes = function() {
 
   const name = this.getAttribute('name') || this.name
 
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   let node = this,
     host
   while ((node = node.parentNode)) {
@@ -133,6 +134,7 @@ ElementProto.attachShadow = function({ mode, test }) {
   // We use an element to denote this. This is proposed to be the element that
   // will be used as the declarative form for Shadow DOM. This is subject to
   // change.
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   const host = this
   const shadowRoot = document.createElement('shadowroot')
 
@@ -214,6 +216,7 @@ prop(ElementProto, 'localName', {
 
 prop(ElementProto, 'nextElementSibling', {
   get() {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     let sib = this
     while ((sib = sib.nextSibling)) {
       if (sib.nodeType === 1) {
@@ -278,6 +281,7 @@ prop(ElementProto, 'outerHTML', {
 
 prop(ElementProto, 'previousElementSibling', {
   get() {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     let sib = this
     while ((sib = sib.previousSibling)) {
       if (sib.nodeType === 1) {

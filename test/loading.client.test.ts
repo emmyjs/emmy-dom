@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { Component, LightComponent, load, launch, createPageComponent, FunctionalComponent, ClassComponent } from '../src/index.ts'
-import { attachToDocument, expectToBeSubclassOf } from './utils.ts'
+import { expectToBeSubclassOf } from './testing.ts'
+import { attachToDocument } from './dom.client.ts'
 import { HTMLElement } from 'happy-dom'
 
 // @vitest-environment happy-dom

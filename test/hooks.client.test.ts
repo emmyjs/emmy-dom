@@ -1,7 +1,7 @@
 import { describe, it, expect, vitest } from 'vitest'
 import { Component, FunctionalComponent, HTMLGenerator, MetaProps } from '../src/index.ts'
 import { getValues, useState, useEffect, useRef, bindHooks, Hoakable } from '../src/hooks.ts'
-import { awaitDidMount } from './utils.ts'
+import { awaitDidMount } from './dom.client.ts'
 // Even VSCode doesn't recognize the usage of HTMLElement, it is necessary to test components
 import { HTMLElement } from 'happy-dom'
 
