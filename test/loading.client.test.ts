@@ -85,5 +85,5 @@ describe('createPageComponent', () => {
   it('should create a page component', async () => {
     const component = await createPageComponent('https://github.com/', 'G')
     expectToBeSubclassOf(component, FunctionalComponent)
-  }, 20000)
+  }, 30000)
 })

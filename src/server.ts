@@ -18,10 +18,8 @@ import {
 import { readFileSync, writeFileSync } from 'fs'
 import { bindHooks, Hoakable, UseEffect, UseState } from './hooks.js'
 
-import { createRequire } from 'module'
-const require = createRequire(import.meta.url)
-const render = require('./ssr')
-require('./ssr/register')
+import { useServer, render } from './register.js'
+useServer()
 
 export type MetaProps = {
   el: FunctionalComponent,

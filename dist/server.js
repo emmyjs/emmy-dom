@@ -11,10 +11,8 @@ export * from './commonExports.js';
 import { Emmy, capitalizeFirstLetter, createInlineStyle, html, javascript, jsx, processGenerator, routerClassNames, uncapitalizeFirstLetter, vanillaElement } from './utils.js';
 import { readFileSync, writeFileSync } from 'fs';
 import { bindHooks } from './hooks.js';
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const render = require('./ssr');
-require('./ssr/register');
+import { useServer, render } from './register.js';
+useServer();
 export class EmmyComponent extends HTMLElement {
     constructor() {
         super();
