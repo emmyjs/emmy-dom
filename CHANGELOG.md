@@ -1,6 +1,15 @@
 # CHANGELOG
 
-## 1.6.5 (2024-07-30)
+## 1.6.6 (2024-08-03)
+
+
+### Performance Improvements
+
+* **Root:** Remove ssr README to reduce bundle size (9k) ([0775962](https://github.com/emmyjs/emmy-dom/commit/077596205b5ff2c1a7f9a7e82a00a57071e22ce9))
+
+
+
+## [1.6.5](https://github.com/emmyjs/emmy-dom/compare/1.6.4...1.6.5) (2024-07-30)
 
 
 ### Bug Fixes
