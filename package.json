@@ -44,7 +44,7 @@
   "homepage": "https://emmyjs.pages.dev/",
   "sideEffects": false,
   "devDependencies": {
-    "@s-ui/mono": "2.41.0",
+    "@s-ui/mono": "2.45.0",
     "@types/eslint": "8.44.7",
     "@typescript-eslint/eslint-plugin": "6.17.0",
     "@typescript-eslint/parser": "6.17.0",
