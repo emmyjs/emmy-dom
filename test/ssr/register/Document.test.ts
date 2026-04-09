@@ -114,6 +114,28 @@ describe('getElementById', () => {
     document.getElementById('one')
     expect(document.getElementById('one').parentNode.nodeName).toBe('HEAD')
   })
+
+  it('updates cached ids when an element id changes', () => {
+    document.head.innerHTML = '<div id="one"></div>'
+
+    const element = document.getElementById('one')
+    expect(element).not.toBe(null)
+
+    element.setAttribute('id', 'renamed')
+
+    expect(document.getElementById('one')).toBe(null)
+    expect(document.getElementById('renamed')).toBe(element)
+  })
+
+  it('updates cached ids when an element is removed', () => {
+    document.body.innerHTML = '<div id="one"></div>'
+
+    const element = document.getElementById('one')
+    expect(element).not.toBe(null)
+
+    element.parentNode.removeChild(element)
+    expect(document.getElementById('one')).toBe(null)
+  })
 })
 
 describe('getElementsByClassName', () => {

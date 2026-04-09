@@ -68,6 +68,16 @@ class Document extends Element {
     this.ssr = {
       scriptBase: process.cwd()
     }
+
+    // Cache hash map for fast getElementById lookups.
+    this._idIndex = new Map()
+    this._idIndexDirty = true
+    this._markIdIndexDirty = () => {
+      this._idIndexDirty = true
+    }
+
+    // Any add/remove/attribute mutation invalidates the ID index.
+    addEventListener('__MutationObserver', this._markIdIndexDirty)
   }
 
   createComment(nodeValue = '') {
@@ -134,9 +144,27 @@ class Document extends Element {
     }
   }
 
-  // TODO use a hash to speed this up.
+  _rebuildIdIndex() {
+    const idIndex = new Map()
+    const tree = this.createTreeWalker(this, NodeFilter.SHOW_ELEMENT)
+
+    while (tree.nextNode()) {
+      const node = tree.currentNode
+      if (node.id && !idIndex.has(node.id)) {
+        idIndex.set(node.id, node)
+      }
+    }
+
+    this._idIndex = idIndex
+    this._idIndexDirty = false
+  }
+
   getElementById(id) {
-    return find(document, node => node.id === id, { one: true })
+    if (this._idIndexDirty) {
+      this._rebuildIdIndex()
+    }
+
+    return this._idIndex.get(id) || null
   }
 
   getElementsByClassName(className) {
