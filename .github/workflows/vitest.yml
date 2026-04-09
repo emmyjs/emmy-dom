@@ -27,4 +27,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
+    - run: npm run tsc
+    - run: npm run cpdir
+    - run: npm run verify:package-contract
     - run: npm test
