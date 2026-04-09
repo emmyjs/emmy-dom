@@ -78,13 +78,22 @@ describe('javascript', () => {
 })
 
 const mockClient = () => {
-  const navigatorMock = { userAgent: 'Mozilla/5.0' } as Navigator
-  const navigatorSpy = vitest.spyOn(globalThis, 'navigator', 'get').mockReturnValue(navigatorMock)
+  const navigatorDescriptor = Object.getOwnPropertyDescriptor(globalThis, 'navigator')
+  Object.defineProperty(globalThis, 'navigator', {
+    configurable: true,
+    value: { userAgent: 'Mozilla/5.0' }
+  })
+
   const hasOwnPropertySpy = vitest.spyOn(globalThis, 'hasOwnProperty').mockImplementation(() => false)
 
   return () => {
-    navigatorSpy.mockRestore()
     hasOwnPropertySpy.mockRestore()
+    if (navigatorDescriptor) {
+      Object.defineProperty(globalThis, 'navigator', navigatorDescriptor)
+    }
+    else {
+      delete (globalThis as { navigator?: Navigator }).navigator
+    }
   }
 }
 
@@ -93,8 +102,8 @@ describe('isServer', () => {
     expect(isServer()).toBe(true)
   })
   it('should return false if the code is running on the client', () => {
-    const restore = mockClient()
+    const restoreClient = mockClient()
     expect(isServer()).toBe(false)
-    restore()
+    restoreClient()
   })
 })
