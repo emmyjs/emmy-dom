@@ -100,6 +100,10 @@ class Document extends Element {
     whatToShow = NodeFilter.SHOW_ALL,
     filter = { acceptNode: () => NodeFilter.FILTER_ACCEPT }
   ) {
+    if (!root || typeof root !== 'object' || !('childNodes' in root)) {
+      throw new TypeError('Failed to execute "createTreeWalker": invalid root node')
+    }
+
     // Use an array so we don't have to use recursion.
     const stack = [root]
     return {
@@ -107,15 +111,18 @@ class Document extends Element {
       nextNode() {
         while (stack.length) {
           const next = stack.shift()
-          const result = applyNodeFilter(next, filter)
+          const nodeIncluded = shouldShowNode(next, whatToShow)
+          const result = nodeIncluded
+            ? applyNodeFilter(next, filter)
+            : NodeFilter.FILTER_SKIP
 
-          if (result !== NodeFilter.FILTER_REJECT) {
+          if (result !== NodeFilter.FILTER_REJECT && next?.childNodes) {
             // We do this in *document order*, so descendents of earlier parents
             // need to get visited first.
             stack.unshift(...next.childNodes)
           }
 
-          if (result === NodeFilter.FILTER_ACCEPT && shouldShowNode(next, whatToShow)) {
+          if (nodeIncluded && result === NodeFilter.FILTER_ACCEPT) {
             this.currentNode = next
             return this.currentNode
           }

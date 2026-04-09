@@ -72,6 +72,31 @@ test('createTreeWalker supports filter acceptNode', () => {
   expect(list).toMatchObject(['HTML', 'HEAD', 'DIV', 'BODY', 'DIV'])
 })
 
+test('createTreeWalker skips filter calls for excluded node types', () => {
+  document.head.innerHTML = '<div id="one">head text</div>'
+  document.body.innerHTML = '<div id="two">body text</div>'
+
+  let calls = 0
+  const tree = document.createTreeWalker(document, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      calls++
+      return node.nodeType === Node.TEXT_NODE
+        ? NodeFilter.FILTER_ACCEPT
+        : NodeFilter.FILTER_REJECT
+    }
+  })
+
+  while (tree.nextNode()) {
+    // no-op, exhaust walker
+  }
+
+  expect(calls).toBe(2)
+})
+
+test('createTreeWalker throws with invalid root', () => {
+  expect(() => document.createTreeWalker(null)).toThrow(TypeError)
+})
+
 describe('getElementById', () => {
   it('returns no elements on empty', () => {
     expect(document.getElementById('one')).toBe(null)
