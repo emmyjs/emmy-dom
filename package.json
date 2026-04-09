@@ -22,8 +22,6 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "status:generate": "node scripts/generate-feature-status-json.cjs",
     "status:verify": "node scripts/verify-feature-status-json.cjs",
-    "coverage:stable": "vitest run --config vite.stable.config.js --coverage",
-    "coverage:stable:check": "npm run coverage:stable",
     "cpdir": "cp -r ./src/ssr ./dist/",
     "hooks:install": "git config core.hooksPath .githooks",
     "lint:check": "eslint --ext .ts ./src",
@@ -37,6 +35,7 @@
     "lint": "eslint --ext .ts ./src --fix",
     "test": "vitest",
     "coverage": "vitest run --coverage",
+    "coverage:stable": "vitest run --coverage --config vite.stable.config.js",
     "prepublishOnly": "npm run build"
   },
   "repository": {

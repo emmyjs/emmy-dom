@@ -37,7 +37,7 @@ Estabilizar SSR y el contrato de publicación del paquete, reducir regresiones e
 ## Estado de Features (Snapshot)
 - ✅ Class Components: Estable
 - ✅ Functional Components: Estable
-- ❌ Declarative Props: Inestable
+- ✅ Declarative Props: Estable
 - ✅ Emmy Hooks: Estable
 - ✅ Auto-close Tags: Estable
 - ✅ JSX in Client Components: Estable
