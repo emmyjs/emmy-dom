@@ -34,21 +34,21 @@ Estabilizar SSR y el contrato de publicación del paquete, reducir regresiones e
 - ⏳ Añadir guía de troubleshooting para SSR y exportaciones.
 
 ## Estado de Features (Snapshot)
-- ✅ Class Components: Stable
-- ✅ Functional Components: Stable
-- ❌ Declarative Props: Unstable
-- ✅ Emmy Hooks: Stable
-- ✅ Auto-close Tags: Stable
-- ✅ JSX in Client Components: Stable
-- ✅ Emmy Router Routes: Stable
-- ✅ Emmy Router SPA Navigation: Stable
-- ❌ Prerendering: Unstable
+- ✅ Class Components: Estable
+- ✅ Functional Components: Estable
+- ❌ Declarative Props: Inestable
+- ✅ Emmy Hooks: Estable
+- ✅ Auto-close Tags: Estable
+- ✅ JSX in Client Components: Estable
+- ✅ Emmy Router Routes: Estable
+- ✅ Emmy Router SPA Navigation: Estable
+- ❌ Prerendering: Inestable
 - ⚠️ Server-side Rendering: Experimental
 
 ## Próximos Pasos Inmediatos
-- 1) Endurecer hooks (cobertura de re-render y dependencias avanzadas).
-- 2) Completar deuda SSR pendiente (`nodeName` dinámico y herencia de `DocumentFragment`).
-- 3) Definir umbral de coverage para marcar features como `Stable`.
+1. Completar deuda SSR pendiente (`nodeName` dinámico y herencia de `DocumentFragment`).
+2. Estabilizar Prerendering y Declarative Props.
+3. Definir umbral de coverage para marcar features como `Estable`.
 
 ## Criterios de éxito
 - Cero incidentes por exports rotos entre versiones consecutivas.
