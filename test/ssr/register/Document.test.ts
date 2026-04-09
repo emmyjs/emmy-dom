@@ -32,6 +32,46 @@ test('createTreeWalker', () => {
   ])
 })
 
+test('createTreeWalker supports whatToShow', () => {
+  document.head.innerHTML = '<div id="one">head text</div>'
+  document.body.innerHTML = '<div id="two">body text</div>'
+
+  const list = []
+  const tree = document.createTreeWalker(document, NodeFilter.SHOW_TEXT)
+
+  while (tree.nextNode()) {
+    list.push(tree.currentNode.nodeName)
+  }
+
+  expect(list).toMatchObject(['#text', '#text'])
+})
+
+test('createTreeWalker supports filter acceptNode', () => {
+  document.head.innerHTML = '<div id="one"><span class="skip-me">a</span></div>'
+  document.body.innerHTML = '<div id="two"><span class="reject-me">b</span></div>'
+
+  const list = []
+  const tree = document.createTreeWalker(document, NodeFilter.SHOW_ELEMENT, {
+    acceptNode(node) {
+      if (node.classList?.contains('skip-me')) {
+        return NodeFilter.FILTER_SKIP
+      }
+
+      if (node.classList?.contains('reject-me')) {
+        return NodeFilter.FILTER_REJECT
+      }
+
+      return NodeFilter.FILTER_ACCEPT
+    }
+  })
+
+  while (tree.nextNode()) {
+    list.push(tree.currentNode.nodeName)
+  }
+
+  expect(list).toMatchObject(['HTML', 'HEAD', 'DIV', 'BODY', 'DIV'])
+})
+
 describe('getElementById', () => {
   it('returns no elements on empty', () => {
     expect(document.getElementById('one')).toBe(null)
