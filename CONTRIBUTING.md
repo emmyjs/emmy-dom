@@ -31,7 +31,7 @@ npm run hooks:install
 This enables a `pre-commit` hook that runs:
 
 ```bash
-npm run co:build
+npm run precommit:check
 ```
 
 ### 3. Create a new branch for your changes:

@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 set -e
 
-npm run co:build
+npm run precommit:check
