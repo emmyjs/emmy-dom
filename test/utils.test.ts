@@ -88,7 +88,6 @@ const mockClient = () => {
 
   return () => {
     hasOwnPropertySpy.mockRestore()
-
     if (navigatorDescriptor) {
       Object.defineProperty(globalThis, 'navigator', navigatorDescriptor)
     }
