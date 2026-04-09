@@ -20,10 +20,12 @@
   "scripts": {
     "tsc": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
+    "status:generate": "node scripts/generate-feature-status-json.cjs",
+    "status:verify": "node scripts/verify-feature-status-json.cjs",
     "cpdir": "cp -r ./src/ssr ./dist/",
     "hooks:install": "git config core.hooksPath .githooks",
     "lint:check": "eslint --ext .ts ./src",
-    "precommit:check": "npm run typecheck && vitest run && npm run lint:check",
+    "precommit:check": "npm run status:verify && npm run typecheck && vitest run && npm run lint:check",
     "verify:package-contract": "node scripts/verify-package-contract.cjs",
     "co:build": "npm run tsc && npm run cpdir && npm run verify:package-contract && vitest run && npm run lint",
     "build": "npm run tsc && npm run cpdir && npm run verify:package-contract && npm run coverage && npm run lint",
