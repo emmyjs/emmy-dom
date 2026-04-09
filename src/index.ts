@@ -64,7 +64,6 @@ export abstract class EmmyComponent extends HTMLElement {
         else {
           htmlFromJSX = jsx(generator)
         }
-        console.log(htmlFromJSX)
         this.contentGenerator = () => htmlFromJSX
       }
       catch (e) {
