@@ -103,7 +103,11 @@ describe('isServer', () => {
   })
   it('should return false if the code is running on the client', () => {
     const restoreClient = mockClient()
-    expect(isServer()).toBe(false)
-    restoreClient()
+    try {
+      expect(isServer()).toBe(false)
+    }
+    finally {
+      restoreClient()
+    }
   })
 })
