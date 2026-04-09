@@ -1,0 +1,58 @@
+name: Copilot Review Gate
+
+on:
+  pull_request:
+    branches: ["main"]
+    types: [opened, synchronize, reopened, ready_for_review]
+  pull_request_review:
+    types: [submitted, edited, dismissed]
+
+jobs:
+  ensure-copilot-reviewed:
+    if: ${{ !github.event.pull_request.draft }}
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+      issues: read
+    steps:
+      - name: Ensure Copilot review exists
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner
+            const repo = context.repo.repo
+            const pull_number = context.payload.pull_request.number
+            const isCopilotLogin = login => {
+              if (!login) return false
+              const normalized = String(login).toLowerCase()
+              return normalized.startsWith('copilot')
+            }
+
+            const reviews = await github.paginate(github.rest.pulls.listReviews, {
+              owner,
+              repo,
+              pull_number,
+              per_page: 100
+            })
+
+            const hasCopilotReview = reviews.some(review =>
+              isCopilotLogin(review.user?.login)
+            )
+
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner,
+              repo,
+              issue_number: pull_number,
+              per_page: 100
+            })
+
+            const hasCopilotComment = comments.some(comment =>
+              isCopilotLogin(comment.user?.login)
+            )
+
+            if (!hasCopilotReview && !hasCopilotComment) {
+              core.setFailed('Copilot review is required before merge. Wait for a copilot reviewer comment/review.')
+              return
+            }
+
+            core.info('Copilot review gate passed')
