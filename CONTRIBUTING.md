@@ -21,6 +21,19 @@ where "url you just copied" (without the quotation marks) is the url to this rep
 git clone https://github.com/YOUR_USERNAME/emmy-dom.git
 ```
 
+### 2.1 Install git hooks (recommended)
+To run the local quality gate before each commit, install the repository hooks:
+
+```bash
+npm run hooks:install
+```
+
+This enables a `pre-commit` hook that runs:
+
+```bash
+npm run co:build
+```
+
 ### 3. Create a new branch for your changes:
 Change to the repository directory on your computer (if you are not already there):
 
@@ -28,11 +41,26 @@ Change to the repository directory on your computer (if you are not already ther
 cd emmy-dom
 ```
 
+Use one short-lived branch per issue/feature. We recommend the following naming format:
+
+- `feat/<issue-number>-short-description`
+- `fix/<issue-number>-short-description`
+- `chore/<issue-number>-short-description`
+
+Examples:
+
+- `feat/123-router-routes`
+- `fix/210-hooks-useeffect`
+- `chore/315-readme-status`
+
 Now create a branch using the `git checkout` command:
 
 ```bash
-git checkout -b your-feature-name
+git checkout -b feat/123-short-description
 ```
+
+> [!TIP]
+> Keep branches small and short-lived. Avoid long-running sub-branches unless a large feature is being split into stacked PRs.
 
 ### 4. Make your changes and commit them using the following command, which includes running tests:
 
@@ -55,10 +83,20 @@ The use of `sui-mono commit` is mandatory to ensure that the commit message foll
 
 ### 5. Push your changes to your forked repository
 ```bash
-git push origin your-feature-name
+git push origin feat/123-short-description
 ```
 
 Create a pull request on the `emmy-dom` repository. After your pull request is merged, you can safely delete your branch if you want to.
+
+## Pull Request Guidelines
+- Open small, focused PRs (preferably one feature or fix per PR).
+- Link the related issue in the PR description.
+- Include a short risk note and the tests you added or updated.
+- Ensure build and tests pass before requesting review.
+- Use squash merge to keep history clean.
+
+### Stability Label Rule
+If a feature is marked as `Stable`, it must have active automated tests for its core behavior and no known critical TODOs blocking production use. Otherwise, it should be labeled `Experimental` or `Unstable`.
 
 ## Reporting Issues
 If you encounter any issues or have suggestions for improvements, please create an issue on the `emmy-dom`  GitHub repository.
