@@ -241,8 +241,8 @@ export function hydrateScript(generator, name) {
     })
   `;
 }
-export function build({ dependencies, template, app, generators, path }) {
-    return __awaiter(this, void 0, void 0, function* () {
+export function build(_a) {
+    return __awaiter(this, arguments, void 0, function* ({ dependencies, template, app, generators, path }) {
         if (!path)
             path = 'index.html';
         console.log(`> Building app in ${path}`);
