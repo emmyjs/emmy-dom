@@ -34,8 +34,8 @@ Estabilizar SSR y el contrato de publicación del paquete, reducir regresiones e
 - ⏳ Añadir guía de troubleshooting para SSR y exportaciones.
 
 ## Estado de Features (Snapshot)
-- ⚠️ Class Components: Experimental
-- ⚠️ Functional Components: Experimental
+- ✅ Class Components: Stable
+- ✅ Functional Components: Stable
 - ❌ Declarative Props: Unstable
 - ⚠️ Emmy Hooks: Experimental
 - ✅ Auto-close Tags: Stable
@@ -46,10 +46,9 @@ Estabilizar SSR y el contrato de publicación del paquete, reducir regresiones e
 - ⚠️ Server-side Rendering: Experimental
 
 ## Próximos Pasos Inmediatos
-- 1) Estabilizar Class/Functional Components: más pruebas de comportamiento y edge cases.
-- 2) Endurecer hooks (cobertura de re-render y dependencias avanzadas).
-- 3) Completar deuda SSR pendiente (`nodeName` dinámico y herencia de `DocumentFragment`).
-- 4) Definir umbral de cobertura para marcar features como `Stable`.
+- 1) Endurecer hooks (cobertura de re-render y dependencias avanzadas).
+- 2) Completar deuda SSR pendiente (`nodeName` dinámico y herencia de `DocumentFragment`).
+- 3) Definir umbral de coverage para marcar features como `Stable`.
 
 ## Criterios de éxito
 - Cero incidentes por exports rotos entre versiones consecutivas.
