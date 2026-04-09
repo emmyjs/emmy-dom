@@ -37,18 +37,19 @@ Estabilizar SSR y el contrato de publicación del paquete, reducir regresiones e
 - ✅ Class Components: Stable
 - ✅ Functional Components: Stable
 - ❌ Declarative Props: Unstable
-- ⚠️ Emmy Hooks: Experimental
+- ✅ Emmy Hooks: Stable
 - ✅ Auto-close Tags: Stable
 - ❌ JSX in Client Components: Unstable
-- ❌ Emmy Router Routes: Unstable
-- ❌ Emmy Router SPA Navigation: Unstable
+- ✅ Emmy Router Routes: Stable
+- ✅ Emmy Router SPA Navigation: Stable
 - ❌ Prerendering: Unstable
 - ⚠️ Server-side Rendering: Experimental
 
 ## Próximos Pasos Inmediatos
 - 1) Endurecer hooks (cobertura de re-render y dependencias avanzadas).
-- 2) Completar deuda SSR pendiente (`nodeName` dinámico y herencia de `DocumentFragment`).
-- 3) Definir umbral de coverage para marcar features como `Stable`.
+- 2) Estabilizar JSX en Client Components con casos de render JSX reales y edge cases.
+- 3) Completar deuda SSR pendiente (`nodeName` dinámico y herencia de `DocumentFragment`).
+- 4) Definir umbral de coverage para marcar features como `Stable`.
 
 ## Criterios de éxito
 - Cero incidentes por exports rotos entre versiones consecutivas.
