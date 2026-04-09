@@ -62,7 +62,7 @@ git checkout -b feat/123-short-description
 > [!TIP]
 > Keep branches small and short-lived. Avoid long-running sub-branches unless a large feature is being split into stacked PRs.
 
-### 4. Make your changes and commit them using the following command, which includes running tests:
+### 4. Make your changes and commit them using the following command:
 
 ```bash
 npm run co
@@ -71,9 +71,11 @@ npm run co
 > [!IMPORTANT]
 > Ensure that your changes pass the existing tests.
 
+`npm run co` runs `co:build` (`tsc`, `cpdir`, `vitest run`, and `eslint --fix`), stages all changes, opens the `sui-mono` commit flow, and pushes.
+
 This command is equivalent to:
 ```bash
-npm run build
+npm run co:build
 git add .
 sui-mono commit
 git push
