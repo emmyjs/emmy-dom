@@ -4,6 +4,9 @@
   "description": "A tiny simple front-end library for building web applications",
   "main": "dist/index.js",
   "type": "module",
+  "engines": {
+    "node": ">=18 <21"
+  },
   "exports": {
     ".": "./dist/index.js",
     "./server": "./dist/server.js"
@@ -17,8 +20,9 @@
   "scripts": {
     "tsc": "tsc -p tsconfig.json",
     "cpdir": "cp -r ./src/ssr ./dist/",
-    "co:build": "npm run tsc && npm run cpdir && vitest run && npm run lint",
-    "build": "npm run tsc && npm run cpdir && npm run coverage && npm run lint",
+    "verify:package-contract": "node scripts/verify-package-contract.cjs",
+    "co:build": "npm run tsc && npm run cpdir && npm run verify:package-contract && vitest run && npm run lint",
+    "build": "npm run tsc && npm run cpdir && npm run verify:package-contract && npm run coverage && npm run lint",
     "co": "npm run co:build && git add . && sui-mono commit && git push",
     "check": "node scripts/check.cjs",
     "release": "node scripts/release.cjs",
