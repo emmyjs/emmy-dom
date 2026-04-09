@@ -48,7 +48,7 @@ Estabilizar SSR y el contrato de publicación del paquete, reducir regresiones e
 
 ## Próximos Pasos Inmediatos
 1. Completar deuda SSR pendiente (`nodeName` dinámico y herencia de `DocumentFragment`).
-2. Estabilizar Prerendering y Declarative Props.
+2. Estabilizar Prerendering.
 3. Endurecer TypeScript de manera incremental (`strict` por etapas).
 
 ## Criterios de éxito
