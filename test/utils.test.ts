@@ -1,5 +1,4 @@
 import { describe, it, expect, vitest } from 'vitest'
-import { restoreGlobalThis } from './testing.ts'
 import { processGenerator, parseCSS, createInlineStyle, capitalizeFirstLetter, uncapitalizeFirstLetter, Emmy, loadGlobalEmmy, html, javascript, isServer } from '../src/utils.ts'
 
 describe('processGenerator', () => {
@@ -79,13 +78,23 @@ describe('javascript', () => {
 })
 
 const mockClient = () => {
-  const navigator = globalThis.navigator
-  const hasOwnProperty = globalThis.hasOwnProperty
-  const navigatorMock = { ...navigator, userAgent: 'Mozilla/5.0' }
-  const hasOwnPropertyMock = vitest.fn(() => false)
-  globalThis.navigator = navigatorMock
-  globalThis.hasOwnProperty = hasOwnPropertyMock
-  return { navigator, hasOwnProperty }
+  const navigatorDescriptor = Object.getOwnPropertyDescriptor(globalThis, 'navigator')
+  Object.defineProperty(globalThis, 'navigator', {
+    configurable: true,
+    value: { userAgent: 'Mozilla/5.0' }
+  })
+
+  const hasOwnPropertySpy = vitest.spyOn(globalThis, 'hasOwnProperty').mockImplementation(() => false)
+
+  return () => {
+    hasOwnPropertySpy.mockRestore()
+    if (navigatorDescriptor) {
+      Object.defineProperty(globalThis, 'navigator', navigatorDescriptor)
+    }
+    else {
+      delete (globalThis as { navigator?: Navigator }).navigator
+    }
+  }
 }
 
 describe('isServer', () => {
@@ -93,8 +102,12 @@ describe('isServer', () => {
     expect(isServer()).toBe(true)
   })
   it('should return false if the code is running on the client', () => {
-    const { navigator, hasOwnProperty } = mockClient()
-    expect(isServer()).toBe(false)
-    restoreGlobalThis({ navigator, hasOwnProperty })
+    const restoreClient = mockClient()
+    try {
+      expect(isServer()).toBe(false)
+    }
+    finally {
+      restoreClient()
+    }
   })
 })
