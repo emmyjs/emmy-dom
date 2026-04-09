@@ -22,7 +22,10 @@ jobs:
             const owner = context.repo.owner
             const repo = context.repo.repo
             const pull_number = context.payload.pull_request.number
-            const copilotLogin = 'copilot-pull-request-reviewer'
+            const copilotLogins = new Set([
+              'copilot-pull-request-reviewer',
+              'copilot-swe-agent'
+            ])
 
             const reviews = await github.paginate(github.rest.pulls.listReviews, {
               owner,
@@ -32,7 +35,7 @@ jobs:
             })
 
             const hasCopilotReview = reviews.some(review =>
-              review.user?.login === copilotLogin
+              copilotLogins.has(review.user?.login)
             )
 
             const comments = await github.paginate(github.rest.issues.listComments, {
@@ -43,11 +46,11 @@ jobs:
             })
 
             const hasCopilotComment = comments.some(comment =>
-              comment.user?.login === copilotLogin
+              copilotLogins.has(comment.user?.login)
             )
 
             if (!hasCopilotReview && !hasCopilotComment) {
-              core.setFailed('Copilot review is required before merge. Wait for a copilot-pull-request-reviewer review/comment.')
+              core.setFailed('Copilot review is required before merge. Wait for a copilot reviewer comment/review.')
               return
             }
 
