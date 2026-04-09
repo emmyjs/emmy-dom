@@ -24,7 +24,7 @@ jobs:
             const pull_number = context.payload.pull_request.number
             const copilotLogin = 'copilot-pull-request-reviewer'
 
-            const { data: reviews } = await github.rest.pulls.listReviews({
+            const reviews = await github.paginate(github.rest.pulls.listReviews, {
               owner,
               repo,
               pull_number,
@@ -35,7 +35,7 @@ jobs:
               review.user?.login === copilotLogin
             )
 
-            const { data: comments } = await github.rest.issues.listComments({
+            const comments = await github.paginate(github.rest.issues.listComments, {
               owner,
               repo,
               issue_number: pull_number,

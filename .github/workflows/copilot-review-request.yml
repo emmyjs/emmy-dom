@@ -21,7 +21,7 @@ jobs:
             const repo = context.repo.repo
             const issue_number = context.payload.pull_request.number
 
-            const { data: comments } = await github.rest.issues.listComments({
+            const comments = await github.paginate(github.rest.issues.listComments, {
               owner,
               repo,
               issue_number,
