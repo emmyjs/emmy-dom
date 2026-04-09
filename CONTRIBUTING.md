@@ -96,6 +96,12 @@ Create a pull request on the `emmy-dom` repository. After your pull request is m
 - Include a short risk note and the tests you added or updated.
 - Ensure build and tests pass before requesting review.
 - Use squash merge to keep history clean.
+- Every PR must receive Copilot reviewer feedback before merge.
+
+### Copilot Review Policy
+- PRs targeting `main` are automatically pinged with `@copilot review` when opened or marked ready for review.
+- A CI gate blocks merge until a `copilot-pull-request-reviewer` review/comment exists on the PR.
+- Do not squash-merge a PR until this gate is green.
 
 ### Stability Label Rule
 If a feature is marked as `Stable`, it must have active automated tests for its core behavior and no known critical TODOs blocking production use. Otherwise, it should be labeled `Experimental` or `Unstable`.
