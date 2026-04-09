@@ -8,6 +8,49 @@ const { find, nodeName } = require('../util')
 
 const createElement = document.createElement.bind(document)
 
+function getWhatToShowForNode(node) {
+  if (!node) return 0
+  if (node.nodeName === '#document') return NodeFilter.SHOW_DOCUMENT
+
+  switch (node.nodeType) {
+  case Node.COMMENT_NODE:
+    return NodeFilter.SHOW_COMMENT
+  case Node.DOCUMENT_FRAGMENT_NODE:
+    return NodeFilter.SHOW_DOCUMENT_FRAGMENT
+  case Node.ELEMENT_NODE:
+    return NodeFilter.SHOW_ELEMENT
+  case Node.TEXT_NODE:
+    return NodeFilter.SHOW_TEXT
+  default:
+    return 0
+  }
+}
+
+function shouldShowNode(node, whatToShow) {
+  if (whatToShow == null || whatToShow === NodeFilter.SHOW_ALL) {
+    return true
+  }
+
+  const nodeFlag = getWhatToShowForNode(node)
+  return nodeFlag !== 0 && (whatToShow & nodeFlag) !== 0
+}
+
+function applyNodeFilter(node, filter) {
+  if (!filter) {
+    return NodeFilter.FILTER_ACCEPT
+  }
+
+  if (typeof filter === 'function') {
+    return filter(node)
+  }
+
+  if (typeof filter.acceptNode === 'function') {
+    return filter.acceptNode(node)
+  }
+
+  return NodeFilter.FILTER_ACCEPT
+}
+
 class Document extends Element {
   constructor() {
     super()
@@ -54,9 +97,7 @@ class Document extends Element {
 
   createTreeWalker(
     root,
-    // TODO needs implemeting.
     whatToShow = NodeFilter.SHOW_ALL,
-    // TODO needs implemeting.
     filter = { acceptNode: () => NodeFilter.FILTER_ACCEPT }
   ) {
     // Use an array so we don't have to use recursion.
@@ -64,13 +105,24 @@ class Document extends Element {
     return {
       currentNode: null,
       nextNode() {
-        this.currentNode = stack.shift()
-        if (this.currentNode) {
-          // We do this in *document order*, so descendents of earlier parents
-          // need to get visited first.
-          stack.unshift(...this.currentNode.childNodes)
+        while (stack.length) {
+          const next = stack.shift()
+          const result = applyNodeFilter(next, filter)
+
+          if (result !== NodeFilter.FILTER_REJECT) {
+            // We do this in *document order*, so descendents of earlier parents
+            // need to get visited first.
+            stack.unshift(...next.childNodes)
+          }
+
+          if (result === NodeFilter.FILTER_ACCEPT && shouldShowNode(next, whatToShow)) {
+            this.currentNode = next
+            return this.currentNode
+          }
         }
-        return this.currentNode || null
+
+        this.currentNode = null
+        return null
       }
     }
   }
