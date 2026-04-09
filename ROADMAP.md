@@ -21,17 +21,17 @@ Estabilizar SSR y el contrato de publicación del paquete, reducir regresiones e
 ## Fase 3: Tipado y compilación (P1)
 - ✅ Resolver warning de TypeScript sobre `rootDir`/layout de salida.
 - ⏳ Endurecer TypeScript de manera incremental (`strict` por etapas).
-- ⏳ Revisar `target` de compilación para alinearlo con runtimes soportados.
+- ✅ Revisar `target` de compilación para alinearlo con runtimes soportados.
 
 ## Fase 4: Tests y calidad (P1)
 - ✅ Profundizar tests SSR (estructura HTML, hidratación, casos edge).
-- ⏳ Agregar tests de comportamiento en componentes funcionales y hooks (re-render, state transitions y edge cases).
-- ⏳ Definir umbrales mínimos de coverage para módulos críticos SSR.
+- ✅ Agregar tests de comportamiento en componentes funcionales y hooks (re-render, state transitions y edge cases).
+- ✅ Definir umbrales mínimos de coverage para módulos críticos SSR.
 
 ## Fase 5: Documentación y adopción (P2)
 - ✅ Publicar roadmap y limitaciones conocidas en docs principales.
 - ✅ Documentar criterios de "listo para producción" y compatibilidad.
-- ⏳ Añadir guía de troubleshooting para SSR y exportaciones.
+- ✅ Añadir guía de troubleshooting para SSR y exportaciones.
 
 ## Estado de Features (Snapshot)
 - ✅ Class Components: Estable
@@ -48,7 +48,7 @@ Estabilizar SSR y el contrato de publicación del paquete, reducir regresiones e
 ## Próximos Pasos Inmediatos
 1. Completar deuda SSR pendiente (`nodeName` dinámico y herencia de `DocumentFragment`).
 2. Estabilizar Prerendering y Declarative Props.
-3. Definir umbral de coverage para marcar features como `Estable`.
+3. Endurecer TypeScript de manera incremental (`strict` por etapas).
 
 ## Criterios de éxito
 - Cero incidentes por exports rotos entre versiones consecutivas.
