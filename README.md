@@ -21,7 +21,7 @@ It is specially designed for building web applications with server-side framewor
 <hr />
 
 > [!NOTE]
-> Emmy.js is still in an experimental phase, so it is not recommended to use it in production, but you can try it out and give us your feedback.
+> Emmy.js is under active development. Some features are stable while others are still experimental or unstable, so please check the [feature status](https://emmyjs.pages.dev/status) before using it in production.
 
 ## `npx create-emmy`
 
@@ -76,6 +76,7 @@ You can find the documentation [here](https://emmyjs.pages.dev/documentation).
 
 ## Contributing
 We are open to contributions. If you want to contribute, please read the [contributing guide](CONTRIBUTING.md).
+It includes the branch naming strategy, pull request workflow, and commit conventions used in this repository.
 
 ## License
 Emmy.js is licensed under the [MIT License](LICENSE).

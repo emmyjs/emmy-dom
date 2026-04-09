@@ -16,7 +16,11 @@
   },
   "scripts": {
     "tsc": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
     "cpdir": "cp -r ./src/ssr ./dist/",
+    "hooks:install": "git config core.hooksPath .githooks",
+    "lint:check": "eslint --ext .ts ./src",
+    "precommit:check": "npm run typecheck && vitest run && npm run lint:check",
     "co:build": "npm run tsc && npm run cpdir && vitest run && npm run lint",
     "build": "npm run tsc && npm run cpdir && npm run coverage && npm run lint",
     "co": "npm run co:build && git add . && sui-mono commit && git push",
