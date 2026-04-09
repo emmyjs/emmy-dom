@@ -27,6 +27,7 @@ Estabilizar SSR y el contrato de publicación del paquete, reducir regresiones e
 - ✅ Profundizar tests SSR (estructura HTML, hidratación, casos edge).
 - ✅ Agregar tests de comportamiento en componentes funcionales y hooks (re-render, state transitions y edge cases).
 - ✅ Definir umbrales mínimos de coverage para módulos críticos SSR.
+- ✅ Asegurar coverage 100% en features marcadas como `Estable` (gate dedicado).
 
 ## Fase 5: Documentación y adopción (P2)
 - ✅ Publicar roadmap y limitaciones conocidas en docs principales.
