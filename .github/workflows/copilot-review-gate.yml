@@ -22,10 +22,11 @@ jobs:
             const owner = context.repo.owner
             const repo = context.repo.repo
             const pull_number = context.payload.pull_request.number
-            const copilotLogins = new Set([
-              'copilot-pull-request-reviewer',
-              'copilot-swe-agent'
-            ])
+            const isCopilotLogin = login => {
+              if (!login) return false
+              const normalized = String(login).toLowerCase()
+              return normalized.startsWith('copilot')
+            }
 
             const reviews = await github.paginate(github.rest.pulls.listReviews, {
               owner,
@@ -35,7 +36,7 @@ jobs:
             })
 
             const hasCopilotReview = reviews.some(review =>
-              copilotLogins.has(review.user?.login)
+              isCopilotLogin(review.user?.login)
             )
 
             const comments = await github.paginate(github.rest.issues.listComments, {
@@ -46,7 +47,7 @@ jobs:
             })
 
             const hasCopilotComment = comments.some(comment =>
-              copilotLogins.has(comment.user?.login)
+              isCopilotLogin(comment.user?.login)
             )
 
             if (!hasCopilotReview && !hasCopilotComment) {
