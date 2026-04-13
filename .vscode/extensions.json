@@ -2,7 +2,7 @@
   "recommendations": [
     "Tobermory.es6-string-html",
     "zjcompt.es6-string-javascript",
-    "GitHub.copilot",
+    "GitHub.copilot-chat",
     "shd101wyy.markdown-preview-enhanced",
     "usernamehw.errorlens",
     "dbaeumer.vscode-eslint"
