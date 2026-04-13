@@ -20,11 +20,31 @@ describe('useState', () => {
   it('should be defined', () => {
     expect(useState).toBeDefined()
   })
+  it('should update state value', () => {
+    const [state, setState] = useState(0)
+    expect(state()).toBe(0)
+    setState(2)
+    expect(state()).toBe(2)
+  })
 })
 
 describe('useEffect', () => {
   it('should be defined', () => {
     expect(useEffect).toBeDefined()
+  })
+  it('should skip callback on server', () => {
+    const component = {
+      effectCallback: () => {},
+      callback: () => {}
+    }
+    let callbackCalls = 0
+
+    useEffect.call(component, () => {
+      callbackCalls += 1
+    }, [], isServerMock)
+
+    component.effectCallback(component)
+    expect(callbackCalls).toBe(0)
   })
 })
 

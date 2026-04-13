@@ -168,6 +168,30 @@ describe('useEffect', () => {
       return emmyElement?.getAttribute('callback')
     })()).toBe('1')
   })
+
+  it('should not call didMount callback again on subsequent callback runs', () => {
+    expect((() => {
+      const functionalComponent = ({ el }) => {
+        const [callsCount, setCallsCount] = el.useState(0)
+        el.useEffect(() => {
+          setCallsCount(callsCount() + 1)
+          el.setAttribute('callback', callsCount().toString())
+        }, ['didMount'], isServerMock)
+        return ''
+      }
+      class A extends FunctionalComponent {
+        constructor() {
+          super(functionalComponent as HTMLGenerator)
+        }
+      }
+      customElements.define('emmy-didmount-twice', A)
+      document.body.innerHTML = '<emmy-didmount-twice></emmy-didmount-twice>'
+      awaitDidMount('emmy-didmount-twice')
+      const emmyElement = document.querySelector('emmy-didmount-twice') as any
+      emmyElement.callback(emmyElement)
+      return emmyElement?.getAttribute('callback')
+    })()).toBe('1')
+  })
 })
 
 describe('bindHooks', () => {
