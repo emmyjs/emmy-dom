@@ -1,14 +1,14 @@
 import { isServer } from './utils.js'
 
-type placeholderCallback = ((component: object) => void) | ((component?: object) => void) | (() => void)
+type placeholderCallback = ((component: unknown) => void) | ((component?: unknown) => void) | (() => void)
 
 export type DependencyArray = Array<(() => any) | any>
 export type UseState = <T>(initialValue: T) => [() => T, (newValue: T) => void]
 export type UseEffect = (callback: placeholderCallback, dependencies: DependencyArray, isServerFunction?: () => boolean) => void
 
 export interface Hoakable {
-  effectCallback: (component: object) => void
-  callback: (component: object) => void
+  effectCallback: (component: unknown) => void
+  callback: (component: unknown) => void
   useEffect: UseEffect
   useState: UseState
 }
@@ -36,7 +36,7 @@ export function useState<T>(initialValue: T): [() => T, (newValue: T) => void] {
   return [state, setState]
 }
 
-export function useEffect(callback: placeholderCallback, dependencies: DependencyArray, isServerFunction: () => boolean = isServer) {
+export function useEffect(this: Hoakable, callback: placeholderCallback, dependencies: DependencyArray, isServerFunction: () => boolean = isServer) {
   if (isServerFunction()) {
     console.warn('Skipping useEffect on server')
     return

@@ -123,14 +123,14 @@ export class LightComponent extends EmmyComponent {
   }
 
   querySelector(selector: string): HTMLElement | null {
-    return HTMLElement.prototype.querySelector.call(this, vanillaElement(selector))
+    return HTMLElement.prototype.querySelector.call(this, vanillaElement(selector)) as HTMLElement | null
   }
 }
 
 export class FunctionalComponent extends LightComponent implements Hoakable {
   effectCallback: (component: FunctionalComponent) => void
-  useState: UseState
-  useEffect: UseEffect
+  useState!: UseState
+  useEffect!: UseEffect
 
   constructor(func: HTMLGenerator) {
     super()
@@ -140,8 +140,8 @@ export class FunctionalComponent extends LightComponent implements Hoakable {
     const renderFunctionOrString = func.call(this, {
       el: this,
       props: () => this.props,
-      children: () => this.innerHTML
-    })
+      children: (() => this.innerHTML) as any
+    } as unknown as EmmyComponent)
     this.render(renderFunctionOrString)
   }
 
@@ -196,13 +196,15 @@ export class FunctionalComponent extends LightComponent implements Hoakable {
   }
 
   querySelector(selector: string): HTMLElement | null {
-    const element = HTMLElement.prototype.querySelector.call(this, vanillaElement(selector))
-    element.__proto__.addEventListener = (event, callback) => {
-      const newCallback = (event) => {
-        callback(event)
-        this.rerender()
+    const element = HTMLElement.prototype.querySelector.call(this, vanillaElement(selector)) as any
+    if (element) {
+      element.__proto__.addEventListener = (event, callback) => {
+        const newCallback = (event) => {
+          callback(event)
+          this.rerender()
+        }
+        HTMLElement.prototype.addEventListener.call(element, event, newCallback)
       }
-      HTMLElement.prototype.addEventListener.call(element, event, newCallback)
     }
     return element
   }
