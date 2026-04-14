@@ -5,12 +5,12 @@ export default defineConfig({
     coverage: {
       reportsDirectory: './docs',
       cleanOnRerun: false,
-      include: ['src/ssr/register/dom/Document.js', 'src/index.ts', 'src/hooks.ts'],
+      include: ['src/**/*.ts', 'src/**/*.js'],
       thresholds: {
-        lines: 85,
-        functions: 85,
+        lines: 80,
+        functions: 70,
         branches: 75,
-        statements: 85
+        statements: 80
       }
     }
   }
