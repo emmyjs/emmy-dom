@@ -56,8 +56,14 @@ export abstract class EmmyComponent extends HTMLElement {
   render(generator: string | HTMLGenerator, callback?: Callback) {
     if (typeof generator !== 'function' && typeof generator !== 'string') {
       try {
-        const htmlFromJSX = jsx(generator)
-        console.log(htmlFromJSX)
+        let htmlFromJSX
+        if (generator && typeof generator === 'object' && 'tag' in generator) {
+          const normalized = generator as { tag: string, attrs?: object, children?: Array<any> }
+          htmlFromJSX = jsx(normalized.tag, normalized.attrs || {}, ...(normalized.children || []))
+        }
+        else {
+          htmlFromJSX = jsx(generator)
+        }
         this.contentGenerator = () => htmlFromJSX
       }
       catch (e) {
@@ -175,14 +181,14 @@ export class FunctionalComponent extends LightComponent implements Hoakable {
 
   querySelector(selector: string): HTMLElement | null {
     const element = HTMLElement.prototype.querySelector.call(this, vanillaElement(selector)) as HTMLElement | null
-    if (element) {
-      element.addEventListener = (event, callback) => {
-        const newCallback = (event) => {
-          callback(event)
-          this.rerender()
-        }
-        HTMLElement.prototype.addEventListener.call(element, event, newCallback)
+    if (!element) return null
+    const addNativeListener = HTMLElement.prototype.addEventListener.bind(element)
+    element.addEventListener = (event, callback) => {
+      const newCallback = (event) => {
+        callback(event)
+        this.rerender()
       }
+      addNativeListener(event, newCallback)
     }
     return element
   }
