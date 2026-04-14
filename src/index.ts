@@ -120,7 +120,7 @@ export class FunctionalComponent extends LightComponent implements Hoakable<Func
     super()
     this.effectCallback = (component: FunctionalComponent) => {}
     bindHooks.call(this, this)
-    this.setState({ rerenderCount: 0 })
+    this.patchState({ rerenderCount: 0 })
     const renderFunctionOrString = func.call(this, {
       el: this,
       props: () => this.props,
@@ -172,7 +172,11 @@ export class FunctionalComponent extends LightComponent implements Hoakable<Func
   }
 
   state() {
-    return JSON.parse(this.getAttribute('state')!.replace(/'/g, '"') || '')
+    try {
+      return JSON.parse((this.getAttribute('state') || '{}').replace(/'/g, '"'))
+    } catch {
+      return {}
+    }
   }
 
   setState(newState: object) {

@@ -22,8 +22,11 @@ export type BuildOptions = {
     template: string;
     app: FunctionalComponent | ClassComponent;
     generators: {
-        [key: string]: HTMLGeneratorGenerator;
-    };
+        [key: string]: HTMLGeneratorGenerator | {
+            func: HTMLGeneratorGenerator;
+            path: string;
+        };
+    } | any;
     path?: string;
 };
 export declare abstract class EmmyComponent extends HTMLElement {
@@ -74,7 +77,17 @@ export declare class Router extends LightComponent {
 export declare function launch(component: ClassComponent | FunctionalComponent, name: string): FunctionalComponent | ClassComponent;
 export declare function createPageComponent(url: string, name: string): Promise<ClassComponent | FunctionalComponent>;
 export declare function load(func: ComponentType, name: string): Promise<ClassComponent | FunctionalComponent>;
-export declare function renderToString(component: ClassComponent | FunctionalComponent): Promise<string>;
+export declare function renderToString(component: ComponentType): Promise<string>;
 export declare function renderFunctionToString(generator: HTMLGeneratorGenerator): string;
-export declare function hydrateScript(generator: HTMLGeneratorGenerator, name: string): string;
+export declare function hydrateScript(generator: HTMLGeneratorGenerator | {
+    func: HTMLGeneratorGenerator;
+    path: string;
+}, name: string): string;
 export declare function build({ dependencies, template, app, generators, path }: BuildOptions): Promise<void>;
+export declare function getExports(folderPath: string, root?: string): Promise<{
+    [key: string]: {
+        func: any;
+        path: string;
+    };
+}>;
+export declare function createConfig({ dependencies, app, paths, source, template }: any): Promise<void>;

@@ -45,7 +45,7 @@ export type BuildOptions = {
   dependencies: string,
   template: string,
   app: FunctionalComponent | ClassComponent,
-  generators: { [key: string]: HTMLGeneratorGenerator },
+  generators: { [key: string]: HTMLGeneratorGenerator | { func: HTMLGeneratorGenerator, path: string } } | any,
   path?: string
 }
 
@@ -294,8 +294,29 @@ launch(Router as unknown as ClassComponent, 'Router')
 
 
 
-export async function renderToString(component: ClassComponent | FunctionalComponent): Promise<string> {
-  const instance = new (component as any)()
+export async function renderToString(component: ComponentType): Promise<string> {
+  if (!component) {
+    throw new Error('Cannot render: the provided \'app\' component is undefined. Please ensure you pass a valid \'app\' to createConfig(), or that your source folder exports App() { ... }.')
+  }
+  let instance: any
+  try {
+    instance = new (component as any)()
+    if (!(instance instanceof Component || instance instanceof LightComponent || instance instanceof FunctionalComponent)) {
+      throw new Error('Not a valid component')
+    }
+  } catch (e) {
+    class X extends FunctionalComponent {
+      constructor() {
+        super(component as unknown as FunctionalComponentGenerator)
+      }
+    }
+    const name = (component as any).name || 'emmy-app'
+    const vanillaName = vanillaElement(name)
+    if (!customElements.get(vanillaName)) {
+      customElements.define(vanillaName, X as any)
+    }
+    instance = new X()
+  }
   const htmlText = await (render as any)(instance)
   return htmlText
 }
@@ -314,9 +335,21 @@ export function renderFunctionToString(generator: HTMLGeneratorGenerator) {
   return stringFromGenerator
 }
 
-export function hydrateScript(generator: HTMLGeneratorGenerator, name: string) {
+export function hydrateScript(generator: HTMLGeneratorGenerator | { func: HTMLGeneratorGenerator, path: string }, name: string) {
+  if (typeof generator === 'object' && generator.path) {
+    const capitalizedName = capitalizeFirstLetter(name)
+    const uncapitalizedName = uncapitalizeFirstLetter(name)
+    return javascript`
+      import { ${name} as _${name} } from '${generator.path}'
+      load(_${name}, '${capitalizedName}')
+      document.querySelectorAll('${vanillaElement(capitalizedName)}').forEach((element) => {
+        element.connectedCallback()
+      })
+    `
+  }
+  
   return javascript`
-    ${renderFunctionToString(generator)}
+    ${renderFunctionToString(generator as HTMLGeneratorGenerator)}
     load(${uncapitalizeFirstLetter(name)}, '${capitalizeFirstLetter(name)}')
     document.querySelectorAll('${vanillaElement(capitalizeFirstLetter(name))}').forEach((element) => {
       element.connectedCallback()
@@ -337,12 +370,79 @@ export async function build ({ dependencies, template, app, generators, path }: 
   const content = html`
     ${ssr}
     <script type="module">
-      import { loadGlobalEmmy } from 'emmy-dom'
-      loadGlobalEmmy(${JSON.stringify(Emmy)})
       ${dependencies}
       ${javascriptString}
     </script>
   `
   const htmlString = templateString.replace('{content}', content)
   writeFileSync(path, htmlString)
+}
+export async function getExports(folderPath: string, root = folderPath) {
+  const { readdirSync, lstatSync } = await import('node:fs')
+  const { resolve, relative, join } = await import('node:path')
+  const files = readdirSync(folderPath)
+  const exports: { [key: string]: { func: any, path: string } } = {}
+  
+  for (const file of files) {
+    const fullPath = join(folderPath, file)
+    if (lstatSync(fullPath).isDirectory()) {
+      const folderExports = await getExports(fullPath, root)
+      Object.assign(exports, folderExports)
+      continue
+    }
+    
+    if (!file.match(/\.(ts|js|jsx|tsx)$/)) continue
+    if (file.endsWith('.d.ts')) continue
+    
+    let relPath = relative(process.cwd(), fullPath).replace(/\\/g, '/')
+    if (!relPath.startsWith('.')) relPath = './' + relPath
+    relPath = relPath.replace(/\.(ts|tsx)$/, '.js')
+    
+    const fileUrl = 'file://' + resolve(fullPath).replace(/\\/g, '/')
+    const fileExports = await import(/* @vite-ignore */ fileUrl)
+    
+    for (const key in fileExports) {
+      if (key === 'default') continue
+      const val = fileExports[key]
+      if (typeof val === 'function' && !val.toString().match(/^class/)) {
+        exports[key] = { func: val, path: `${relPath}` }
+      }
+    }
+  }
+  return exports
+}
+
+export async function createConfig({
+  dependencies = '',
+  app,
+  paths,
+  source = './app',
+  template = './template.html'
+}: any) {
+  const currentWorkingDirectory = process.cwd()
+  const { resolve } = await import('node:path')
+
+  template = resolve(currentWorkingDirectory, template)
+  source = resolve(currentWorkingDirectory, source)
+
+  const fileDependencies = javascript`
+    import { load, html, jsx, Router, Route, Emmy, loadGlobalEmmy as lge } from 'emmy-dom'
+    lge(${JSON.stringify(Emmy)})
+    ${dependencies}
+  `
+
+  const exports = await getExports(source)
+  
+  if (!app) {
+    const fallback = exports.App || exports.app || exports.Index || exports.index || exports.Main || exports.main || Object.values(exports)[0]
+    app = fallback ? fallback.func : undefined
+  }
+
+  for (const path in paths) {
+    await build({
+      app, template, generators: exports,
+      dependencies: fileDependencies,
+      path: paths[path]
+    })
+  }
 }
