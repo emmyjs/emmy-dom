@@ -365,7 +365,9 @@ export async function build ({ dependencies, template, app, generators, path }: 
   let javascriptString = ''
   for (const name in generators) {
     if ([ 'Route', 'Router' ].includes(name)) continue
-    javascriptString += hydrateScript(generators[name], name)
+    const func: any = typeof generators[name] === 'object' ? (generators[name] as any).func : generators[name]
+    if (func && func.static) continue // Astro-like exact partial hydration
+    javascriptString += hydrateScript(generators[name] as any, name)
   }
   const content = html`
     ${ssr}

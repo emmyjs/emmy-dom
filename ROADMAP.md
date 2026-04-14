@@ -1,4 +1,28 @@
-# Emmy DOM Roadmap
+# Emmy DOM 2.0.0
+
+## What's New in Version 2.0.0
+Version 2.0.0 introduces major architectural changes, making the framework production-ready for Server-Side Rendering (SSR) and paving the way for static site generation.
+
+### 🏝️ Astro-like Islands Architecture
+Emmy DOM now supports **Partial Hydration (Islands Architecture)** for 100% static components. By assigning a `static` flag to your function components, you can completely opt-out of shipping Javascript to the browser for that component, drastically reducing the bundle size!
+```typescript
+export function underConstruction({ el }) {
+  el.className = 'absolute inset-0 bg-gray-900 bg-opacity-90 flex flex-col justify-center items-center'
+  return html`<div>Under construction</div>`
+}
+// Skips client-side hydration completely, leaving only raw HTML:
+underConstruction.static = true
+```
+
+### 🏎️ New SSR Render Engine
+We have successfully replaced the legacy experimental engine with a highly robust simulated DOM stringifier based on `undom`. Features include:
+- Strict compliance with Web Components standard tags (`<emmy-app>`).
+- 0% leakage of Node.js modules (like `fs`, `path`) into the frontend Vite client.
+- Bulletproof state hydration via intelligent `patchState` synchronization.
+
+---
+
+# Previous Roadmap
 
 ## Objective
 Stabilize SSR and the package publishing contract, reduce regressions in releases, and improve clarity of use in production.
