@@ -35,7 +35,7 @@ export declare class LightComponent extends EmmyComponent {
     connectedCallback(): void;
     querySelector(selector: string): HTMLElement | null;
 }
-export declare class FunctionalComponent extends LightComponent implements Hoakable {
+export declare class FunctionalComponent extends LightComponent implements Hoakable<FunctionalComponent> {
     effectCallback: (component: FunctionalComponent) => void;
     useState: UseState;
     useEffect: UseEffect;

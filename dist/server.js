@@ -119,15 +119,16 @@ export class FunctionalComponent extends LightComponent {
     }
     querySelector(selector) {
         const element = HTMLElement.prototype.querySelector.call(this, vanillaElement(selector));
-        if (element) {
-            element.addEventListener = (event, callback) => {
-                const newCallback = (event) => {
-                    callback(event);
-                    this.rerender();
-                };
-                HTMLElement.prototype.addEventListener.call(element, event, newCallback);
+        if (!element)
+            return null;
+        const addNativeListener = HTMLElement.prototype.addEventListener.bind(element);
+        element.addEventListener = (event, callback) => {
+            const newCallback = (event) => {
+                callback(event);
+                this.rerender();
             };
-        }
+            addNativeListener(event, newCallback);
+        };
         return element;
     }
 }
