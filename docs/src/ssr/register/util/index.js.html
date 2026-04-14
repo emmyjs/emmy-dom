@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">76% </span>
+                <span class="strong">73.33% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>57/75</span>
+                <span class='fraction'>55/75</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">87.5% </span>
+                <span class="strong">69.23% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>14/16</span>
+                <span class='fraction'>9/13</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">76% </span>
+                <span class="strong">73.33% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>57/75</span>
+                <span class='fraction'>55/75</span>
             </div>
         
             
@@ -142,17 +142,17 @@
 <span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">169x</span>
-<span class="cline-any cline-yes">169x</span>
+<span class="cline-any cline-yes">209x</span>
+<span class="cline-any cline-yes">209x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">169x</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-yes">169x</span>
-<span class="cline-any cline-yes">153x</span>
-<span class="cline-any cline-yes">153x</span>
-<span class="cline-any cline-yes">169x</span>
-<span class="cline-any cline-yes">169x</span>
+<span class="cline-any cline-yes">209x</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-yes">209x</span>
+<span class="cline-any cline-yes">185x</span>
+<span class="cline-any cline-yes">185x</span>
+<span class="cline-any cline-yes">209x</span>
+<span class="cline-any cline-yes">209x</span>
 <span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -169,25 +169,25 @@
 <span class="cline-any cline-yes">312x</span>
 <span class="cline-any cline-yes">312x</span>
 <span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">50x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">32x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">50x</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">32x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-yes">323x</span>
 <span class="cline-any cline-yes">323x</span>
@@ -249,14 +249,14 @@ function find(root, call, opts = {}) {
 &nbsp;
   // Since we short-circuit in the loop, we can initialise this to the default
   // return value we'd expect if nothing is found.
-  const list = opts.one ? null : []
+  const list = opts.one <span class="branch-0 cbranch-no" title="branch not covered" >? null </span>: []
 &nbsp;
   while (tree.nextNode()) {
     if (call(tree.currentNode)) {
       // Short-circuit if only returning one.
-      if (opts.one) {
-        return tree.currentNode
-      }
+      if (opts.one) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >        return tree.currentNode</span>
+<span class="cstat-no" title="statement not covered" >      }</span>
       list.push(tree.currentNode)
     }
   }
@@ -295,7 +295,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-08-03T23:49:43.200Z
+                at 2026-04-14T13:09:29.389Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

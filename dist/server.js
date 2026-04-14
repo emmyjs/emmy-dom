@@ -81,7 +81,7 @@ export class FunctionalComponent extends LightComponent {
         const renderFunctionOrString = func.call(this, {
             el: this,
             props: () => this.props,
-            children: (() => this.innerHTML)
+            children: () => this.innerHTML
         });
         this.render(renderFunctionOrString);
     }
@@ -129,7 +129,7 @@ export class FunctionalComponent extends LightComponent {
     querySelector(selector) {
         const element = HTMLElement.prototype.querySelector.call(this, vanillaElement(selector));
         if (element) {
-            element.__proto__.addEventListener = (event, callback) => {
+            element.addEventListener = (event, callback) => {
                 const newCallback = (event) => {
                     callback(event);
                     this.rerender();
@@ -243,8 +243,8 @@ export function hydrateScript(generator, name) {
     })
   `;
 }
-export function build(_a) {
-    return __awaiter(this, arguments, void 0, function* ({ dependencies, template, app, generators, path }) {
+export function build({ dependencies, template, app, generators, path }) {
+    return __awaiter(this, void 0, void 0, function* () {
         if (!path)
             path = 'index.html';
         console.log(`> Building app in ${path}`);

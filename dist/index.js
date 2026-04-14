@@ -78,7 +78,7 @@ export class FunctionalComponent extends LightComponent {
         const renderFunctionOrString = func.call(this, {
             el: this,
             props: () => this.props,
-            children: (() => this.innerHTML)
+            children: () => this.innerHTML
         });
         this.render(renderFunctionOrString);
     }
@@ -126,7 +126,7 @@ export class FunctionalComponent extends LightComponent {
     querySelector(selector) {
         const element = HTMLElement.prototype.querySelector.call(this, vanillaElement(selector));
         if (element) {
-            element.__proto__.addEventListener = (event, callback) => {
+            element.addEventListener = (event, callback) => {
                 const newCallback = (event) => {
                     callback(event);
                     this.rerender();

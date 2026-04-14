@@ -110,7 +110,7 @@ export class FunctionalComponent extends LightComponent implements Hoakable {
   useState!: UseState
   useEffect!: UseEffect
 
-  constructor(func: HTMLGenerator) {
+  constructor(func: FunctionalComponentGenerator) {
     super()
     this.effectCallback = (component: FunctionalComponent) => {}
     bindHooks.call(this, this)
@@ -118,8 +118,8 @@ export class FunctionalComponent extends LightComponent implements Hoakable {
     const renderFunctionOrString = func.call(this, {
       el: this,
       props: () => this.props,
-      children: (() => this.innerHTML) as any
-    } as unknown as EmmyComponent)
+      children: () => this.innerHTML
+    })
     this.render(renderFunctionOrString)
   }
 
@@ -174,9 +174,9 @@ export class FunctionalComponent extends LightComponent implements Hoakable {
   }
 
   querySelector(selector: string): HTMLElement | null {
-    const element = HTMLElement.prototype.querySelector.call(this, vanillaElement(selector)) as any
+    const element = HTMLElement.prototype.querySelector.call(this, vanillaElement(selector)) as HTMLElement | null
     if (element) {
-      element.__proto__.addEventListener = (event, callback) => {
+      element.addEventListener = (event, callback) => {
         const newCallback = (event) => {
           callback(event)
           this.rerender()
@@ -260,7 +260,7 @@ export async function load(func: ComponentType, name: string): Promise<ClassComp
   catch (e) {
     class X extends FunctionalComponent {
       constructor() {
-        super(func as HTMLGenerator)
+        super(func as unknown as FunctionalComponentGenerator)
       }
     }
     return launch(X as unknown as FunctionalComponent, name)

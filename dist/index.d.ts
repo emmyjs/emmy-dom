@@ -39,7 +39,7 @@ export declare class FunctionalComponent extends LightComponent implements Hoaka
     effectCallback: (component: FunctionalComponent) => void;
     useState: UseState;
     useEffect: UseEffect;
-    constructor(func: HTMLGenerator);
+    constructor(func: FunctionalComponentGenerator);
     get props(): object;
     set props(props: object);
     connectedCallback(): void;

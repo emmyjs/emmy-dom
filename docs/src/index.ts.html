@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.43% </span>
+                <span class="strong">78.59% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>211/269</span>
+                <span class='fraction'>213/271</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.43% </span>
+                <span class="strong">78.59% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>211/269</span>
+                <span class='fraction'>213/271</span>
             </div>
         
             
@@ -332,7 +332,9 @@
 <a name='L267'></a><a href='#L267'>267</a>
 <a name='L268'></a><a href='#L268'>268</a>
 <a name='L269'></a><a href='#L269'>269</a>
-<a name='L270'></a><a href='#L270'>270</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L270'></a><a href='#L270'>270</a>
+<a name='L271'></a><a href='#L271'>271</a>
+<a name='L272'></a><a href='#L272'>272</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -510,12 +512,14 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -704,16 +708,16 @@ export class LightComponent extends EmmyComponent {
   }
 &nbsp;
   querySelector(selector: string): HTMLElement | null {
-    return HTMLElement.prototype.querySelector.call(this, vanillaElement(selector))
+    return HTMLElement.prototype.querySelector.call(this, vanillaElement(selector)) as HTMLElement | null
   }
 }
 &nbsp;
 export class FunctionalComponent extends LightComponent implements Hoakable {
   effectCallback: (component: FunctionalComponent) =&gt; void
-  useState: UseState
-  useEffect: UseEffect
+  useState!: UseState
+  useEffect!: UseEffect
 &nbsp;
-  constructor(func: HTMLGenerator) {
+  constructor(func: FunctionalComponentGenerator) {
     super()
     this.effectCallback = (component: FunctionalComponent) =&gt; {}
     bindHooks.call(this, this)
@@ -777,14 +781,16 @@ export class FunctionalComponent extends LightComponent implements Hoakable {
   }
 &nbsp;
   querySelector(selector: string): HTMLElement | null {
-    const element = HTMLElement.prototype.querySelector.call(this, vanillaElement(selector))
-    element.__proto__.addEventListener = <span class="fstat-no" title="function not covered" >(event, callback) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      const newCallback = (event) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        callback(event)</span>
-<span class="cstat-no" title="statement not covered" >        this.rerender()</span>
+    const element = HTMLElement.prototype.querySelector.call(this, vanillaElement(selector)) as HTMLElement | null
+    if (element) {
+      element.addEventListener = <span class="fstat-no" title="function not covered" >(event, callback) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        const newCallback = (event) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >          callback(event)</span>
+<span class="cstat-no" title="statement not covered" >          this.rerender()</span>
+<span class="cstat-no" title="statement not covered" >        }</span>
+<span class="cstat-no" title="statement not covered" >        HTMLElement.prototype.addEventListener.call(element, event, newCallback)</span>
 <span class="cstat-no" title="statement not covered" >      }</span>
-<span class="cstat-no" title="statement not covered" >      HTMLElement.prototype.addEventListener.call(element, event, newCallback)</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
+    }
     return element
   }
 }
@@ -861,7 +867,7 @@ export async function load(func: ComponentType, name: string): Promise&lt;ClassC
   catch (e) {
     class X extends FunctionalComponent {
       constructor() {
-        super(func as HTMLGenerator)
+        super(func as unknown as FunctionalComponentGenerator)
       }
     }
     return launch(X as unknown as FunctionalComponent, name)
@@ -877,7 +883,7 @@ launch(Router as unknown as ClassComponent, 'Router')
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-08-03T23:49:43.200Z
+                at 2026-04-14T13:09:29.389Z
             </div>
         <script src="../prettify.js"></script>
         <script>

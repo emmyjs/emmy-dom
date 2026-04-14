@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">67.05% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>232/346</span>
+                <span class='fraction'>232/348</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">67.05% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>232/346</span>
+                <span class='fraction'>232/348</span>
             </div>
         
             
@@ -409,7 +409,9 @@
 <a name='L344'></a><a href='#L344'>344</a>
 <a name='L345'></a><a href='#L345'>345</a>
 <a name='L346'></a><a href='#L346'>346</a>
-<a name='L347'></a><a href='#L347'>347</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L347'></a><a href='#L347'>347</a>
+<a name='L348'></a><a href='#L348'>348</a>
+<a name='L349'></a><a href='#L349'>349</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -607,6 +609,8 @@
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -880,16 +884,16 @@ export class LightComponent extends EmmyComponent {
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  querySelector(selector: string): HTMLElement | null {</span>
-<span class="cstat-no" title="statement not covered" >    return HTMLElement.prototype.querySelector.call(this, vanillaElement(selector))</span>
+<span class="cstat-no" title="statement not covered" >    return HTMLElement.prototype.querySelector.call(this, vanillaElement(selector)) as HTMLElement | null</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
 }
 &nbsp;
 export class FunctionalComponent extends LightComponent implements Hoakable {
   effectCallback: (component: FunctionalComponent) =&gt; void
-  useState: UseState
-  useEffect: UseEffect
+  useState!: UseState
+  useEffect!: UseEffect
 &nbsp;
-  constructor(func: HTMLGenerator) {
+  constructor(func: FunctionalComponentGenerator) {
     super()
     this.effectCallback = (component: FunctionalComponent) =&gt; {}
     bindHooks.call(this, this)
@@ -953,13 +957,15 @@ export class FunctionalComponent extends LightComponent implements Hoakable {
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  querySelector(selector: string): HTMLElement | null {</span>
-<span class="cstat-no" title="statement not covered" >    const element = HTMLElement.prototype.querySelector.call(this, vanillaElement(selector))</span>
-<span class="cstat-no" title="statement not covered" >    element.__proto__.addEventListener = (event, callback) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      const newCallback = (event) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        callback(event)</span>
-<span class="cstat-no" title="statement not covered" >        this.rerender()</span>
+<span class="cstat-no" title="statement not covered" >    const element = HTMLElement.prototype.querySelector.call(this, vanillaElement(selector)) as HTMLElement | null</span>
+<span class="cstat-no" title="statement not covered" >    if (element) {</span>
+<span class="cstat-no" title="statement not covered" >      element.addEventListener = (event, callback) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        const newCallback = (event) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >          callback(event)</span>
+<span class="cstat-no" title="statement not covered" >          this.rerender()</span>
+<span class="cstat-no" title="statement not covered" >        }</span>
+<span class="cstat-no" title="statement not covered" >        HTMLElement.prototype.addEventListener.call(element, event, newCallback)</span>
 <span class="cstat-no" title="statement not covered" >      }</span>
-<span class="cstat-no" title="statement not covered" >      HTMLElement.prototype.addEventListener.call(element, event, newCallback)</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 <span class="cstat-no" title="statement not covered" >    return element</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
@@ -1037,7 +1043,7 @@ export async function load(func: ComponentType, name: string): Promise&lt;ClassC
   catch (e) {
     class X extends FunctionalComponent {
       constructor() {
-        super(func as HTMLGenerator)
+        super(func as unknown as FunctionalComponentGenerator)
       }
     }
     return launch(X as unknown as FunctionalComponent, name)
@@ -1108,7 +1114,7 @@ export <span class="fstat-no" title="function not covered" >function hydrateScri
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-08-03T23:49:43.200Z
+                at 2026-04-14T13:09:29.389Z
             </div>
         <script src="../prettify.js"></script>
         <script>
