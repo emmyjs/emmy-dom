@@ -1,4 +1,5 @@
-# Emmy DOM 2.0.0
+
+# Emmy DOM v2 Roadmap
 
 ## What's New in Version 2.0.0
 Version 2.0.0 introduces major architectural changes, making the framework production-ready for Server-Side Rendering (SSR) and paving the way for static site generation.
@@ -14,11 +15,16 @@ export function underConstruction({ el }) {
 underConstruction.static = true
 ```
 
-### 🏎️ New SSR Render Engine
+
+### 🏎️ Snel Engine: New SSR Render Engine
+The new SSR engine is now officially named **Snel Engine** (Dutch for "fast").
 We have successfully replaced the legacy experimental engine with a highly robust simulated DOM stringifier based on `undom`. Features include:
 - Strict compliance with Web Components standard tags (`<emmy-app>`).
 - 0% leakage of Node.js modules (like `fs`, `path`) into the frontend Vite client.
 - Bulletproof state hydration via intelligent `patchState` synchronization.
+
+#### Performance
+In local profiling, Snel Engine achieves LCP (Largest Contentful Paint) ≈ 0.5s and total main thread work ≈ 3.2s (see attached Chrome DevTools trace). This demonstrates competitive speed for SSR hydration and initial load. Further optimizations are planned.
 
 ---
 
