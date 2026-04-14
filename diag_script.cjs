@@ -1,5 +1,5 @@
 const { execSync } = require('child_process');
-const fs = require('fs');
+const fs = require('fs')
 try {
   const out = execSync('npm run build && npm run precommit:check', { cwd: __dirname }).toString();
   fs.writeFileSync(__dirname + '/diag.log', 'SUCCESS\n' + out);
