@@ -127,8 +127,8 @@ export class LightComponent extends EmmyComponent {
   }
 }
 
-export class FunctionalComponent extends LightComponent implements Hoakable {
-  effectCallback: (component: unknown) => void
+export class FunctionalComponent extends LightComponent implements Hoakable<FunctionalComponent> {
+  effectCallback: (component: FunctionalComponent) => void
   useState!: UseState
   useEffect!: UseEffect
 
