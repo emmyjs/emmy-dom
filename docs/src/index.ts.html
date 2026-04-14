@@ -32,7 +32,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>79/79</span>
+                <span class='fraction'>78/78</span>
             </div>
         
             
@@ -494,8 +494,8 @@
 <span class="cline-any cline-yes">55x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">26x</span>
-<span class="cline-any cline-yes">26x</span>
+<span class="cline-any cline-yes">27x</span>
+<span class="cline-any cline-yes">27x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">29x</span>
@@ -580,40 +580,40 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">28x</span>
+<span class="cline-any cline-yes">29x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">25x</span>
-<span class="cline-any cline-yes">25x</span>
-<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">26x</span>
+<span class="cline-any cline-yes">26x</span>
+<span class="cline-any cline-yes">26x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">14x</span>
 <span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -700,7 +700,7 @@ export abstract class EmmyComponent extends HTMLElement {
     }
   }
 &nbsp;
-  abstract querySelector(selector: string): HTMLElement | null
+  abstract querySelector(selector: string): Element | null
 }
 &nbsp;
 export class Component extends EmmyComponent {
@@ -714,7 +714,7 @@ export class Component extends EmmyComponent {
     this.callback.call(this, this)
   }
 &nbsp;
-  querySelector(selector: string): HTMLElement | null {
+  querySelector(selector: string): Element | null {
     return this.shadowRoot!.querySelector(vanillaElement(selector))
   }
 }
@@ -725,15 +725,15 @@ export class LightComponent extends EmmyComponent {
     this.callback.call(this, this)
   }
 &nbsp;
-  querySelector(selector: string): HTMLElement | null {
-    return HTMLElement.prototype.querySelector.call(this, vanillaElement(selector)) as HTMLElement | null
+  querySelector(selector: string): Element | null {
+    return HTMLElement.prototype.querySelector.call(this, vanillaElement(selector)) as Element | null
   }
 }
 &nbsp;
 export class FunctionalComponent extends LightComponent implements Hoakable&lt;FunctionalComponent&gt; {
   effectCallback: (component: FunctionalComponent) =&gt; void
   useState!: UseState
-  useEffect!: UseEffect
+  useEffect!: UseEffect&lt;FunctionalComponent&gt;
 &nbsp;
   constructor(func: FunctionalComponentGenerator) {
     super()
@@ -798,8 +798,8 @@ export class FunctionalComponent extends LightComponent implements Hoakable&lt;F
     this.setAttribute('state', JSON.stringify(newState).replace(/"/g, '\''))
   }
 &nbsp;
-  querySelector(selector: string): HTMLElement | null {
-    const element = HTMLElement.prototype.querySelector.call(this, vanillaElement(selector)) as HTMLElement | null
+  querySelector(selector: string): Element | null {
+    const element = HTMLElement.prototype.querySelector.call(this, vanillaElement(selector)) as Element | null
     if (!element) return null
     const addNativeListener = HTMLElement.prototype.addEventListener.bind(element)
     element.addEventListener = (event, callback) =&gt; {
@@ -901,7 +901,7 @@ launch(Router as unknown as ClassComponent, 'Router')
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-14T13:35:41.247Z
+                at 2026-04-14T17:32:24.066Z
             </div>
         <script src="../prettify.js"></script>
         <script>

@@ -3,7 +3,8 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   test: {
     coverage: {
-      reportsDirectory: './coverage',
+      reportsDirectory: './docs',
+      clean: false,
       cleanOnRerun: false,
       include: ['src/**/*.ts', 'src/**/*.js'],
       thresholds: {
