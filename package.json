@@ -58,7 +58,7 @@
     "@s-ui/mono": "2.41.0",
     "@types/eslint": "8.44.7",
     "@types/node": "18.19.0",
-    "@typescript-eslint/eslint-plugin": "6.17.0",
+    "@typescript-eslint/eslint-plugin": "8.58.2",
     "@typescript-eslint/parser": "6.17.0",
     "@vitest/coverage-v8": "1.6.0",
     "eslint": "8.56.0",
