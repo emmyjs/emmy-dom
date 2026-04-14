@@ -78,6 +78,9 @@ You can find the documentation [here](https://emmyjs.pages.dev/documentation).
 We are open to contributions. If you want to contribute, please read the [contributing guide](CONTRIBUTING.md).
 It includes the branch naming strategy, pull request workflow, and commit conventions used in this repository.
 
+## Acknowledgements
+The Server-Side Rendering (SSR) core of Emmy.js is heavily based on and inspired by [@skatejs/ssr](https://github.com/skatejs/skatejs). We acknowledge and are grateful to the SkateJS contributors for their amazing work establishing building blocks for Web Component SSR.
+
 ## License
 Emmy.js is licensed under the [MIT License](LICENSE).
 

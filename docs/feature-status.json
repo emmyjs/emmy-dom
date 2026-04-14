@@ -1,64 +1,64 @@
 {
   "source": "ROADMAP.md",
-  "updatedAt": "2026-04-14T13:36:15.995Z",
+  "updatedAt": "2026-04-14T16:16:48.054Z",
   "features": [
     {
       "name": "Class Components",
-      "label": "Estable",
+      "label": "Stable (100% Coverage)",
       "status": "stable",
       "icon": "✅"
     },
     {
       "name": "Functional Components",
-      "label": "Estable",
+      "label": "Stable (100% Coverage)",
       "status": "stable",
       "icon": "✅"
     },
     {
       "name": "Declarative Props",
-      "label": "Estable",
+      "label": "Stable (100% Coverage)",
       "status": "stable",
       "icon": "✅"
     },
     {
       "name": "Emmy Hooks",
-      "label": "Estable",
+      "label": "Stable (100% Coverage)",
       "status": "stable",
       "icon": "✅"
     },
     {
       "name": "Auto-close Tags",
-      "label": "Estable",
+      "label": "Stable (100% Coverage)",
       "status": "stable",
       "icon": "✅"
     },
     {
       "name": "JSX in Client Components",
-      "label": "Estable",
+      "label": "Stable (100% Coverage)",
       "status": "stable",
       "icon": "✅"
     },
     {
       "name": "Emmy Router Routes",
-      "label": "Estable",
+      "label": "Stable (100% Coverage)",
       "status": "stable",
       "icon": "✅"
     },
     {
       "name": "Emmy Router SPA Navigation",
-      "label": "Estable",
+      "label": "Stable (100% Coverage)",
       "status": "stable",
       "icon": "✅"
     },
     {
       "name": "Prerendering",
-      "label": "Inestable",
+      "label": "Unstable (0% Coverage)",
       "status": "unstable",
       "icon": "❌"
     },
     {
       "name": "Server-side Rendering",
-      "label": "Experimental",
+      "label": "Experimental (85% Coverage)",
       "status": "experimental",
       "icon": "⚠️"
     }

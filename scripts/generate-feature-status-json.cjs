@@ -12,7 +12,7 @@ const ICON_STATUS_MAP = {
 }
 
 function extractSnapshotBlock(markdown) {
-  const marker = '## Estado de Features (Snapshot)'
+  const marker = '## Feature Status (Snapshot)'
   const start = markdown.indexOf(marker)
   if (start === -1) throw new Error('No se encontro la seccion de snapshot en ROADMAP.md')
 
