@@ -48,16 +48,16 @@ Stabilize SSR and the package publishing contract, reduce regressions in release
 - ⏳ Evaluate at architectural level whether overriding DOM globals (like `querySelector`) still makes sense, and explore less intrusive alternatives.
 
 ## Feature Status (Snapshot)
-- ✅ Class Components: Stable
-- ✅ Functional Components: Stable
-- ✅ Declarative Props: Stable
-- ✅ Emmy Hooks: Stable
-- ✅ Auto-close Tags: Stable
-- ✅ JSX in Client Components: Stable
-- ✅ Emmy Router Routes: Stable
-- ✅ Emmy Router SPA Navigation: Stable
-- ❌ Prerendering: Unstable
-- ⚠️ Server-side Rendering: Experimental
+- ✅ Class Components: Stable (100% Coverage)
+- ✅ Functional Components: Stable (100% Coverage)
+- ✅ Declarative Props: Stable (100% Coverage)
+- ✅ Emmy Hooks: Stable (100% Coverage)
+- ✅ Auto-close Tags: Stable (100% Coverage)
+- ✅ JSX in Client Components: Stable (100% Coverage)
+- ✅ Emmy Router Routes: Stable (100% Coverage)
+- ✅ Emmy Router SPA Navigation: Stable (100% Coverage)
+- ❌ Prerendering: Unstable (0% Coverage)
+- ⚠️ Server-side Rendering: Experimental (85% Coverage)
 
 ## Immediate Next Steps
 1. Stabilize Prerendering.
