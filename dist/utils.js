@@ -1,6 +1,6 @@
 import styleToCssString from './react-style-object-to-css/index.js';
-import { render as renderJsx } from 'jsx-to-html';
-export const jsx = renderJsx;
+import jsxToHtml from 'jsx-to-html';
+export const jsx = (...args) => jsxToHtml.render(...args);
 export function processGenerator(generator) {
     const processedGenerator = generator.replace(/<\/?[^>]+>/g, match => {
         const element = match.slice(0, -1);
@@ -66,6 +66,5 @@ export const html = String.raw;
 export const javascript = String.raw;
 export const routerClassNames = 'flex flex-col justify-center items-center space-y-3 text-center w-full h-fit box-border';
 export function isServer() {
-    var _a;
-    return ((_a = globalThis.navigator) === null || _a === void 0 ? void 0 : _a.userAgent) === 'Node' || globalThis.hasOwnProperty('process');
+    return globalThis.navigator?.userAgent === 'Node' || globalThis.hasOwnProperty('process');
 }

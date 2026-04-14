@@ -1,4 +1,4 @@
-export declare const jsx: any;
+export declare const jsx: (...args: any[]) => any;
 export declare function processGenerator(generator: string): string;
 export declare function parseCSS(cssString: string): object;
 export declare function createInlineStyle(cssString: string | object): string;
