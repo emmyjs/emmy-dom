@@ -62,6 +62,27 @@ describe('useState', () => {
 })
 
 describe('useEffect', () => {
+  it('should auto-rerender after async fetch using setState', async () => {
+    return new Promise<void>(resolve => {
+      const functionalComponent = ({ el }: MetaProps) => {
+        const [data, setData] = el.useState('loading')
+        el.useEffect(() => {
+          setTimeout(() => {
+            el.patchState = vitest.fn() // intercept to check if it tries to patch/rerender
+            setData('mocked data')
+            resolve() // Success if it reaches here without crash and auto rerenders via patch
+          }, 0)
+        }, ['didMount'], isServerMock)
+        return `<div id="result">${data()}</div>`
+      }
+      class FetchComp3 extends FunctionalComponent {
+        constructor() { super(functionalComponent as HTMLGenerator) }
+      }
+      customElements.define('emmy-fetch-comp-3', FetchComp3)
+      document.body.innerHTML = '<emmy-fetch-comp-3></emmy-fetch-comp-3>'
+    })
+  })
+
   it('should be defined', () => {
     expect(useEffect).toBeDefined()
   })
