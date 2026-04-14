@@ -2,3 +2,4 @@
 app.ts
 .coverage-stable/
 temp/
+coverage
