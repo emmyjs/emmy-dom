@@ -7,9 +7,7 @@ export declare function capitalizeFirstLetter(str: string): string;
 export declare function uncapitalizeFirstLetter(str: string): string;
 export declare const Emmy: {};
 export declare const loadGlobalEmmy: (obj: object) => void;
-export declare const html: (template: {
-    raw: readonly string[] | ArrayLike<string>;
-}, ...substitutions: any[]) => string;
+export declare const html: (strings: TemplateStringsArray, ...values: any[]) => string;
 export declare const javascript: (template: {
     raw: readonly string[] | ArrayLike<string>;
 }, ...substitutions: any[]) => string;
