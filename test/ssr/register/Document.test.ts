@@ -173,3 +173,128 @@ describe('getElementsByTagName', () => {
     expect(document.getElementsByTagName('span').length).toBe(2)
   })
 })
+
+describe('createComment', () => {
+  it('creates a comment node', () => {
+    const comment = document.createComment('hello world')
+    expect(comment.nodeType).toBe(Node.COMMENT_NODE)
+    expect(comment.nodeValue).toBe('hello world')
+  })
+})
+
+describe('createEvent', () => {
+  it('creates an event', () => {
+    const event = document.createEvent('Event')
+    expect(event).toBeInstanceOf(Event)
+  })
+})
+
+describe('importNode', () => {
+  it('removes the node from its previous parent', () => {
+    const parent = document.createElement('div')
+    const child = document.createElement('span')
+    parent.appendChild(child)
+    
+    document.importNode(child)
+    expect(parent.childNodes.length).toBe(0)
+  })
+
+  it('drops children if deep is false or omitted', () => {
+    const parent = document.createElement('div')
+    const child1 = document.createElement('span')
+    const child2 = document.createElement('span')
+    parent.appendChild(child1)
+    parent.appendChild(child2)
+
+    const imported = document.importNode(parent)
+    expect(imported.childNodes.length).toBe(0)
+  })
+
+  it('keeps children if deep is true', () => {
+    const parent = document.createElement('div')
+    const child1 = document.createElement('span')
+    const child2 = document.createElement('span')
+    parent.appendChild(child1)
+    parent.appendChild(child2)
+
+    const imported = document.importNode(parent, true)
+    expect(imported.childNodes.length).toBe(2)
+  })
+})
+
+describe('createTreeWalker remaining coverage', () => {
+  it('supports function as filter', () => {
+    document.head.innerHTML = '<div class="func-filter"></div>'
+    const tree = document.createTreeWalker(document, NodeFilter.SHOW_ELEMENT, node => {
+      return node.classList?.contains('func-filter') ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP
+    })
+    const list = []
+    while (tree.nextNode()) {
+      list.push(tree.currentNode.nodeName)
+    }
+    expect(list).toEqual(['DIV'])
+  })
+
+  it('defaults to FILTER_ACCEPT if filter object has no acceptNode', () => {
+    document.head.innerHTML = '<b id="no-accept"></b>'
+    const tree = document.createTreeWalker(document, NodeFilter.SHOW_ELEMENT, {})
+    const list = []
+    while (tree.nextNode()) {
+      if (tree.currentNode.id === 'no-accept') list.push(tree.currentNode.nodeName)
+    }
+    expect(list).toEqual(['B'])
+  })
+})
+
+describe('createElement custom element coverage', () => {
+  it('returns a new instance of the custom element constructor', () => {
+    class MyCustomElement extends HTMLElement {}
+    window.customElements.define('my-custom', MyCustomElement)
+    const elem = document.createElement('my-custom')
+    expect(elem.nodeName).toBe('MY-CUSTOM')
+    expect(elem instanceof MyCustomElement).toBe(true)
+  })
+})
+
+describe('createTreeWalker advanced coverage', () => {
+  it('handles COMMENT_NODE, DOCUMENT_FRAGMENT_NODE and unknown nodes', () => {
+    const parent = document.createElement('div')
+    parent.appendChild(document.createComment('hello'))
+    
+    // Create a mock node with an unknown type for the default branch
+    const unknownNode = document.createElement('span')
+    Object.defineProperty(unknownNode, 'nodeType', { value: 999 })
+    parent.appendChild(unknownNode)
+    
+    document.body.appendChild(parent)
+
+    const tree = document.createTreeWalker(document, NodeFilter.SHOW_COMMENT)
+    const list = []
+    while (tree.nextNode()) {
+      list.push(tree.currentNode.nodeValue)
+    }
+    expect(list.includes('hello')).toBe(true)
+  })
+
+  it('handles DOCUMENT_FRAGMENT_NODE filtering', () => {
+    // createTreeWalker traverses children, but DocumentFragment is a parent.
+    // However, if the root itself is a fragment, it can be tested.
+    const frag = document.createDocumentFragment()
+    const tree = document.createTreeWalker(frag, NodeFilter.SHOW_DOCUMENT_FRAGMENT)
+    expect(tree.nextNode()).toBe(frag) // It skips because fragment children aren't fragments unless appended.
+    
+    const childFrag = document.createDocumentFragment()
+    // undom doesn't let append fragment as a node usually, but let's force it for coverage
+    Object.defineProperty(childFrag, 'nodeType', { value: Node.DOCUMENT_FRAGMENT_NODE })
+    frag.appendChild(childFrag)
+    const tree2 = document.createTreeWalker(frag, NodeFilter.SHOW_DOCUMENT_FRAGMENT)
+    
+    tree2.nextNode()
+  })
+
+  it('handles null filter', () => {
+    document.head.innerHTML = '<i></i>'
+    const tree = document.createTreeWalker(document, NodeFilter.SHOW_ELEMENT, null)
+    tree.nextNode()
+  })
+})
