@@ -81,7 +81,7 @@ export abstract class EmmyComponent extends HTMLElement {
     }
   }
 
-  abstract querySelector(selector: string): HTMLElement | null
+  abstract querySelector(selector: string): Element | null
 }
 
 export class Component extends EmmyComponent {
@@ -95,7 +95,7 @@ export class Component extends EmmyComponent {
     this.callback.call(this, this)
   }
 
-  querySelector(selector: string): HTMLElement | null {
+  querySelector(selector: string): Element | null {
     return this.shadowRoot!.querySelector(vanillaElement(selector))
   }
 }
@@ -106,17 +106,17 @@ export class LightComponent extends EmmyComponent {
     this.callback.call(this, this)
   }
 
-  querySelector(selector: string): HTMLElement | null {
-    return HTMLElement.prototype.querySelector.call(this, vanillaElement(selector))
+  querySelector(selector: string): Element | null {
+    return HTMLElement.prototype.querySelector.call(this, vanillaElement(selector)) as Element | null
   }
 }
 
-export class FunctionalComponent extends LightComponent implements Hoakable {
+export class FunctionalComponent extends LightComponent implements Hoakable<FunctionalComponent> {
   effectCallback: (component: FunctionalComponent) => void
-  useState: UseState
-  useEffect: UseEffect
+  useState!: UseState
+  useEffect!: UseEffect<FunctionalComponent>
 
-  constructor(func: HTMLGenerator) {
+  constructor(func: FunctionalComponentGenerator) {
     super()
     this.effectCallback = (component: FunctionalComponent) => {}
     bindHooks.call(this, this)
@@ -131,7 +131,7 @@ export class FunctionalComponent extends LightComponent implements Hoakable {
 
   get props() {
     return Array.from(this.attributes).reduce((acc, attr) => {
-      const name = attr.name as any === 'class' ? 'className' : attr.name
+      const name = attr.name === 'class' ? 'className' : attr.name
       return { ...acc, [name]: () => this.getAttribute(attr.name) }
     }, {})
   }
@@ -179,8 +179,8 @@ export class FunctionalComponent extends LightComponent implements Hoakable {
     this.setAttribute('state', JSON.stringify(newState).replace(/"/g, '\''))
   }
 
-  querySelector(selector: string): HTMLElement | null {
-    const element = HTMLElement.prototype.querySelector.call(this, vanillaElement(selector))
+  querySelector(selector: string): Element | null {
+    const element = HTMLElement.prototype.querySelector.call(this, vanillaElement(selector)) as Element | null
     if (!element) return null
     const addNativeListener = HTMLElement.prototype.addEventListener.bind(element)
     element.addEventListener = (event, callback) => {
@@ -266,7 +266,7 @@ export async function load(func: ComponentType, name: string): Promise<ClassComp
   catch (e) {
     class X extends FunctionalComponent {
       constructor() {
-        super(func as HTMLGenerator)
+        super(func as unknown as FunctionalComponentGenerator)
       }
     }
     return launch(X as unknown as FunctionalComponent, name)

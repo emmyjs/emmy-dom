@@ -1,12 +1,3 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 export * from './commonExports.js';
 import { bindHooks } from './hooks.js';
 import { createInlineStyle, html, jsx, processGenerator, routerClassNames, vanillaElement } from './utils.js';
@@ -28,8 +19,14 @@ export class EmmyComponent extends HTMLElement {
     render(generator, callback) {
         if (typeof generator !== 'function' && typeof generator !== 'string') {
             try {
-                const htmlFromJSX = jsx(generator);
-                console.log(htmlFromJSX);
+                let htmlFromJSX;
+                if (generator && typeof generator === 'object' && 'tag' in generator) {
+                    const normalized = generator;
+                    htmlFromJSX = jsx(normalized.tag, normalized.attrs || {}, ...(normalized.children || []));
+                }
+                else {
+                    htmlFromJSX = jsx(generator);
+                }
                 this.contentGenerator = () => htmlFromJSX;
             }
             catch (e) {
@@ -85,7 +82,7 @@ export class FunctionalComponent extends LightComponent {
     get props() {
         return Array.from(this.attributes).reduce((acc, attr) => {
             const name = attr.name === 'class' ? 'className' : attr.name;
-            return Object.assign(Object.assign({}, acc), { [name]: () => this.getAttribute(attr.name) });
+            return { ...acc, [name]: () => this.getAttribute(attr.name) };
         }, {});
     }
     set props(props) {
@@ -125,12 +122,15 @@ export class FunctionalComponent extends LightComponent {
     }
     querySelector(selector) {
         const element = HTMLElement.prototype.querySelector.call(this, vanillaElement(selector));
-        element.__proto__.addEventListener = (event, callback) => {
+        if (!element)
+            return null;
+        const addNativeListener = HTMLElement.prototype.addEventListener.bind(element);
+        element.addEventListener = (event, callback) => {
             const newCallback = (event) => {
                 callback(event);
                 this.rerender();
             };
-            HTMLElement.prototype.addEventListener.call(element, event, newCallback);
+            addNativeListener(event, newCallback);
         };
         return element;
     }
@@ -178,34 +178,30 @@ export function launch(component, name) {
     customElements.define(vanillaElement(name), component);
     return component;
 }
-export function createPageComponent(url, name) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const result = yield fetch(url);
-        const htmlText = yield result.text();
-        return load(() => htmlText, name);
-    });
+export async function createPageComponent(url, name) {
+    const result = await fetch(url);
+    const htmlText = await result.text();
+    return load(() => htmlText, name);
 }
-export function load(func, name) {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (typeof func === 'string') {
-            return yield createPageComponent(func, name);
+export async function load(func, name) {
+    if (typeof func === 'string') {
+        return await createPageComponent(func, name);
+    }
+    try {
+        const instance = new func();
+        if (instance instanceof Component || instance instanceof LightComponent || instance instanceof FunctionalComponent) {
+            return launch(func, name);
         }
-        try {
-            const instance = new func();
-            if (instance instanceof Component || instance instanceof LightComponent || instance instanceof FunctionalComponent) {
-                return launch(func, name);
+        throw new Error('Not a valid component');
+    }
+    catch (e) {
+        class X extends FunctionalComponent {
+            constructor() {
+                super(func);
             }
-            throw new Error('Not a valid component');
         }
-        catch (e) {
-            class X extends FunctionalComponent {
-                constructor() {
-                    super(func);
-                }
-            }
-            return launch(X, name);
-        }
-    });
+        return launch(X, name);
+    }
 }
 launch(Route, 'Route');
 launch(Router, 'Router');

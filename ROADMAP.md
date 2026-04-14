@@ -33,6 +33,7 @@ Estabilizar SSR y el contrato de publicación del paquete, reducir regresiones e
 - ✅ Publicar roadmap y limitaciones conocidas en docs principales.
 - ✅ Documentar criterios de "listo para producción" y compatibilidad.
 - ✅ Añadir guía de troubleshooting para SSR y exportaciones.
+- ⏳ Evaluate at architectural level whether overriding DOM globals (like `querySelector`) still makes sense, and explore less intrusive alternatives.
 
 ## Estado de Features (Snapshot)
 - ✅ Class Components: Estable
