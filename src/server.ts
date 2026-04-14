@@ -128,7 +128,7 @@ export class LightComponent extends EmmyComponent {
 }
 
 export class FunctionalComponent extends LightComponent implements Hoakable {
-  effectCallback: (component: FunctionalComponent) => void
+  effectCallback: (component: unknown) => void
   useState!: UseState
   useEffect!: UseEffect
 
@@ -147,7 +147,7 @@ export class FunctionalComponent extends LightComponent implements Hoakable {
 
   get props() {
     return Array.from(this.attributes).reduce((acc, attr) => {
-      const name = attr.name as any === 'class' ? 'className' : attr.name
+      const name = attr.name === 'class' ? 'className' : attr.name
       return { ...acc, [name]: () => this.getAttribute(attr.name) }
     }, {})
   }
@@ -197,14 +197,14 @@ export class FunctionalComponent extends LightComponent implements Hoakable {
 
   querySelector(selector: string): HTMLElement | null {
     const element = HTMLElement.prototype.querySelector.call(this, vanillaElement(selector)) as HTMLElement | null
-    if (element) {
-      element.addEventListener = (event, callback) => {
-        const newCallback = (event) => {
-          callback(event)
-          this.rerender()
-        }
-        HTMLElement.prototype.addEventListener.call(element, event, newCallback)
+    if (!element) return null
+    const addNativeListener = HTMLElement.prototype.addEventListener.bind(element)
+    element.addEventListener = (event, callback) => {
+      const newCallback = (event) => {
+        callback(event)
+        this.rerender()
       }
+      addNativeListener(event, newCallback)
     }
     return element
   }

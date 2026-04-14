@@ -112,7 +112,7 @@ export class LightComponent extends EmmyComponent {
 }
 
 export class FunctionalComponent extends LightComponent implements Hoakable {
-  effectCallback: (component: FunctionalComponent) => void
+  effectCallback: (component: unknown) => void
   useState!: UseState
   useEffect!: UseEffect
 
@@ -131,7 +131,7 @@ export class FunctionalComponent extends LightComponent implements Hoakable {
 
   get props() {
     return Array.from(this.attributes).reduce((acc, attr) => {
-      const name = attr.name as any === 'class' ? 'className' : attr.name
+      const name = attr.name === 'class' ? 'className' : attr.name
       return { ...acc, [name]: () => this.getAttribute(attr.name) }
     }, {})
   }
