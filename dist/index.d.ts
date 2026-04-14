@@ -24,12 +24,12 @@ export declare abstract class EmmyComponent extends HTMLElement {
     addStyle(style: StyleObject): void;
     abstract connectedCallback(): void;
     render(generator: string | HTMLGenerator, callback?: Callback): void;
-    abstract querySelector(selector: string): HTMLElement | null;
+    abstract querySelector(selector: string): Element | null;
 }
 export declare class Component extends EmmyComponent {
     constructor();
     connectedCallback(): void;
-    querySelector(selector: string): HTMLElement | null;
+    querySelector(selector: string): Element | null;
 }
 export declare class LightComponent extends EmmyComponent {
     connectedCallback(): void;
@@ -49,7 +49,7 @@ export declare class FunctionalComponent extends LightComponent implements Hoaka
     rerender(): void;
     state(): any;
     setState(newState: object): void;
-    querySelector(selector: string): HTMLElement | null;
+    querySelector(selector: string): Element | null;
 }
 export declare class Route extends LightComponent {
     static routes: {
