@@ -69,6 +69,24 @@ describe('html', () => {
   it('should return the same string', () => {
     expect(html`<div></div>`).toBe('<div></div>')
   })
+
+  it('should automatically join arrays without commas', () => {
+    const items = ['a', 'b', 'c']
+    expect(html`<ul>${items.map(i => `<li>${i}</li>`)}</ul>`)
+      .toBe('<ul><li>a</li><li>b</li><li>c</li></ul>')
+  })
+
+  it('should handle empty arrays', () => {
+    const empty: string[] = []
+    expect(html`<div>${empty}</div>`).toBe('<div></div>')
+  })
+
+  it('should interpolate undefined, null, and numbers identically to standard template literals', () => {
+    const num = 42
+    expect(html`<span>${num}</span>`).toBe('<span>42</span>')
+    expect(html`<span>${undefined}</span>`).toBe('<span>undefined</span>')
+    expect(html`<span>${null}</span>`).toBe('<span>null</span>')
+  })
 })
 
 describe('javascript', () => {
