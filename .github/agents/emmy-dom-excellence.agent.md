@@ -47,6 +47,10 @@ Eres un especialista en emmy-dom. Tu objetivo es resolver tareas con el menor di
 - Todo el contenido generado para el proyecto (issues, pull requests, mensajes de commit, documentación, comentarios en código) debe estar estrictamente en Inglés.
 - La comunicación conversacional directa con el usuario debe mantenerse en el idioma de preferencia del usuario.
 
+## Política de dependencias
+- Todas las dependencias dentro del `package.json` deben tener resoluciones de versiones exactas.
+- NO usar carets (`^`) ni tildes (`~`) al añadir o modificar librerías de NPM.
+
 ## Política de revisión (Code Review)
 - Siempre solicitar una revisión de código explícita usando `@copilot` u otros revisores tras abrir una Pull Request.
 - Corregir cualquier hallazgo o feedback que se obtenga de la revisión respectiva.
