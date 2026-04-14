@@ -11,12 +11,12 @@ Stabilize SSR and the package publishing contract, reduce regressions in release
 - ✅ Automate Copilot review requests on new PRs.
 - ✅ Add a Copilot review gate before merge.
 
-## Phase 2: SSR Core (P0)
+## ✅ Phase 2: SSR Core (P0)
 - ✅ Implement `whatToShow` and `filter` in the SSR DOM `createTreeWalker`.
 - ✅ Optimize `getElementById` (avoid linear search with an index/hash).
 - ✅ Correct `TreeWalker` semantics according to review (gating by `whatToShow` + root validation).
-- ⏳ Resolve or isolate the `nodeName` loss issue related to dynamic imports.
-- ⏳ Review inheritance debt in `DocumentFragment` and cleanup of settable `nodeName`.
+- ✅ Resolve or isolate the `nodeName` loss issue related to dynamic imports.
+- ✅ Review inheritance debt in `DocumentFragment` and cleanup of settable `nodeName`.
 
 ## ✅ Phase 3: Typing and Compilation (P1)
 - ✅ Resolve TypeScript warning regarding `rootDir`/output layout.

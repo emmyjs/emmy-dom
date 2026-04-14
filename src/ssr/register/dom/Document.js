@@ -52,13 +52,16 @@ function applyNodeFilter(node, filter) {
 }
 
 class Document extends Element {
+  get nodeName() {
+    return '#document'
+  }
+
   constructor() {
     super()
 
     this.body = this.createElement('body')
     this.documentElement = this.createElement('html')
     this.head = this.createElement('head')
-    this.nodeName = '#document'
 
     this.appendChild(this.documentElement)
     this.documentElement.appendChild(this.head)
@@ -92,7 +95,12 @@ class Document extends Element {
 
   createElement(name) {
     const Ctor = window.customElements.get(name)
-    return Ctor ? new Ctor() : createElement(name)
+    if (Ctor) {
+      const elem = new Ctor()
+      elem._nodeName = name.toUpperCase()
+      return elem
+    }
+    return createElement(name)
   }
 
   createEvent(name) {

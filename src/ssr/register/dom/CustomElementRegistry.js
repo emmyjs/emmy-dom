@@ -5,14 +5,21 @@ class CustomElementRegistry {
   constructor() {
     this.promises = {}
     this.registry = {}
+    this._ctorMap = new WeakMap()
   }
   define(name, func) {
     // We must invoke the getter for observedAttributes to mimic the spec'd
     // behaviour just in case consumer getters require side-effects happen
     // within it.
     func.observedAttributes
-    prop(func.prototype, 'nodeName', { value: name })
+    const ucName = name.toUpperCase()
+    prop(func.prototype, 'nodeName', { value: ucName })
     this.registry[name] = func
+    
+    if (typeof func === 'function') {
+      this._ctorMap.set(func, ucName)
+    }
+
     if (this.promises[name]) {
       this.promises[name]()
       delete this.promises[name]
@@ -31,15 +38,31 @@ class CustomElementRegistry {
     })
   }
   __fixLostNodeNameForElement(elem) {
+    const ctor = elem.constructor
+    if (ctor && this._ctorMap && this._ctorMap.has(ctor)) {
+      return this._ctorMap.get(ctor)
+    }
+
     for (let name in this.registry) {
       const test = this.registry[name]
 
-      // `elem instanceof test` did NOT work. The constructor must be being
-      // rewritten somehow.
-      if (new test() instanceof elem.constructor) {
+      // Fallback: match by constructor name (useful for Webpack wrapped dynamic imports)
+      if (test.name && ctor && test.name === ctor.name) {
         const ucName = name.toUpperCase()
         prop(test.prototype, 'nodeName', { value: ucName })
         return ucName
+      }
+
+      // `elem instanceof test` did NOT work. The constructor must be being
+      // rewritten somehow.
+      try {
+        if (new test() instanceof ctor) {
+          const ucName = name.toUpperCase()
+          prop(test.prototype, 'nodeName', { value: ucName })
+          return ucName
+        }
+      } catch (e) {
+        // Ignore instantiation errors during fuzzy matching
       }
     }
 
