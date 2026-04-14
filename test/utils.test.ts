@@ -1,5 +1,5 @@
 import { describe, it, expect, vitest } from 'vitest'
-import { processGenerator, parseCSS, createInlineStyle, capitalizeFirstLetter, uncapitalizeFirstLetter, Emmy, loadGlobalEmmy, html, javascript, isServer } from '../src/utils.ts'
+import { processGenerator, parseCSS, createInlineStyle, capitalizeFirstLetter, uncapitalizeFirstLetter, Emmy, loadGlobalEmmy, html, javascript, isServer, vanillaElement } from '../src/utils.ts'
 
 describe('processGenerator', () => {
   it('should return a string', () => {
@@ -7,6 +7,15 @@ describe('processGenerator', () => {
     expect(processGenerator('<Div color="red"></Div>')).toBe('<emmy-div color="red"></emmy-div>')
     expect(processGenerator('<Div />')).toBe('<emmy-div></emmy-div>')
     expect(processGenerator('<Div color="red" />')).toBe('<emmy-div color="red"></emmy-div>')
+  })
+})
+
+describe('vanillaElement', () => {
+  it('should format uppercase tags into emmy- lowered tags', () => {
+    expect(vanillaElement('MyComponent')).toBe('emmy-mycomponent')
+  })
+  it('should return original tags unmodified when already lowered', () => {
+    expect(vanillaElement('my-component')).toBe('my-component')
   })
 })
 
