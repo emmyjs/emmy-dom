@@ -95,7 +95,7 @@ export abstract class EmmyComponent extends HTMLElement {
     }
   }
 
-  abstract querySelector(selector: string): HTMLElement | null
+  abstract querySelector(selector: string): Element | null
 }
 
 
@@ -110,7 +110,7 @@ export class Component extends EmmyComponent {
     this.callback.call(this, this)
   }
 
-  querySelector(selector: string): HTMLElement | null {
+  querySelector(selector: string): Element | null {
     return this.shadowRoot!.querySelector(vanillaElement(selector))
   }
 }
@@ -195,8 +195,8 @@ export class FunctionalComponent extends LightComponent implements Hoakable<Func
     this.setAttribute('state', JSON.stringify(newState).replace(/"/g, '\''))
   }
 
-  querySelector(selector: string): HTMLElement | null {
-    const element = HTMLElement.prototype.querySelector.call(this, vanillaElement(selector)) as HTMLElement | null
+  querySelector(selector: string): Element | null {
+    const element = HTMLElement.prototype.querySelector.call(this, vanillaElement(selector)) as Element | null
     if (!element) return null
     const addNativeListener = HTMLElement.prototype.addEventListener.bind(element)
     element.addEventListener = (event, callback) => {
