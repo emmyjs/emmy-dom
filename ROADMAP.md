@@ -29,6 +29,7 @@ Estabilizar SSR y el contrato de publicación del paquete, reducir regresiones e
 - Publicar roadmap y limitaciones conocidas en docs principales.
 - Documentar criterios de "listo para producción" y compatibilidad.
 - Añadir guía de troubleshooting para SSR y exportaciones.
+- Evaluar a nivel arquitectónico si tiene sentido seguir sobrescribiendo globales del DOM (como `querySelector`), buscando alternativas menos intrusivas.
 
 ## Criterios de éxito
 - Cero incidentes por exports rotos entre versiones consecutivas.
