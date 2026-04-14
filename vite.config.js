@@ -8,10 +8,10 @@ export default defineConfig({
       cleanOnRerun: false,
       include: ['src/**/*.ts', 'src/**/*.js'],
       thresholds: {
-        lines: 80,
-        functions: 70,
-        branches: 75,
-        statements: 80
+        lines: 85,
+        functions: 75,
+        branches: 85,
+        statements: 85
       }
     }
   }
