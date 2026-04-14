@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">59.25% </span>
+                <span class="strong">81.48% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>16/27</span>
+                <span class='fraction'>22/27</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>4/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">59.25% </span>
+                <span class="strong">81.48% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>16/27</span>
+                <span class='fraction'>22/27</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -94,53 +94,53 @@
 <span class="cline-any cline-yes">14x</span>
 <span class="cline-any cline-yes">14x</span>
 <span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const path = require('path')
-const vm = require('vm')
-const { execFile } = require('../util')
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="fstat-no" title="function not covered" >const </span>path = require('path')
+const vm = <span class="fstat-no" title="function not covered" >require('vm')</span>
+const util = require('../util/index.js');
 &nbsp;
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >function trigger(obj, data) {</span></span>
-<span class="cstat-no" title="statement not covered" >  if (obj.onmessage) {</span>
-<span class="cstat-no" title="statement not covered" >    obj.onmessage({ data })</span>
+function <span class="fstat-no" title="function not covered" >trigger(obj, data) {</span>
+<span class="cstat-no" title="statement not covered" >  if (obj &amp;&amp; obj.onmessage) {</span>
+    obj.onmessage(<span class="fstat-no" title="function not covered" >{ data })</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
 <span class="cstat-no" title="statement not covered" >}</span>
-&nbsp;
-const context = {
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >const context = {</span>
   onmessage: null,
-<span class="fstat-no" title="function not covered" >  postMessage(msg) {</span>
-<span class="cstat-no" title="statement not covered" >    trigger(this, msg)</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  postMessage(msg) {
+    trigger(this, msg)
+  }
 }
 &nbsp;
 class Worker {
-<span class="fstat-no" title="function not covered" >  constructor(file) {</span>
-<span class="cstat-no" title="statement not covered" >    execFile(file, { context })</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
-<span class="fstat-no" title="function not covered" >  postMessage(msg) {</span>
-<span class="cstat-no" title="statement not covered" >    trigger(this, msg)</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  constructor(file) {
+    util.execFile(file, { context })
+  }
+  postMessage(msg) {
+    trigger(this, msg)
+  }
 }
 &nbsp;
 module.exports = Worker
@@ -151,7 +151,7 @@ module.exports = Worker
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-14T17:39:02.804Z
+                at 2026-04-14T18:00:49.142Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

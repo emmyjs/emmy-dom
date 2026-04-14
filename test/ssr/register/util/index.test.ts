@@ -13,15 +13,15 @@ describe('ssr/register/util', () => {
       createTreeWalker: vi.fn(),
     } as any;
     global.window = {} as any;
-  });
+    });
 
   describe('execFile', () => {
     it('should read and execute file code', () => {
       global.document.ssr.scriptBase = __dirname;
       const result = execFile('dummy.js');
       expect(result).toContain('dummy');
+      });
     });
-  });
 
   describe('find', () => {
     it('should return the first matched node if opts.one is true', () => {
@@ -40,19 +40,19 @@ describe('ssr/register/util', () => {
           if (callCount === 2) return mockNode2;
           return null;
         }
-      });
+        });
 
       const root = {};
       const result = find(root, (node) => node.id === 1, { one: true });
       expect(result).toBe(mockNode1);
+      });
     });
-  });
 
   describe('walk', () => {
     it('should return early if root is falsy', () => {
       walk(null, vi.fn());
       expect(global.document.createTreeWalker).not.toHaveBeenCalled();
-    });
+      });
 
     it('should call the callback for each node', () => {
       let callCount = 0;
@@ -64,30 +64,30 @@ describe('ssr/register/util', () => {
         get currentNode() {
           return { id: callCount };
         }
-      });
+        });
       const callback = vi.fn();
       walk({}, callback);
       expect(callback).toHaveBeenCalledTimes(2);
+    });
   });
-});
 
   describe('each', () => {
     it('returns falsy node immediately', () => {
       expect(each(null, vi.fn())).toBeNull();
-    });
+      });
     it('calls function on each childNode if fragment', () => {
       const call = vi.fn();
       const node = { nodeName: '#document-fragment', childNodes: [1, 2] };
       each(node, call);
       expect(call).toHaveBeenCalledTimes(2);
-    });
+      });
     it('calls function on node if not fragment', () => {
       const call = vi.fn();
       const node = { nodeName: 'div' };
       each(node, call);
       expect(call).toHaveBeenCalledWith(node);
+      });
     });
-  });
 
   describe('execCode', () => {
     it('executes code in new context via vm', () => {
@@ -95,16 +95,16 @@ describe('ssr/register/util', () => {
       execCode('console.log(1)', { context });
       // In our mock, runInNewContext returns code
       expect(execCode('"data"', { context })).toBe('data');
+      });
     });
-  });
 
   describe('expose', () => {
     it('sets variable in global and window', () => {
       expose('MyTestVar', 'MyTestVal');
       expect(global.MyTestVar).toBe('MyTestVal');
       expect(window.MyTestVar).toBe('MyTestVal');
+      });
     });
-  });
 
   describe('find without one', () => {
     it('returns list of matched nodes', () => {
@@ -121,17 +121,17 @@ describe('ssr/register/util', () => {
           if (callCount === 2) return mockNode2;
           return null;
         }
-      });
+        });
       const result = find({}, (n) => true);
       expect(result).toEqual([mockNode1, mockNode2]);
+      });
     });
-  });
 
   describe('prop', () => {
     it('defines property on object', () => {
       const obj = {};
       prop(obj, 'testProp', { value: 'testValue' });
       expect(obj.testProp).toBe('testValue');
+      });
     });
   });
-});

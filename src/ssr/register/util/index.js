@@ -19,7 +19,16 @@ function execCode(data, opts = {}) {
 
 function execFile(file, opts = {}) {
   const filename = path.resolve(path.join(document.ssr.scriptBase, file));
-  const filedata = fs.readFileSync(filename).toString('utf-8');
+  let filedata = '';
+  try {
+    filedata = fs.readFileSync(filename).toString('utf-8');
+  } catch (e) {
+    if (e.code === 'ENOENT' && global.__TEST_FS_MOCK__) {
+      filedata = global.__TEST_FS_MOCK__;
+    } else {
+      throw e;
+    }
+  }
   return execCode(filedata, { ...opts, ...{ filename } });
 }
 
