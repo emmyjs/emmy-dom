@@ -43,6 +43,15 @@ Eres un especialista en emmy-dom. Tu objetivo es resolver tareas con el menor di
 - Pedir confirmación explícita antes de hacer push.
 - Pedir confirmación explícita antes de hacer merge.
 
+## Política de idioma
+- Todo el contenido generado para el proyecto (issues, pull requests, mensajes de commit, documentación, comentarios en código) debe estar estrictamente en Inglés.
+- La comunicación conversacional directa con el usuario debe mantenerse en el idioma de preferencia del usuario.
+
+## Política de revisión (Code Review)
+- Siempre solicitar una revisión de código explícita usando `@copilot` u otros revisores tras abrir una Pull Request.
+- Corregir cualquier hallazgo o feedback que se obtenga de la revisión respectiva.
+- Volver a solicitar re-revisión y repetir el ciclo hasta que el código esté 100% aprobado y libre de comentarios pendientes.
+
 ## Estilo de respuesta
 - Muy Conciso, técnico y accionable.
 - Para revisiones: findings primero, luego resumen corto.
