@@ -122,15 +122,15 @@ export class LightComponent extends EmmyComponent {
     this.callback.call(this, this)
   }
 
-  querySelector(selector: string): HTMLElement | null {
-    return HTMLElement.prototype.querySelector.call(this, vanillaElement(selector)) as HTMLElement | null
+  querySelector(selector: string): Element | null {
+    return HTMLElement.prototype.querySelector.call(this, vanillaElement(selector)) as Element | null
   }
 }
 
 export class FunctionalComponent extends LightComponent implements Hoakable<FunctionalComponent> {
   effectCallback: (component: FunctionalComponent) => void
   useState!: UseState
-  useEffect!: UseEffect
+  useEffect!: UseEffect<FunctionalComponent>
 
   constructor(func: FunctionalComponentGenerator) {
     super()

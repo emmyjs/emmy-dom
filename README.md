@@ -71,7 +71,6 @@ load(myComponent, 'MyComponent')
 
 ## Documentation
 You can find the documentation [here](https://emmyjs.pages.dev/documentation).
-For common SSR/exports issues, see the troubleshooting guide in [docs/troubleshooting-ssr-exports.md](docs/troubleshooting-ssr-exports.md).
 
 [Tutorial](https://www.youtube.com/watch?v=rOxAJ9c068c)
 
