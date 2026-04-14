@@ -41,11 +41,14 @@ Stabilize SSR and the package publishing contract, reduce regressions in release
 - ✅ Ensure 100% coverage on features marked as `Stable` (dedicated gate).
 </details>
 
-## Phase 5: Documentation and Adoption (P2)
+<details>
+<summary><strong>✅ Phase 5: Documentation and Adoption (P2)</strong></summary>
+
 - ✅ Publish roadmap and known limitations in main docs.
 - ✅ Document "production-ready" criteria and compatibility.
 - ✅ Add troubleshooting guide for SSR and exports.
-- ⏳ Evaluate at architectural level whether overriding DOM globals (like `querySelector`) still makes sense, and explore less intrusive alternatives.
+- ✅ Evaluate at architectural level whether overriding DOM globals (like `querySelector`) still makes sense, and explore less intrusive alternatives.
+</details>
 
 ## Feature Status (Snapshot)
 - ✅ Class Components: Stable (100% Coverage)
