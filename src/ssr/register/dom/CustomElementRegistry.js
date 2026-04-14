@@ -15,10 +15,7 @@ class CustomElementRegistry {
     const ucName = name.toUpperCase()
     prop(func.prototype, 'nodeName', { value: ucName })
     this.registry[name] = func
-    
-    if (typeof func === 'function') {
-      this._ctorMap.set(func, ucName)
-    }
+    this._ctorMap.set(func, ucName)
 
     if (this.promises[name]) {
       this.promises[name]()
@@ -39,8 +36,13 @@ class CustomElementRegistry {
   }
   __fixLostNodeNameForElement(elem) {
     const ctor = elem.constructor
-    if (ctor && this._ctorMap && this._ctorMap.has(ctor)) {
-      return this._ctorMap.get(ctor)
+    if (ctor && this._ctorMap.has(ctor)) {
+      const ucName = this._ctorMap.get(ctor)
+      const existing = Object.getOwnPropertyDescriptor(ctor.prototype, 'nodeName')
+      if (!existing || existing.value !== ucName) {
+        prop(ctor.prototype, 'nodeName', { value: ucName })
+      }
+      return ucName
     }
 
     for (let name in this.registry) {

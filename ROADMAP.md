@@ -60,8 +60,7 @@ Stabilize SSR and the package publishing contract, reduce regressions in release
 - ⚠️ Server-side Rendering: Experimental
 
 ## Immediate Next Steps
-1. Complete pending SSR debt (dynamic `nodeName` and `DocumentFragment` inheritance).
-2. Stabilize Prerendering.
+1. Stabilize Prerendering.
 
 ## Success Criteria
 - ✅ Zero incidents due to broken exports between consecutive versions.
