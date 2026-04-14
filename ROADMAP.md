@@ -59,11 +59,10 @@ Stabilize SSR and the package publishing contract, reduce regressions in release
 - ✅ JSX in Client Components: Stable (100% Coverage)
 - ✅ Emmy Router Routes: Stable (100% Coverage)
 - ✅ Emmy Router SPA Navigation: Stable (100% Coverage)
-- ❌ Prerendering: Unstable (0% Coverage)
-- ⚠️ Server-side Rendering: Experimental (85% Coverage)
+- ✅ Server-side Rendering: Stable (85% Coverage)
 
 ## Immediate Next Steps
-1. Stabilize Prerendering.
+1. Increase SSR real-world testing and documentation.
 
 ## Success Criteria
 - ✅ Zero incidents due to broken exports between consecutive versions.
