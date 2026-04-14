@@ -20,7 +20,7 @@ Estabilizar SSR y el contrato de publicación del paquete, reducir regresiones e
 
 ## Fase 3: Tipado y compilación (P1)
 - ✅ Resolver warning de TypeScript sobre `rootDir`/layout de salida.
-- ⏳ Endurecer TypeScript de manera incremental (`strict` por etapas).
+- ✅ Endurecer TypeScript de manera incremental (`strict` por etapas).
 - ✅ Revisar `target` de compilación para alinearlo con runtimes soportados.
 
 ## Fase 4: Tests y calidad (P1)
@@ -50,7 +50,6 @@ Estabilizar SSR y el contrato de publicación del paquete, reducir regresiones e
 ## Próximos Pasos Inmediatos
 1. Completar deuda SSR pendiente (`nodeName` dinámico y herencia de `DocumentFragment`).
 2. Estabilizar Prerendering.
-3. Endurecer TypeScript de manera incremental (`strict` por etapas).
 
 ## Criterios de éxito
 - Cero incidentes por exports rotos entre versiones consecutivas.
