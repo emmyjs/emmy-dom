@@ -147,7 +147,27 @@ Route.routes = {};
 export class Router extends LightComponent {
     constructor() {
         super();
+        this.handleLocation = () => { };
         this.className = routerClassNames;
+        // SSR: expand route content directly if running on server (no window)
+        if (typeof window === 'undefined') {
+            // Permitir inyección explícita de generadores al SSR
+            const generators = globalThis.emmyGenerators || {};
+            const path = '/root';
+            const htmlText = Route.routes['/root']
+                || Route.routes['/404'] || html `<h1>404</h1>`;
+            // Expandir todos los tags de componentes estáticos
+            let expanded = htmlText;
+            expanded = expanded.replace(/<([a-zA-Z0-9-]+)[^>]*><\/\1>/g, (match, tag) => {
+                const generator = generators[tag];
+                if (generator && generator.static === true) {
+                    return typeof generator === 'function' ? generator({ el: { className: '' } }) : '';
+                }
+                return match;
+            });
+            this.innerHTML = expanded;
+            return;
+        }
         this.handleLocation = () => {
             const path = window.location.pathname;
             const htmlText = (path === '/' ? Route.routes['/root'] : Route.routes[path])
@@ -272,6 +292,9 @@ export async function build({ dependencies, template, app, generators, path }) {
     for (const name in generators) {
         if (['Route', 'Router'].includes(name))
             continue;
+        const func = typeof generators[name] === 'object' ? generators[name].func : generators[name];
+        if (func && func.static)
+            continue; // Astro-like exact partial hydration
         javascriptString += hydrateScript(generators[name], name);
     }
     const content = html `
