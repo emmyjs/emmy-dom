@@ -28,7 +28,7 @@
     "precommit:check": "npm run status:verify && npm run typecheck && vitest run && npm run lint:check",
     "verify:package-contract": "node scripts/verify-package-contract.cjs",
     "co:build": "npm run tsc && npm run cpdir && npm run verify:package-contract && vitest run && npm run lint",
-    "build": "npm run tsc && npm run cpdir && npm run verify:package-contract && npm run coverage && npm run lint",
+    "build": "npm run tsc && npm run cpdir && npm run verify:package-contract && npm run lint",
     "co": "npm run co:build && git add . && sui-mono commit && git push",
     "check": "node scripts/check.cjs",
     "release": "node scripts/release.cjs",
