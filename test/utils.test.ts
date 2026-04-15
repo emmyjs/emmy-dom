@@ -1,5 +1,5 @@
 import { describe, it, expect, vitest } from 'vitest'
-import { processGenerator, parseCSS, createInlineStyle, capitalizeFirstLetter, uncapitalizeFirstLetter, Emmy, loadGlobalEmmy, html, javascript, isServer } from '../src/utils.ts'
+import { processGenerator, parseCSS, createInlineStyle, capitalizeFirstLetter, uncapitalizeFirstLetter, Emmy, loadGlobalEmmy, html, javascript, isServer, vanillaElement } from '../src/utils.ts'
 
 describe('processGenerator', () => {
   it('should return a string', () => {
@@ -7,6 +7,15 @@ describe('processGenerator', () => {
     expect(processGenerator('<Div color="red"></Div>')).toBe('<emmy-div color="red"></emmy-div>')
     expect(processGenerator('<Div />')).toBe('<emmy-div></emmy-div>')
     expect(processGenerator('<Div color="red" />')).toBe('<emmy-div color="red"></emmy-div>')
+  })
+})
+
+describe('vanillaElement', () => {
+  it('should format uppercase tags into emmy- lowered tags', () => {
+    expect(vanillaElement('MyComponent')).toBe('emmy-mycomponent')
+  })
+  it('should return original tags unmodified when already lowered', () => {
+    expect(vanillaElement('my-component')).toBe('my-component')
   })
 })
 
@@ -68,6 +77,24 @@ describe('loadGlobalEmmy', () => {
 describe('html', () => {
   it('should return the same string', () => {
     expect(html`<div></div>`).toBe('<div></div>')
+  })
+
+  it('should automatically join arrays without commas', () => {
+    const items = ['a', 'b', 'c']
+    expect(html`<ul>${items.map(i => `<li>${i}</li>`)}</ul>`)
+      .toBe('<ul><li>a</li><li>b</li><li>c</li></ul>')
+  })
+
+  it('should handle empty arrays', () => {
+    const empty: string[] = []
+    expect(html`<div>${empty}</div>`).toBe('<div></div>')
+  })
+
+  it('should interpolate undefined, null, and numbers identically to standard template literals', () => {
+    const num = 42
+    expect(html`<span>${num}</span>`).toBe('<span>42</span>')
+    expect(html`<span>${undefined}</span>`).toBe('<span>undefined</span>')
+    expect(html`<span>${null}</span>`).toBe('<span>null</span>')
   })
 })
 

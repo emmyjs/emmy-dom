@@ -1,9 +1,9 @@
 const path = require('path')
 const vm = require('vm')
-const { execFile } = require('../util')
+const util = require('../util/index.js');
 
 function trigger(obj, data) {
-  if (obj.onmessage) {
+  if (obj && obj.onmessage) {
     obj.onmessage({ data })
   }
 }
@@ -17,7 +17,7 @@ const context = {
 
 class Worker {
   constructor(file) {
-    execFile(file, { context })
+    util.execFile(file, { context })
   }
   postMessage(msg) {
     trigger(this, msg)

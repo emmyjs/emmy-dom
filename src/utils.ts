@@ -70,7 +70,17 @@ export const loadGlobalEmmy = (obj: object) => {
   })
 }
 
-export const html = String.raw
+export const html = (strings: TemplateStringsArray, ...values: any[]) => {
+  let result = strings.raw[0]
+  for (let i = 0; i < values.length; i++) {
+    let val = values[i]
+    if (Array.isArray(val)) {
+      val = val.join('')
+    }
+    result += val + strings.raw[i + 1]
+  }
+  return result
+}
 export const javascript = String.raw
 
 export const routerClassNames = 'flex flex-col justify-center items-center space-y-3 text-center w-full h-fit box-border'

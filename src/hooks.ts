@@ -27,11 +27,14 @@ export function getValues(dependencies: DependencyArray): Array<any> {
   })
 }
 
-export function useState<T>(initialValue: T): [() => T, (newValue: T) => void] {
+export function useState<T>(this: any, initialValue: T): [() => T, (newValue: T) => void] {
   let value = initialValue
   const state = () => value
-  const setState = (newValue) => {
+  const setState = (newValue: T) => {
     value = newValue
+    if (this && typeof this.rerender === 'function') {
+      this.rerender()
+    }
   }
   return [state, setState]
 }

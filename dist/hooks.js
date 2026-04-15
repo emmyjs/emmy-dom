@@ -16,6 +16,9 @@ export function useState(initialValue) {
     const state = () => value;
     const setState = (newValue) => {
         value = newValue;
+        if (this && typeof this.rerender === 'function') {
+            this.rerender();
+        }
     };
     return [state, setState];
 }

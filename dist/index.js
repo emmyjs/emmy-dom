@@ -71,7 +71,7 @@ export class FunctionalComponent extends LightComponent {
         super();
         this.effectCallback = (component) => { };
         bindHooks.call(this, this);
-        this.setState({ rerenderCount: 0 });
+        this.patchState({ rerenderCount: 0 });
         const renderFunctionOrString = func.call(this, {
             el: this,
             props: () => this.props,
@@ -115,7 +115,12 @@ export class FunctionalComponent extends LightComponent {
         this.patchState({ rerenderCount: this.state().rerenderCount + 1 });
     }
     state() {
-        return JSON.parse(this.getAttribute('state').replace(/'/g, '"') || '');
+        try {
+            return JSON.parse((this.getAttribute('state') || '{}').replace(/'/g, '"'));
+        }
+        catch {
+            return {};
+        }
     }
     setState(newState) {
         this.setAttribute('state', JSON.stringify(newState).replace(/"/g, '\''));

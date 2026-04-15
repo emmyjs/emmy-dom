@@ -11,14 +11,14 @@ class History {
     return this._current().state
   }
   back() {
-    if (index > 0) {
+    if (this.index > 0) {
       this.index--
       this._update()
       this._dispatch()
     }
   }
   forward() {
-    if (index < this.length - 1) {
+    if (this.index < this.length - 1) {
       this.index++
       this._update()
       this._dispatch()

@@ -232,7 +232,6 @@ prop(ElementProto, 'nodeName', {
     return this._nodeName || customElements.__fixLostNodeNameForElement(this)
   },
 
-  // TODO check to see if this is necessary anymore. This shouldn't be settable.
   set(val) {
     this._nodeName = val
   }

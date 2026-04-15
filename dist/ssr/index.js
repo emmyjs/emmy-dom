@@ -17,6 +17,31 @@ function stringify(node) {
     return node.textContent
   }
 
+  // Expansión recursiva de custom elements estáticos en todo el árbol
+  const expandStatic = (n) => {
+    const ctor = n.constructor
+    if (ctor && ctor.static === true) {
+      // Ejecutar connectedCallback si existe
+      if (typeof n.connectedCallback === 'function') {
+        try { n.connectedCallback() } catch (e) {}
+      }
+      // Si tras connectedCallback los childNodes están vacíos y hay generador, ejecutarlo
+      if ((!n.childNodes || n.childNodes.length === 0) && typeof n.render === 'function') {
+        try {
+          const html = n.render()
+          if (typeof html === 'string' && html.length > 0) {
+            n.childNodes = [ { nodeName: '#text', textContent: html } ]
+          }
+        } catch (e) {}
+      }
+    }
+    // Recursivo para hijos
+    if (n.childNodes && n.childNodes.length > 0) {
+      n.childNodes.forEach(expandStatic)
+    }
+  }
+  expandStatic(node)
+
   str += `<${node.localName}${(node.attributes || [])
     .map(a => ` ${a.name}="${a.value}"`)
     .join('')}>`

@@ -10,7 +10,7 @@ export interface Hoakable<T = any> {
 }
 export declare function bindHooks(component: Hoakable): void;
 export declare function getValues(dependencies: DependencyArray): Array<any>;
-export declare function useState<T>(initialValue: T): [() => T, (newValue: T) => void];
+export declare function useState<T>(this: any, initialValue: T): [() => T, (newValue: T) => void];
 export declare function useEffect<T>(this: Hoakable<T>, callback: placeholderCallback<T>, dependencies: DependencyArray, isServerFunction?: () => boolean): void;
 export declare function useRef<T>(value?: T): {
     current: T | undefined;

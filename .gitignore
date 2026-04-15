@@ -1,4 +1,3 @@
 /node_modules
 app.ts
-.coverage-stable/
-temp/
+tmp/

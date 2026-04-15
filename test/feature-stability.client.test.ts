@@ -236,7 +236,7 @@ describe('Feature stability: functional rendering internals', () => {
     expect(element.state().rerenderCount).toBe(2)
 
     element.setAttribute('state', '')
-    expect(() => element.state()).toThrow()
+    expect(element.state()).toEqual({})
 
     expect(element.querySelector('#does-not-exist')).toBeNull()
   })
