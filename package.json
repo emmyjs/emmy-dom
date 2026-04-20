@@ -69,7 +69,7 @@
   },
   "dependencies": {
     "jsx-to-html": "1.1.0",
-    "parse5": "7.1.2",
+    "parse5": "8.0.1",
     "undom": "0.4.0"
   }
 }
